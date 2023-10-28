@@ -1,0 +1,464 @@
+[
+	version(1.0),
+	uuid(9B6E3A71-1949-40CE-BB68-9B73312B1C32)
+]
+library foo_jscript_panel3
+{
+	importlib("stdole2.tlb");
+
+	[uuid(9818CD0D-CD94-4050-AAC6-B605314F5FAB)]
+	interface IDisposable : IDispatch
+	{
+		HRESULT Dispose();
+	};
+
+	interface IJSImage;
+	interface IMenuObj;
+	interface IMetadbHandleList;
+	interface ITextLayout;
+
+	[uuid(9080B381-661D-48F2-93E5-3174ED79879A)]
+	interface IContextMenuManager : IDisposable
+	{
+		HRESULT BuildMenu(IMenuObj* obj, int base_id);
+		HRESULT ExecuteByID(UINT32 id, [out, retval] VARIANT_BOOL* out);
+		HRESULT InitContext(IMetadbHandleList* handles);
+		HRESULT InitContextPlaylist();
+		HRESULT InitNowPlaying();
+	};
+
+	[uuid(77074381-B3A0-46F8-8E3C-30AFB688D07A)]
+	interface IDropAction : IDispatch
+	{
+		[propget] HRESULT Effect([out, retval] DWORD* out);
+		[propput] HRESULT Base(UINT32 base);
+		[propput] HRESULT Effect(DWORD effect);
+		[propput] HRESULT Playlist(UINT32 playlistIndex);
+		[propput] HRESULT ToSelect(VARIANT_BOOL to_select);
+	};
+
+	[uuid(AC6CCB64-A3DD-4BF8-AC1B-CD6B964362AB)]
+	interface IFileInfo : IDisposable
+	{
+		HRESULT InfoFind(BSTR name, [out, retval] INT_PTR* out);
+		HRESULT InfoName(UINT32 idx, [out, retval] BSTR* out);
+		HRESULT InfoValue(UINT32 idx, [out, retval] BSTR* out);
+		HRESULT MetaFind(BSTR name, [out, retval] INT_PTR* out);
+		HRESULT MetaName(UINT32 idx, [out, retval] BSTR* out);
+		HRESULT MetaValue(UINT32 idx, UINT32 vidx, [out, retval] BSTR* out);
+		HRESULT MetaValueCount(UINT32 idx, [out, retval] UINT_PTR* out);
+		[propget] HRESULT InfoCount([out, retval] UINT_PTR* out);
+		[propget] HRESULT MetaCount([out, retval] UINT_PTR* out);
+	};
+
+	[uuid(16A02EF1-23F1-4C5F-A236-F0295BE822D4)]
+	interface IJSGraphics : IDispatch
+	{
+		HRESULT get([out, retval] void** out);
+		HRESULT Clear(__int64 colour);
+		HRESULT DrawEllipse(float centreX, float centreY, float radiusX, float radiusY, float line_width, __int64 colour);
+		HRESULT DrawImage(IJSImage* image, float dstX, float dstY, float dstW, float dstH, float srcX, float srcY, float srcW, float srcH, [defaultvalue(1)] float opacity, [defaultvalue(0)] float angle);
+		HRESULT DrawImageWithMask(IJSImage* image, IJSImage* mask_image, float x, float y, float w, float h);
+		HRESULT DrawLine(float x1, float y1, float x2, float y2, float line_width, __int64 colour);
+		HRESULT DrawRectangle(float x, float y, float w, float h, float line_width, __int64 colour);
+		HRESULT DrawRoundedRectangle(float x, float y, float w, float h, float radiusX, float radiusY, float line_width, __int64 colour);
+		HRESULT FillEllipse(float centreX, float centreY, float radiusX, float radiusY, __int64 colour);
+		HRESULT FillGradientRectangle(float x, float y, float w, float h, UINT8 direction, __int64 colour1, __int64 colour2);
+		HRESULT FillGradientRectangleAdvanced(float x, float y, float w, float h, BSTR str);
+		HRESULT FillRectangle(float x, float y, float w, float h, __int64 colour);
+		HRESULT FillRoundedRectangle(float x, float y, float w, float h, float radiusX, float radiusY, __int64 colour);
+		HRESULT WriteText(BSTR text, BSTR font, __int64 colour, float x, float y, float w, float h, [defaultvalue(0)] UINT32 text_alignment, [defaultvalue(0)] UINT32 paragraph_alignment, [defaultvalue(0)] UINT32 word_wrapping, [defaultvalue(0)] UINT32 trimming_granularity);
+		HRESULT WriteTextLayout(ITextLayout* layout, VARIANT colour, float x, float y, float w, float h, [defaultvalue(0)] float vertical_offset);
+	};
+
+	[uuid(0AE6C5C9-4FF1-4605-8025-C8280A5428C3)]
+	interface IJSImage : IDisposable
+	{
+		HRESULT get([out, retval] void** out);
+		HRESULT ApplyEffect(UINT8 effect);
+		HRESULT Clone([out, retval] IJSImage** out);
+		HRESULT FlipRotate(UINT8 options);
+		HRESULT GetColourScheme(UINT8 count, [out, retval] VARIANT* out);
+		HRESULT GetGraphics([out, retval] IJSGraphics** out);
+		HRESULT ReleaseGraphics();
+		HRESULT Resize(UINT32 width, UINT32 height);
+		HRESULT SaveAs(BSTR path, [out, retval] VARIANT_BOOL* out);
+		HRESULT StackBlur(UINT8 radius);
+		[propget] HRESULT Height([out, retval] UINT32* out);
+		[propget] HRESULT Path([out, retval] BSTR* out);
+		[propget] HRESULT Width([out, retval] UINT32* out);
+	};
+
+	[uuid(E10902CB-07C2-40E2-A039-7A660B4FAB56)]
+	interface IMainMenuManager : IDisposable
+	{
+		HRESULT BuildMenu(IMenuObj* obj, UINT32 base_id);
+		HRESULT ExecuteByID(UINT32 id, [out, retval] VARIANT_BOOL* out);
+	};
+
+	[uuid(0190AFCB-84A9-4E71-8D65-36BA8F5A5F40)]
+	interface IMenuObj : IDisposable
+	{
+		HRESULT get([out, retval] void** out);
+		HRESULT AppendMenuItem(UINT32 flags, UINT32 item_id, BSTR text);
+		HRESULT AppendMenuSeparator();
+		HRESULT AppendTo(IMenuObj* obj, UINT32 flags, BSTR text);
+		HRESULT CheckMenuItem(UINT32 item_id, VARIANT_BOOL check);
+		HRESULT CheckMenuRadioItem(UINT32 first, UINT32 last, UINT32 selected);
+		HRESULT SetDefault(UINT32 item_id);
+		HRESULT TrackPopupMenu(int x, int y, [defaultvalue(0)] UINT32 flags, [out, retval] int* out);
+	};
+
+	[uuid(893E67CA-EF49-4E65-8695-A5112A4C3EBF)]
+	interface IMetadbHandle : IDisposable
+	{
+		HRESULT get([out, retval] void** out);
+		HRESULT Compare(IMetadbHandle* handle, [out, retval] VARIANT_BOOL* out);
+		HRESULT GetAlbumArt([defaultvalue(0)] UINT32 art_id, [defaultvalue(-1)] VARIANT_BOOL want_stub, [out, retval] IJSImage** out);
+		HRESULT GetAlbumArtAsync(UINT32 window_id, [defaultvalue(0)] UINT32 art_id, [defaultvalue(-1)] VARIANT_BOOL want_stub);
+		HRESULT GetAlbumArtEmbedded([defaultvalue(0)] UINT32 art_id, [out, retval] IJSImage** out);
+		HRESULT GetFileInfo([defaultvalue(0)] VARIANT_BOOL full_info, [out, retval] IFileInfo** out);
+		HRESULT IsInLibrary([out, retval] VARIANT_BOOL* out);
+		HRESULT ShowAlbumArtViewer([defaultvalue(0)] UINT32 art_id, [defaultvalue(-1)] VARIANT_BOOL want_stub);
+		[propget] HRESULT FileCreated([out, retval] UINT64* out);
+		[propget] HRESULT FileSize([out, retval] UINT64* out);
+		[propget] HRESULT LastModified([out, retval] UINT64* out);
+		[propget] HRESULT Length([out, retval] double* out);
+		[propget] HRESULT Path([out, retval] BSTR* out);
+		[propget] HRESULT RawPath([out, retval] BSTR* out);
+		[propget] HRESULT SubSong([out, retval] UINT32* out);
+	};
+
+	[uuid(3674E0F8-9691-467F-AAFE-070F20A32D4F)]
+	interface IMetadbHandleList : IDisposable
+	{
+		HRESULT get([out, retval] void** out);
+		HRESULT AddItem(IMetadbHandle* handle);
+		HRESULT AddItems(IMetadbHandleList* handles);
+		HRESULT AttachImage(BSTR path, [defaultvalue(0)] UINT32 art_id);
+		HRESULT CalcTotalDuration([out, retval] double* out);
+		HRESULT CalcTotalSize([out, retval] UINT64* out);
+		HRESULT Clone([out, retval] IMetadbHandleList** out);
+		HRESULT CopyToClipboard([out, retval] VARIANT_BOOL* out);
+		HRESULT DoDragDrop(DWORD okEffects, [out, retval] DWORD* out);
+		HRESULT Find(IMetadbHandle* handle, [out, retval] INT_PTR* out);
+		HRESULT GetItem(UINT32 idx, [out, retval] IMetadbHandle** out);
+		HRESULT GetLibraryRelativePaths([out, retval] VARIANT* out);
+		HRESULT GetOtherInfo([out, retval] BSTR* out);
+		HRESULT GetQueryItems(BSTR query, [out, retval] IMetadbHandleList** out);
+		HRESULT InsertItem(UINT32 idx, IMetadbHandle* handle);
+		HRESULT InsertItems(UINT32 base, IMetadbHandleList* handles);
+		HRESULT MakeDifference(IMetadbHandleList* handles);
+		HRESULT MakeIntersection(IMetadbHandleList* handles);
+		HRESULT OptimiseFileLayout([defaultvalue(0)] VARIANT_BOOL minimise);
+		HRESULT Randomise();
+		HRESULT RemoveAll();
+		HRESULT RemoveAttachedImage([defaultvalue(0)] UINT32 art_id);
+		HRESULT RemoveAttachedImages();
+		HRESULT RemoveByIdx(UINT32 idx);
+		HRESULT RemoveDuplicates();
+		HRESULT RemoveDuplicatesByFormat(BSTR pattern);
+		HRESULT RemoveFromIdx(UINT32 idx, UINT32 num);
+		HRESULT ReplaceItem(UINT32 idx, IMetadbHandle* handle);
+		HRESULT RunContextCommand(BSTR command, [out, retval] VARIANT_BOOL* out);
+		HRESULT SaveAs(BSTR path);
+		HRESULT SortByFormat(BSTR pattern, int direction);
+		HRESULT SortByPath();
+		HRESULT SortByRelativePath();
+		HRESULT UpdateFileInfoFromJSON(BSTR str);
+		[propget] HRESULT Count([out, retval] UINT_PTR* out);
+	};
+
+	[uuid(E086093E-D095-4233-A3F8-0C8D81B3AAF1)]
+	interface IPlayingItemLocation : IDispatch
+	{
+		[propget] HRESULT IsValid([out, retval] VARIANT_BOOL* out);
+		[propget] HRESULT PlaylistIndex([out, retval] INT_PTR* out);
+		[propget] HRESULT PlaylistItemIndex([out, retval] INT_PTR* out);
+	};
+
+	[uuid(5A8D4B48-BE00-4E0F-B369-8C61005DCDA3)]
+	interface IProfiler : IDispatch
+	{
+		HRESULT Reset();
+		HRESULT Print();
+		[propget] HRESULT Time([out, retval] __int64* out);
+	};
+
+	[uuid(D1C338E4-EBF8-45C1-A7BD-401F90CF901B)]
+	interface ISelectionHolder : IDisposable
+	{
+		HRESULT SetPlaylistSelectionTracking();
+		HRESULT SetPlaylistTracking();
+		HRESULT SetSelection(IMetadbHandleList* handles, [defaultvalue(0)] UINT32 type);
+	};
+
+	[uuid(41F4FBFD-98E4-4939-9BB5-35A2D1CFE581)]
+	interface ITextLayout : IDisposable
+	{
+		HRESULT get([out, retval] void** out);
+		HRESULT CalcTextHeight(float max_width, [out, retval] float* out);
+	};
+
+	[uuid(ACBD90C9-E7B7-4AEC-B8C6-84D74810B368)]
+	interface IThemeManager : IDisposable
+	{
+		HRESULT DrawThemeBackground(IJSGraphics* gr, int x, int y, int w, int h);
+		HRESULT GetThemeColour(int propid, [out, retval] int* out);
+		HRESULT IsThemePartDefined(int partid, [defaultvalue(0)] int stateid, [out, retval] VARIANT_BOOL* out);
+		HRESULT SetPartAndStateID(int partid, int stateid);
+	};
+
+	[uuid(B8A66BA6-389D-4C06-A350-BEABEAD2D3AC)]
+	interface ITitleFormat : IDisposable
+	{
+		HRESULT Eval([out, retval] BSTR* out);
+		HRESULT EvalActivePlaylistItem(UINT32 playlistItemIndex, [out, retval] BSTR* out);
+		HRESULT EvalPlaylistItem(UINT32 playlistIndex, UINT32 playlistItemIndex, [out, retval] BSTR* out);
+		HRESULT EvalWithMetadb(IMetadbHandle* handle, [out, retval] BSTR* out);
+		HRESULT EvalWithMetadbs(IMetadbHandleList* handles, [out, retval] VARIANT* out);
+	};
+
+	[uuid(526AE5CE-5287-48F8-94AE-29A37C6E72FD)]
+	interface ITooltip : IDispatch
+	{
+		HRESULT Activate();
+		HRESULT Deactivate();
+		HRESULT SetMaxWidth(int width);
+		HRESULT TrackPosition(int x, int y);
+		[propget] HRESULT Text([out, retval] BSTR* out);
+		[propput] HRESULT Text(BSTR text);
+		[propput] HRESULT TrackActivate(VARIANT_BOOL activate);
+	};
+
+	[uuid(47DCA23A-E3A8-4CA2-86E3-95B52F3B2143)]
+	interface IConsole : IDispatch
+	{
+		HRESULT GetLines([defaultvalue(0)] VARIANT_BOOL with_timestamp, [out, retval] VARIANT* out);
+		HRESULT ClearBacklog();
+		[vararg] HRESULT Log(SAFEARRAY(VARIANT) sa);
+	};
+
+	[uuid(1518F88D-FE53-478B-815B-BE343640E2E4)]
+	interface IFb : IDispatch
+	{
+		HRESULT AcquireSelectionHolder([out, retval] ISelectionHolder** out);
+		HRESULT AddDirectory();
+		HRESULT AddFiles();
+		HRESULT AddLocationsAsync(UINT32 window_id, VARIANT locations, [out, retval] UINT_PTR* out);
+		HRESULT CheckClipboardContents([out, retval] VARIANT_BOOL* out);
+		HRESULT CheckComponent(BSTR name, [out, retval] VARIANT_BOOL* out);
+		HRESULT ClearPlaylist();
+		HRESULT CreateContextMenuManager([out, retval] IContextMenuManager** out);
+		HRESULT CreateHandleList([optional] VARIANT var, [out, retval] IMetadbHandleList** out);
+		HRESULT CreateMainMenuManager(BSTR name, [out, retval] IMainMenuManager** out);
+		HRESULT Exit();
+		HRESULT GetClipboardContents([out, retval] IMetadbHandleList** out);
+		HRESULT GetDSPPresets([out, retval] BSTR* out);
+		HRESULT GetFocusItem([out, retval] IMetadbHandle** out);
+		HRESULT GetLibraryItems([defaultvalue("")] BSTR query, [out, retval] IMetadbHandleList** out);
+		HRESULT GetNowPlaying([out, retval] IMetadbHandle** out);
+		HRESULT GetOutputDevices([out, retval] BSTR* out);
+		HRESULT GetSelection([defaultvalue(0)] UINT32 flags, [out, retval] IMetadbHandleList** out);
+		HRESULT GetSelectionType([out, retval] UINT_PTR* out);
+		HRESULT IsLibraryEnabled([out, retval] VARIANT_BOOL* out);
+		HRESULT LoadPlaylist();
+		HRESULT Next();
+		HRESULT Pause();
+		HRESULT Play();
+		HRESULT PlayOrPause();
+		HRESULT Prev();
+		HRESULT Random();
+		HRESULT RunContextCommand(BSTR command, [out, retval] VARIANT_BOOL* out);
+		HRESULT RunMainMenuCommand(BSTR command, [out, retval] VARIANT_BOOL* out);
+		HRESULT SavePlaylist();
+		HRESULT SetDSPPreset(UINT32 idx);
+		HRESULT SetOutputDevice(BSTR output, BSTR device);
+		HRESULT ShowConsole();
+		HRESULT ShowLibrarySearchUI(BSTR query);
+		HRESULT ShowPictureViewer(BSTR path);
+		HRESULT ShowPreferences();
+		HRESULT Stop();
+		HRESULT TitleFormat(BSTR pattern, [out, retval] ITitleFormat** out);
+		HRESULT VolumeDown();
+		HRESULT VolumeMute();
+		HRESULT VolumeUp();
+		[propget] HRESULT AlwaysOnTop([out, retval] VARIANT_BOOL* out);
+		[propget] HRESULT ComponentPath([out, retval] BSTR* out);
+		[propget] HRESULT CursorFollowPlayback([out, retval] VARIANT_BOOL* out);
+		[propget] HRESULT FoobarPath([out, retval] BSTR* out);
+		[propget] HRESULT IsPaused([out, retval] VARIANT_BOOL* out);
+		[propget] HRESULT IsPlaying([out, retval] VARIANT_BOOL* out);
+		[propget] HRESULT IsV2([out, retval] VARIANT_BOOL* out);
+		[propget] HRESULT PlaybackFollowCursor([out, retval] VARIANT_BOOL* out);
+		[propget] HRESULT PlaybackLength([out, retval] double* out);
+		[propget] HRESULT PlaybackTime([out, retval] double* out);
+		[propget] HRESULT ProfilePath([out, retval] BSTR* out);
+		[propget] HRESULT ReplaygainMode([out, retval] UINT32* out);
+		[propget] HRESULT StopAfterCurrent([out, retval] VARIANT_BOOL* out);
+		[propget] HRESULT Volume([out, retval] float* out);
+		[propput] HRESULT AlwaysOnTop(VARIANT_BOOL b);
+		[propput] HRESULT CursorFollowPlayback(VARIANT_BOOL b);
+		[propput] HRESULT PlaybackFollowCursor(VARIANT_BOOL b);
+		[propput] HRESULT PlaybackTime(double time);
+		[propput] HRESULT ReplaygainMode(UINT32 mode);
+		[propput] HRESULT StopAfterCurrent(VARIANT_BOOL b);
+		[propput] HRESULT Volume(float value);
+	};
+
+	[uuid(2B527D99-1C1D-44B6-8182-1EA9456E61DD)]
+	interface IPlman : IDispatch
+	{
+		HRESULT AddLocations(UINT32 playlistIndex, VARIANT locations, [defaultvalue(0)] VARIANT_BOOL select);
+		HRESULT AddPlaylistLock(UINT32 playlistIndex, UINT32 mask, [out, retval] VARIANT_BOOL* out);
+		HRESULT ClearPlaylist(UINT32 playlistIndex);
+		HRESULT ClearPlaylistSelection(UINT32 playlistIndex);
+		HRESULT CreateAutoPlaylist(UINT32 playlistIndex, BSTR name, BSTR query, [defaultvalue("")] BSTR sort, [defaultvalue(0)] UINT32 flags, [out, retval] INT_PTR* out);
+		HRESULT CreatePlaylist([defaultvalue(0xffffffff)] UINT32 playlistIndex, [defaultvalue("")] BSTR name, [out, retval] UINT_PTR* out);
+		HRESULT DuplicatePlaylist(UINT32 playlistIndex, BSTR name, [out, retval] UINT_PTR* out);
+		HRESULT ExecutePlaylistDefaultAction(UINT32 playlistIndex, UINT32 playlistItemIndex, [out, retval] VARIANT_BOOL* out);
+		HRESULT FindByGUID(BSTR str, [out, retval] INT_PTR* out);
+		HRESULT FindOrCreatePlaylist(BSTR name, VARIANT_BOOL unlocked, [out, retval] UINT_PTR* out);
+		HRESULT FindPlaylist(BSTR name, [out, retval] INT_PTR* out);
+		HRESULT GetGUID(UINT32 playlistIndex, [out, retval] BSTR* out);
+		HRESULT GetPlayingItemLocation([out, retval] IPlayingItemLocation** out);
+		HRESULT GetPlaylistFocusItemIndex(UINT32 playlistIndex, [out, retval] INT_PTR* out);
+		HRESULT GetPlaylistItemCount(UINT32 playlistIndex, [out, retval] UINT_PTR* out);
+		HRESULT GetPlaylistItems(UINT32 playlistIndex, [out, retval] IMetadbHandleList** out);
+		HRESULT GetPlaylistLockFilterMask(UINT32 playlistIndex, [out, retval] int* out);
+		HRESULT GetPlaylistLockName(UINT32 playlistIndex, [out, retval] BSTR* out);
+		HRESULT GetPlaylistName(UINT32 playlistIndex, [out, retval] BSTR* out);
+		HRESULT GetPlaylistSelectedItems(UINT32 playlistIndex, [out, retval] IMetadbHandleList** out);
+		HRESULT GetQueryItems(UINT32 playlistIndex, BSTR query, [out, retval] IMetadbHandleList** out);
+		HRESULT GetRecyclerItems(UINT32 index, [out, retval] IMetadbHandleList** out);
+		HRESULT GetRecyclerName(UINT32 index, [out, retval] BSTR* out);
+		HRESULT InsertPlaylistItems(UINT32 playlistIndex, UINT32 base, IMetadbHandleList* handles, [defaultvalue(0)] VARIANT_BOOL select);
+		HRESULT InsertPlaylistItemsFilter(UINT32 playlistIndex, UINT32 base, IMetadbHandleList* handles, [defaultvalue(0)] VARIANT_BOOL select);
+		HRESULT InvertSelection(UINT32 playlistIndex);
+		HRESULT IsAutoPlaylist(UINT32 playlistIndex, [out, retval] VARIANT_BOOL* out);
+		HRESULT IsPlaylistItemSelected(UINT32 playlistIndex, UINT32 playlistItemIndex, [out, retval] VARIANT_BOOL* out);
+		HRESULT IsPlaylistLocked(UINT32 playlistIndex, [out, retval] VARIANT_BOOL* out);
+		HRESULT MovePlaylist(UINT32 from, UINT32 to, [out, retval] VARIANT_BOOL* out);
+		HRESULT MovePlaylistSelection(UINT32 playlistIndex, int delta, [out, retval] VARIANT_BOOL* out);
+		HRESULT MovePlaylistSelectionV2(UINT32 playlistIndex, UINT32 new_pos, [out, retval] VARIANT_BOOL* out);
+		HRESULT RecyclerPurge(VARIANT affectedItems);
+		HRESULT RecyclerRestore(UINT32 index);
+		HRESULT RemovePlaylist(UINT32 playlistIndex, [out, retval] VARIANT_BOOL* out);
+		HRESULT RemovePlaylistLock(UINT32 playlistIndex, [out, retval] VARIANT_BOOL* out);
+		HRESULT RemovePlaylists(VARIANT playlistIndexes, [out, retval] VARIANT_BOOL* out);
+		HRESULT RemovePlaylistSelection(UINT32 playlistIndex, [defaultvalue(0)] VARIANT_BOOL crop);
+		HRESULT RemovePlaylistSwitch(UINT32 playlistIndex, [out, retval] VARIANT_BOOL* out);
+		HRESULT RenamePlaylist(UINT32 playlistIndex, BSTR name, [out, retval] VARIANT_BOOL* out);
+		HRESULT SetActivePlaylistContext();
+		HRESULT SetPlaylistFocusItem(UINT32 playlistIndex, UINT32 playlistItemIndex);
+		HRESULT SetPlaylistSelection(UINT32 playlistIndex, VARIANT affectedItems, VARIANT_BOOL state);
+		HRESULT SetPlaylistSelectionSingle(UINT32 playlistIndex, UINT32 playlistItemIndex, VARIANT_BOOL state);
+		HRESULT ShowAutoPlaylistUI(UINT32 playlistIndex, [out, retval] VARIANT_BOOL* out);
+		HRESULT ShowPlaylistLockUI(UINT32 playlistIndex, [out, retval] VARIANT_BOOL* out);
+		HRESULT SortByFormat(UINT32 playlistIndex, BSTR pattern, [defaultvalue(0)] VARIANT_BOOL selOnly, [out, retval] VARIANT_BOOL* out);
+		HRESULT SortByFormatV2(UINT32 playlistIndex, BSTR pattern, [defaultvalue(1)] int direction, [out, retval] VARIANT_BOOL* out);
+		HRESULT SortPlaylistsByName([defaultvalue(1)] int direction);
+		HRESULT UndoBackup(UINT32 playlistIndex);
+		[propget] HRESULT ActivePlaylist([out, retval] INT_PTR* out);
+		[propget] HRESULT PlaybackOrder([out, retval] UINT_PTR* out);
+		[propget] HRESULT PlayingPlaylist([out, retval] INT_PTR* out);
+		[propget] HRESULT PlaylistCount([out, retval] UINT_PTR* out);
+		[propget] HRESULT RecyclerCount([out, retval] UINT_PTR* out);
+		[propput] HRESULT ActivePlaylist(UINT32 playlistIndex);
+		[propput] HRESULT PlaybackOrder(UINT32 order);
+	};
+
+	[uuid(C49E0740-6EA1-4C7C-A58C-763E5C3E87E7)]
+	interface IUtils : IDispatch
+	{
+		HRESULT CalcTextWidth(BSTR text, BSTR font_name, float font_size, [defaultvalue(400)] UINT32 font_weight, [defaultvalue(0)] UINT32 font_style, [defaultvalue(5)] UINT32 font_stretch, [out, retval] float* out);
+		HRESULT CheckFont(BSTR name, [out, retval] VARIANT_BOOL* out);
+		HRESULT ColourPicker(int default_colour, [out, retval] int* out);
+		HRESULT CreateFolder(BSTR path, [out, retval] VARIANT_BOOL* out);
+		HRESULT CreateImage(UINT32 width, UINT32 height, [out, retval] IJSImage** out);
+		HRESULT CreateProfiler([defaultvalue("")] BSTR name, [out, retval] IProfiler** out);
+		HRESULT CreateTextLayout(BSTR text, BSTR font_name, float font_size, [defaultvalue(400)] UINT32 font_weight, [defaultvalue(0)] UINT32 font_style, [defaultvalue(5)] UINT32 font_stretch, [defaultvalue(0)] UINT32 text_alignment, [defaultvalue(0)] UINT32 paragraph_alignment, [defaultvalue(0)] UINT32 word_wrapping, [defaultvalue(0)] UINT32 trimming_granularity, [out, retval] ITextLayout** out);
+		HRESULT CreateTextLayout2(BSTR text, BSTR fonts, [defaultvalue(0)] UINT32 text_alignment, [defaultvalue(0)] UINT32 paragraph_alignment, [defaultvalue(0)] UINT32 word_wrapping, [defaultvalue(0)] UINT32 trimming_granularity, [out, retval] ITextLayout** out);
+		HRESULT DateStringToTimestamp(BSTR str, [out, retval] UINT64* out);
+		HRESULT DetectCharset(BSTR path, [out, retval] UINT32* out);
+		HRESULT DownloadFileAsync(UINT32 window_id, BSTR url, BSTR path);
+		HRESULT DownloadImageAsync(UINT32 window_id, BSTR url);
+		HRESULT FormatDuration(double seconds, [out, retval] BSTR* out);
+		HRESULT FormatFileSize(UINT64 bytes, [out, retval] BSTR* out);
+		HRESULT GetClipboardText([out, retval] BSTR* out);
+		HRESULT GetFileSize(BSTR path, [out, retval] __int64* out);
+		HRESULT GetLastModified(BSTR path, [out, retval] UINT64* out);
+		HRESULT GetSysColour(int index, [out, retval] int* out);
+		HRESULT GetSystemMetrics(int index, [out, retval] int* out);
+		HRESULT Glob(BSTR pattern, [defaultvalue(0x00000010)] DWORD exc_mask, [defaultvalue(0xffffffff)] DWORD inc_mask, [out, retval] VARIANT* out);
+		HRESULT InputBox(BSTR prompt, BSTR caption, [defaultvalue("")] BSTR def, [defaultvalue(0)] VARIANT_BOOL error_on_cancel, [out, retval] BSTR* out);
+		HRESULT HTTPRequestAsync(UINT32 window_id, UINT8 type, BSTR url, [defaultvalue("")] BSTR user_agent_or_headers, [defaultvalue("")] BSTR post_data, [defaultvalue("")] BSTR content_type, [out, retval] UINT_PTR* out);
+		HRESULT IsFile(BSTR path, [out, retval] VARIANT_BOOL* out);
+		HRESULT IsFolder(BSTR folder, [out, retval] VARIANT_BOOL* out);
+		HRESULT IsKeyPressed(UINT32 vkey, [out, retval] VARIANT_BOOL* out);
+		HRESULT ListFiles(BSTR folder, [defaultvalue(0)] VARIANT_BOOL recur, [out, retval] VARIANT* out);
+		HRESULT ListFolders(BSTR folder, [defaultvalue(0)] VARIANT_BOOL recur, [out, retval] VARIANT* out);
+		HRESULT ListFonts([out, retval] VARIANT* out);
+		HRESULT LoadImage(BSTR path, [out, retval] IJSImage** out);
+		HRESULT LoadImageAsync(UINT32 window_id, BSTR path);
+		HRESULT LoadSVG(BSTR path_or_xml, [defaultvalue(0)] float max_width, [out, retval] IJSImage** out);
+		HRESULT MessageBox(BSTR prompt, BSTR caption, UINT32 flags, [out, retval] int* out);
+		HRESULT ReadINI(BSTR path, BSTR section, BSTR key, [defaultvalue("")] BSTR default_value, [out, retval] BSTR* out);
+		HRESULT ReadTextFile(BSTR path, [defaultvalue(0)] UINT32 codepage, [out, retval] BSTR* out);
+		HRESULT ReadUTF8(BSTR path, [out, retval] BSTR* out);
+		HRESULT RemovePath(BSTR path, [out, retval] VARIANT_BOOL* out);
+		HRESULT ReplaceIllegalChars(BSTR str, [defaultvalue(-1)] VARIANT_BOOL modern, [out, retval] BSTR* out);
+		HRESULT Run(BSTR app, [defaultvalue("")] BSTR params);
+		HRESULT RunCmdAsync(UINT32 window_id, BSTR app, BSTR params, [out, retval] UINT_PTR* out);
+		HRESULT SetClipboardText(BSTR str);
+		HRESULT ShowPopupMessage(BSTR msg, [defaultvalue("")] BSTR title);
+		HRESULT TextBox(BSTR prompt, BSTR caption, [defaultvalue("")] BSTR def, [out, retval] BSTR* out);
+		HRESULT TimestampToDateString(UINT64 ts, [out, retval] BSTR* out);
+		HRESULT WriteINI(BSTR path, BSTR section, BSTR key, BSTR value, [out, retval] VARIANT_BOOL* out);
+		HRESULT WriteTextFile(BSTR path, BSTR content, [out, retval] VARIANT_BOOL* out);
+		[propget] HRESULT Version([out, retval] UINT32* out);
+	};
+
+	[uuid(38E90116-F8C6-45A5-B81D-5A01C731C3C6)]
+	interface IWindow : IDispatch
+	{
+		HRESULT ClearInterval(UINT32 id);
+		HRESULT ClearTimeout(UINT32 id);
+		HRESULT CreatePopupMenu([out, retval] IMenuObj** out);
+		HRESULT CreateThemeManager(BSTR class_list, [out, retval] IThemeManager** out);
+		HRESULT CreateTooltip([defaultvalue("Segoe UI")] BSTR name, [defaultvalue(16)] int pxSize, [out, retval] ITooltip** out);
+		HRESULT GetColourCUI(UINT8 idx, [out, retval] int* out);
+		HRESULT GetColourDUI(UINT8 idx, [out, retval] int* out);
+		HRESULT GetFontCUI(UINT8 idx, [out, retval] BSTR* out);
+		HRESULT GetFontDUI(UINT8 idx, [out, retval] BSTR* out);
+		HRESULT GetProperty(BSTR name, [optional] VARIANT default_value, [out, retval] VARIANT* out);
+		HRESULT NotifyOthers(BSTR name, VARIANT info);
+		HRESULT Reload([defaultvalue(0)] VARIANT_BOOL clear_properties);
+		HRESULT Repaint();
+		HRESULT RepaintRect(int x, int y, int w, int h);
+		HRESULT SetCursor(int id);
+		HRESULT SetInterval(IDispatch* func, DWORD delay, [out, retval] UINT_PTR* out);
+		HRESULT SetProperty(BSTR name, VARIANT val);
+		HRESULT SetTimeout(IDispatch* func, DWORD delay, [out, retval] UINT_PTR* out);
+		HRESULT SetTooltipFont(BSTR name, int pxSize);
+		HRESULT ShowConfigure();
+		HRESULT ShowProperties();
+		[propget] HRESULT DPI([out, retval] UINT32* out);
+		[propget] HRESULT Height([out, retval] int* out);
+		[propget] HRESULT ID([out, retval] UINT_PTR* out);
+		[propget] HRESULT IsDark([out, retval] VARIANT_BOOL* out);
+		[propget] HRESULT IsDefaultUI([out, retval] VARIANT_BOOL* out);
+		[propget] HRESULT IsThemed([out, retval] VARIANT_BOOL* out);
+		[propget] HRESULT IsVisible([out, retval] VARIANT_BOOL* out);
+		[propget] HRESULT MaxHeight([out, retval] LONG* out);
+		[propget] HRESULT MaxWidth([out, retval] LONG* out);
+		[propget] HRESULT MinHeight([out, retval] LONG* out);
+		[propget] HRESULT MinWidth([out, retval] LONG* out);
+		[propget] HRESULT Name([out, retval] BSTR* out);
+		[propget] HRESULT Width([out, retval] int* out);
+		[propput] HRESULT MaxHeight(LONG height);
+		[propput] HRESULT MaxWidth(LONG width);
+		[propput] HRESULT MinHeight(LONG height);
+		[propput] HRESULT MinWidth(LONG width);
+	};
+}
