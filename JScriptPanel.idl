@@ -117,6 +117,7 @@ library foo_jscript_panel3
 		HRESULT GetAlbumArt([defaultvalue(0)] UINT32 art_id, [defaultvalue(-1)] VARIANT_BOOL want_stub, [out, retval] IJSImage** out);
 		HRESULT GetAlbumArtAsync(UINT32 window_id, [defaultvalue(0)] UINT32 art_id, [defaultvalue(-1)] VARIANT_BOOL want_stub);
 		HRESULT GetAlbumArtEmbedded([defaultvalue(0)] UINT32 art_id, [out, retval] IJSImage** out);
+		HRESULT GetAlbumArtThumbAsync(UINT32 window_id, [defaultvalue(0)] UINT32 art_id, [defaultvalue(300)] UINT32 max_size);
 		HRESULT GetFileInfo([defaultvalue(0)] VARIANT_BOOL full_info, [out, retval] IFileInfo** out);
 		HRESULT IsInLibrary([out, retval] VARIANT_BOOL* out);
 		HRESULT ShowAlbumArtViewer([defaultvalue(0)] UINT32 art_id, [defaultvalue(-1)] VARIANT_BOOL want_stub);
@@ -253,6 +254,7 @@ library foo_jscript_panel3
 		HRESULT CreateHandleList([optional] VARIANT var, [out, retval] IMetadbHandleList** out);
 		HRESULT CreateMainMenuManager(BSTR name, [out, retval] IMainMenuManager** out);
 		HRESULT Exit();
+		HRESULT GetAlbumArtStub([defaultvalue(0)] UINT32 art_id, [out, retval] IJSImage** out);
 		HRESULT GetClipboardContents([out, retval] IMetadbHandleList** out);
 		HRESULT GetDSPPresets([out, retval] BSTR* out);
 		HRESULT GetFocusItem([out, retval] IMetadbHandle** out);
@@ -386,7 +388,7 @@ library foo_jscript_panel3
 		HRESULT FormatDuration(double seconds, [out, retval] BSTR* out);
 		HRESULT FormatFileSize(UINT64 bytes, [out, retval] BSTR* out);
 		HRESULT GetClipboardText([out, retval] BSTR* out);
-		HRESULT GetFileSize(BSTR path, [out, retval] __int64* out);
+		HRESULT GetFileSize(BSTR path, [out, retval] UINT64* out);
 		HRESULT GetLastModified(BSTR path, [out, retval] UINT64* out);
 		HRESULT GetSysColour(int index, [out, retval] int* out);
 		HRESULT GetSystemMetrics(int index, [out, retval] int* out);
