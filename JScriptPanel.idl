@@ -420,6 +420,7 @@ library foo_jscript_panel3
 		HRESULT WriteINI(BSTR path, BSTR section, BSTR key, BSTR value, [out, retval] VARIANT_BOOL* out);
 		HRESULT WriteTextFile(BSTR path, BSTR content, [out, retval] VARIANT_BOOL* out);
 		[propget] HRESULT Version([out, retval] UINT32* out);
+		[propget] HRESULT VersionString([out, retval] BSTR* out);
 	};
 
 	[uuid(38E90116-F8C6-45A5-B81D-5A01C731C3C6)]
