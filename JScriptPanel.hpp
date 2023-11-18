@@ -48,5 +48,7 @@ static void** arg_helper(auto arg) { return reinterpret_cast<void**>(arg); }
 #include "PanelBase.hpp"
 
 #include "FontHelper.hpp"
+
+#include "IStreamHelpers.hpp"
 #include "AlbumArt.hpp"
 #include "ImageHelpers.hpp"
