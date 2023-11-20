@@ -7,7 +7,7 @@ namespace Component
 
 	namespace
 	{
-		advconfig_branch_factory advconfig_branch(Component::name.data(), guids::advconfig_branch, advconfig_branch::guid_branch_tools, 0);
+		advconfig_branch_factory advconfig_branch(name.data(), guids::advconfig_branch, advconfig_branch::guid_branch_tools, 0.0);
 		advconfig_string_factory advconfig_pin_to("Playback Statistics Title Format", guids::advconfig_pin_to, guids::advconfig_branch, 0.0, "$lower($meta(artist,0) - %title%)", preferences_state::needs_restart);
 
 		void init_stage()
