@@ -121,6 +121,11 @@ library foo_jscript_panel3
 		HRESULT GetAlbumArtThumbAsync(UINT32 window_id, [defaultvalue(0)] UINT32 art_id, [defaultvalue(300)] UINT32 max_size);
 		HRESULT GetFileInfo([defaultvalue(0)] VARIANT_BOOL full_info, [out, retval] IFileInfo** out);
 		HRESULT IsInLibrary([out, retval] VARIANT_BOOL* out);
+		HRESULT SetFirstPlayed(UINT32 first_played);
+		HRESULT SetLastPlayed(UINT32 last_played);
+		HRESULT SetLoved(UINT32 loved);
+		HRESULT SetPlaycount(UINT32 playcount);
+		HRESULT SetRating(UINT32 rating);
 		HRESULT ShowAlbumArtViewer([defaultvalue(0)] UINT32 art_id, [defaultvalue(-1)] VARIANT_BOOL want_stub);
 		[propget] HRESULT FileCreated([out, retval] UINT64* out);
 		[propget] HRESULT FileSize([out, retval] UINT64* out);
@@ -140,6 +145,7 @@ library foo_jscript_panel3
 		HRESULT AttachImage(BSTR path, [defaultvalue(0)] UINT32 art_id);
 		HRESULT CalcTotalDuration([out, retval] double* out);
 		HRESULT CalcTotalSize([out, retval] UINT64* out);
+		HRESULT ClearStats();
 		HRESULT Clone([out, retval] IMetadbHandleList** out);
 		HRESULT CopyToClipboard([out, retval] VARIANT_BOOL* out);
 		HRESULT DoDragDrop(DWORD okEffects, [out, retval] DWORD* out);
@@ -154,6 +160,7 @@ library foo_jscript_panel3
 		HRESULT MakeIntersection(IMetadbHandleList* handles);
 		HRESULT OptimiseFileLayout([defaultvalue(0)] VARIANT_BOOL minimise);
 		HRESULT Randomise();
+		HRESULT RefreshStats();
 		HRESULT RemoveAll();
 		HRESULT RemoveAttachedImage([defaultvalue(0)] UINT32 art_id);
 		HRESULT RemoveAttachedImages();

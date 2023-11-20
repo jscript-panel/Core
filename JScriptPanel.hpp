@@ -9,6 +9,13 @@ static void** arg_helper(auto arg) { return reinterpret_cast<void**>(arg); }
 #include "FileHelper.hpp"
 #include "JSONHelper.hpp"
 
+#include "CallbackID.hpp"
+#include "GUIDS.hpp"
+
+#include "Config.hpp"
+#include "PlaybackStatistics.hpp"
+#include "MetadbIndex.hpp"
+
 #include "JScriptPanel_h.h"
 #include "ComArrayReader.hpp"
 #include "ComArrayWriter.hpp"
@@ -40,12 +47,10 @@ static void** arg_helper(auto arg) { return reinterpret_cast<void**>(arg); }
 #include "Plman.hpp"
 #include "Utils.hpp"
 #include "Window.hpp"
-
-#include "CallbackID.hpp"
-#include "CallbackData.hpp"
-#include "GUIDS.hpp"
 #include "PanelManager.hpp"
 #include "PanelBase.hpp"
+
+#include "CallbackData.hpp"
 
 #include "FontHelper.hpp"
 
