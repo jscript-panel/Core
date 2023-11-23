@@ -12,7 +12,7 @@ static void** arg_helper(auto arg) { return reinterpret_cast<void**>(arg); }
 #include "CallbackID.hpp"
 #include "GUIDS.hpp"
 
-#include "Config.hpp"
+#include "Component.hpp"
 #include "PlaybackStatistics.hpp"
 #include "MetadbIndex.hpp"
 
