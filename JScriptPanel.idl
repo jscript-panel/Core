@@ -126,6 +126,7 @@ library foo_jscript_panel3
 		HRESULT SetLoved(UINT32 loved);
 		HRESULT SetPlaycount(UINT32 playcount);
 		HRESULT SetRating(UINT32 rating);
+		HRESULT SetSkipcount(UINT32 skipcount);
 		HRESULT ShowAlbumArtViewer([defaultvalue(0)] UINT32 art_id, [defaultvalue(-1)] VARIANT_BOOL want_stub);
 		[propget] HRESULT FileCreated([out, retval] UINT64* out);
 		[propget] HRESULT FileSize([out, retval] UINT64* out);
