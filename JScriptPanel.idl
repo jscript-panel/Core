@@ -150,6 +150,7 @@ library foo_jscript_panel3
 		HRESULT Clone([out, retval] IMetadbHandleList** out);
 		HRESULT CopyToClipboard([out, retval] VARIANT_BOOL* out);
 		HRESULT DoDragDrop(DWORD okEffects, [out, retval] DWORD* out);
+		HRESULT Drop(UINT32 count, [out, retval] IMetadbHandleList** out);
 		HRESULT Find(IMetadbHandle* handle, [out, retval] INT_PTR* out);
 		HRESULT GetItem(UINT32 idx, [out, retval] IMetadbHandle** out);
 		HRESULT GetLibraryRelativePaths([out, retval] VARIANT* out);
@@ -175,6 +176,7 @@ library foo_jscript_panel3
 		HRESULT SortByFormat(BSTR pattern, int direction);
 		HRESULT SortByPath();
 		HRESULT SortByRelativePath();
+		HRESULT Take(UINT32 count, [out, retval] IMetadbHandleList** out);
 		HRESULT UpdateFileInfoFromJSON(BSTR str);
 		[propget] HRESULT Count([out, retval] UINT_PTR* out);
 	};
