@@ -404,7 +404,7 @@ library foo_jscript_panel3
 		HRESULT GetSysColour(int index, [out, retval] int* out);
 		HRESULT GetSystemMetrics(int index, [out, retval] int* out);
 		HRESULT Glob(BSTR pattern, [defaultvalue(0x00000010)] DWORD exc_mask, [defaultvalue(0xffffffff)] DWORD inc_mask, [out, retval] VARIANT* out);
-		HRESULT InputBox(BSTR prompt, BSTR caption, [defaultvalue("")] BSTR def, [defaultvalue(0)] VARIANT_BOOL error_on_cancel, [out, retval] BSTR* out);
+		HRESULT InputBox(BSTR prompt, BSTR title, [defaultvalue("")] BSTR def, [defaultvalue(0)] VARIANT_BOOL error_on_cancel, [out, retval] BSTR* out);
 		HRESULT HTTPRequestAsync(UINT32 window_id, UINT8 type, BSTR url, [defaultvalue("")] BSTR user_agent_or_headers, [defaultvalue("")] BSTR post_data, [defaultvalue("")] BSTR content_type, [out, retval] UINT_PTR* out);
 		HRESULT IsFile(BSTR path, [out, retval] VARIANT_BOOL* out);
 		HRESULT IsFolder(BSTR folder, [out, retval] VARIANT_BOOL* out);
@@ -415,7 +415,7 @@ library foo_jscript_panel3
 		HRESULT LoadImage(BSTR path, [out, retval] IJSImage** out);
 		HRESULT LoadImageAsync(UINT32 window_id, BSTR path);
 		HRESULT LoadSVG(BSTR path_or_xml, [defaultvalue(0)] float max_width, [out, retval] IJSImage** out);
-		HRESULT MessageBox(BSTR prompt, BSTR caption, UINT32 flags, [out, retval] int* out);
+		HRESULT MessageBox(BSTR prompt, BSTR title, UINT32 flags, [out, retval] int* out);
 		HRESULT ReadINI(BSTR path, BSTR section, BSTR key, [defaultvalue("")] BSTR default_value, [out, retval] BSTR* out);
 		HRESULT ReadTextFile(BSTR path, [defaultvalue(0)] UINT32 codepage, [out, retval] BSTR* out);
 		HRESULT ReadUTF8(BSTR path, [out, retval] BSTR* out);
@@ -425,7 +425,7 @@ library foo_jscript_panel3
 		HRESULT RunCmdAsync(UINT32 window_id, BSTR app, BSTR params, [out, retval] UINT_PTR* out);
 		HRESULT SetClipboardText(BSTR str);
 		HRESULT ShowPopupMessage(BSTR msg, [defaultvalue("")] BSTR title);
-		HRESULT TextBox(BSTR prompt, BSTR caption, [defaultvalue("")] BSTR def, [out, retval] BSTR* out);
+		HRESULT TextBox(BSTR prompt, BSTR title, [defaultvalue("")] BSTR def, [out, retval] BSTR* out);
 		HRESULT TimestampToDateString(UINT64 ts, [out, retval] BSTR* out);
 		HRESULT WriteINI(BSTR path, BSTR section, BSTR key, BSTR value, [out, retval] VARIANT_BOOL* out);
 		HRESULT WriteTextFile(BSTR path, BSTR content, [out, retval] VARIANT_BOOL* out);
