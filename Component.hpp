@@ -13,6 +13,7 @@ namespace Component
 	uint32_t get_threaded_process_flags();
 	void popup(wil::zstring_view msg);
 
+	static const std::string default_user_agent = fmt::format("{}/{}", dll, version_string);
 	static constexpr uint32_t max_image_size = 64 * 1024 * 1024;
 
 	extern cfg_string pin_to;
