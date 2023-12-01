@@ -31,6 +31,7 @@ library foo_jscript_panel3
 	interface IDropAction : IDispatch
 	{
 		[propget] HRESULT Effect([out, retval] DWORD* out);
+
 		[propput] HRESULT Base(UINT32 base);
 		[propput] HRESULT Effect(DWORD effect);
 		[propput] HRESULT Playlist(UINT32 playlistIndex);
@@ -47,6 +48,7 @@ library foo_jscript_panel3
 		HRESULT MetaName(UINT32 idx, [out, retval] BSTR* out);
 		HRESULT MetaValue(UINT32 idx, UINT32 vidx, [out, retval] BSTR* out);
 		HRESULT MetaValueCount(UINT32 idx, [out, retval] UINT_PTR* out);
+
 		[propget] HRESULT InfoCount([out, retval] UINT_PTR* out);
 		[propget] HRESULT MetaCount([out, retval] UINT_PTR* out);
 	};
@@ -56,6 +58,7 @@ library foo_jscript_panel3
 	{
 		HRESULT get([out, retval] void** out);
 		HRESULT init(void* render_target, void* brush);
+
 		HRESULT Clear(__int64 colour);
 		HRESULT DrawEllipse(float centreX, float centreY, float radiusX, float radiusY, float line_width, __int64 colour);
 		HRESULT DrawImage(IJSImage* image, float dstX, float dstY, float dstW, float dstH, float srcX, float srcY, float srcW, float srcH, [defaultvalue(1)] float opacity, [defaultvalue(0)] float angle);
@@ -76,6 +79,7 @@ library foo_jscript_panel3
 	interface IJSImage : IDisposable
 	{
 		HRESULT get([out, retval] void** out);
+
 		HRESULT ApplyEffect(UINT8 effect);
 		HRESULT Clone([out, retval] IJSImage** out);
 		HRESULT FlipRotate(UINT8 options);
@@ -85,6 +89,7 @@ library foo_jscript_panel3
 		HRESULT Resize(UINT32 width, UINT32 height);
 		HRESULT SaveAs(BSTR path, [out, retval] VARIANT_BOOL* out);
 		HRESULT StackBlur(UINT8 radius);
+
 		[propget] HRESULT Height([out, retval] UINT32* out);
 		[propget] HRESULT Path([out, retval] BSTR* out);
 		[propget] HRESULT Width([out, retval] UINT32* out);
@@ -101,6 +106,7 @@ library foo_jscript_panel3
 	interface IMenuObj : IDisposable
 	{
 		HRESULT get([out, retval] void** out);
+
 		HRESULT AppendMenuItem(UINT32 flags, UINT32 item_id, BSTR text);
 		HRESULT AppendMenuSeparator();
 		HRESULT AppendTo(IMenuObj* obj, UINT32 flags, BSTR text);
@@ -114,6 +120,7 @@ library foo_jscript_panel3
 	interface IMetadbHandle : IDisposable
 	{
 		HRESULT get([out, retval] void** out);
+
 		HRESULT Compare(IMetadbHandle* handle, [out, retval] VARIANT_BOOL* out);
 		HRESULT GetAlbumArt([defaultvalue(0)] UINT32 art_id, [defaultvalue(-1)] VARIANT_BOOL want_stub, [out, retval] IJSImage** out);
 		HRESULT GetAlbumArtAsync(UINT32 window_id, [defaultvalue(0)] UINT32 art_id, [defaultvalue(-1)] VARIANT_BOOL want_stub);
@@ -128,6 +135,7 @@ library foo_jscript_panel3
 		HRESULT SetRating(UINT32 rating);
 		HRESULT SetSkipcount(UINT32 skipcount);
 		HRESULT ShowAlbumArtViewer([defaultvalue(0)] UINT32 art_id, [defaultvalue(-1)] VARIANT_BOOL want_stub);
+
 		[propget] HRESULT FileCreated([out, retval] UINT64* out);
 		[propget] HRESULT FileSize([out, retval] UINT64* out);
 		[propget] HRESULT LastModified([out, retval] UINT64* out);
@@ -141,6 +149,7 @@ library foo_jscript_panel3
 	interface IMetadbHandleList : IDisposable
 	{
 		HRESULT get([out, retval] void** out);
+
 		HRESULT AddItem(IMetadbHandle* handle);
 		HRESULT AddItems(IMetadbHandleList* handles);
 		HRESULT AttachImage(BSTR path, [defaultvalue(0)] UINT32 art_id);
@@ -178,6 +187,7 @@ library foo_jscript_panel3
 		HRESULT SortByRelativePath();
 		HRESULT Take(UINT32 count, [out, retval] IMetadbHandleList** out);
 		HRESULT UpdateFileInfoFromJSON(BSTR str);
+
 		[propget] HRESULT Count([out, retval] UINT_PTR* out);
 	};
 
@@ -192,8 +202,9 @@ library foo_jscript_panel3
 	[uuid(5A8D4B48-BE00-4E0F-B369-8C61005DCDA3)]
 	interface IProfiler : IDispatch
 	{
-		HRESULT Reset();
 		HRESULT Print();
+		HRESULT Reset();
+
 		[propget] HRESULT Time([out, retval] __int64* out);
 	};
 
@@ -209,6 +220,7 @@ library foo_jscript_panel3
 	interface ITextLayout : IDisposable
 	{
 		HRESULT get([out, retval] void** out);
+
 		HRESULT CalcTextHeight(float max_width, [out, retval] float* out);
 	};
 
@@ -238,7 +250,9 @@ library foo_jscript_panel3
 		HRESULT Deactivate();
 		HRESULT SetMaxWidth(int width);
 		HRESULT TrackPosition(int x, int y);
+
 		[propget] HRESULT Text([out, retval] BSTR* out);
+
 		[propput] HRESULT Text(BSTR text);
 		[propput] HRESULT TrackActivate(VARIANT_BOOL activate);
 	};
@@ -248,6 +262,7 @@ library foo_jscript_panel3
 	{
 		HRESULT GetLines([defaultvalue(0)] VARIANT_BOOL with_timestamp, [out, retval] VARIANT* out);
 		HRESULT ClearBacklog();
+
 		[vararg] HRESULT Log(SAFEARRAY(VARIANT) sa);
 	};
 
@@ -296,6 +311,7 @@ library foo_jscript_panel3
 		HRESULT VolumeDown();
 		HRESULT VolumeMute();
 		HRESULT VolumeUp();
+
 		[propget] HRESULT AlwaysOnTop([out, retval] VARIANT_BOOL* out);
 		[propget] HRESULT ComponentPath([out, retval] BSTR* out);
 		[propget] HRESULT CursorFollowPlayback([out, retval] VARIANT_BOOL* out);
@@ -310,6 +326,7 @@ library foo_jscript_panel3
 		[propget] HRESULT ReplaygainMode([out, retval] UINT32* out);
 		[propget] HRESULT StopAfterCurrent([out, retval] VARIANT_BOOL* out);
 		[propget] HRESULT Volume([out, retval] float* out);
+
 		[propput] HRESULT AlwaysOnTop(VARIANT_BOOL b);
 		[propput] HRESULT CursorFollowPlayback(VARIANT_BOOL b);
 		[propput] HRESULT PlaybackFollowCursor(VARIANT_BOOL b);
@@ -372,11 +389,13 @@ library foo_jscript_panel3
 		HRESULT SortByFormatV2(UINT32 playlistIndex, BSTR pattern, [defaultvalue(1)] int direction, [out, retval] VARIANT_BOOL* out);
 		HRESULT SortPlaylistsByName([defaultvalue(1)] int direction);
 		HRESULT UndoBackup(UINT32 playlistIndex);
+
 		[propget] HRESULT ActivePlaylist([out, retval] INT_PTR* out);
 		[propget] HRESULT PlaybackOrder([out, retval] UINT_PTR* out);
 		[propget] HRESULT PlayingPlaylist([out, retval] INT_PTR* out);
 		[propget] HRESULT PlaylistCount([out, retval] UINT_PTR* out);
 		[propget] HRESULT RecyclerCount([out, retval] UINT_PTR* out);
+
 		[propput] HRESULT ActivePlaylist(UINT32 playlistIndex);
 		[propput] HRESULT PlaybackOrder(UINT32 order);
 	};
@@ -387,6 +406,7 @@ library foo_jscript_panel3
 		HRESULT CalcTextWidth(BSTR text, BSTR font_name, float font_size, [defaultvalue(400)] UINT32 font_weight, [defaultvalue(0)] UINT32 font_style, [defaultvalue(5)] UINT32 font_stretch, [out, retval] float* out);
 		HRESULT CheckFont(BSTR name, [out, retval] VARIANT_BOOL* out);
 		HRESULT ColourPicker(int default_colour, [out, retval] int* out);
+		HRESULT ConvertToAscii(BSTR str, [out, retval] BSTR* out);
 		HRESULT CreateFolder(BSTR path, [out, retval] VARIANT_BOOL* out);
 		HRESULT CreateImage(UINT32 width, UINT32 height, [out, retval] IJSImage** out);
 		HRESULT CreateProfiler([defaultvalue("")] BSTR name, [out, retval] IProfiler** out);
@@ -429,6 +449,7 @@ library foo_jscript_panel3
 		HRESULT TimestampToDateString(UINT64 ts, [out, retval] BSTR* out);
 		HRESULT WriteINI(BSTR path, BSTR section, BSTR key, BSTR value, [out, retval] VARIANT_BOOL* out);
 		HRESULT WriteTextFile(BSTR path, BSTR content, [out, retval] VARIANT_BOOL* out);
+
 		[propget] HRESULT Version([out, retval] UINT32* out);
 		[propget] HRESULT VersionString([out, retval] BSTR* out);
 	};
@@ -457,6 +478,7 @@ library foo_jscript_panel3
 		HRESULT SetTooltipFont(BSTR name, int pxSize);
 		HRESULT ShowConfigure();
 		HRESULT ShowProperties();
+
 		[propget] HRESULT DPI([out, retval] UINT32* out);
 		[propget] HRESULT Height([out, retval] int* out);
 		[propget] HRESULT ID([out, retval] UINT_PTR* out);
@@ -470,6 +492,7 @@ library foo_jscript_panel3
 		[propget] HRESULT MinWidth([out, retval] LONG* out);
 		[propget] HRESULT Name([out, retval] BSTR* out);
 		[propget] HRESULT Width([out, retval] int* out);
+
 		[propput] HRESULT MaxHeight(LONG height);
 		[propput] HRESULT MaxWidth(LONG width);
 		[propput] HRESULT MinHeight(LONG height);
