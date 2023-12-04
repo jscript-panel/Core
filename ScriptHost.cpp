@@ -72,7 +72,8 @@ HRESULT ScriptHost::ParseImports()
 HRESULT ScriptHost::ParseScript(wil::zstring_view code, wil::zstring_view path)
 {
 	m_context_to_path_map.emplace(++m_last_source_context, path);
-	return m_parser->ParseScriptText(to_wide(code).data(), nullptr, nullptr, nullptr, m_last_source_context, 0, SCRIPTTEXT_HOSTMANAGESSOURCE | SCRIPTTEXT_ISVISIBLE, nullptr, nullptr);
+	const auto wcode = to_wide(code);
+	return m_parser->ParseScriptText(wcode.data(), nullptr, nullptr, nullptr, m_last_source_context, 0, SCRIPTTEXT_HOSTMANAGESSOURCE | SCRIPTTEXT_ISVISIBLE, nullptr, nullptr);
 }
 
 STDMETHODIMP ScriptHost::GetDocVersionString(BSTR*)
