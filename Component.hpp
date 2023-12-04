@@ -14,6 +14,8 @@ namespace Component
 	void popup(wil::zstring_view msg);
 
 	static const std::string default_user_agent = fmt::format("{}/{}", dll, version_string);
+	static constexpr wil::zwstring_view default_font_name = L"Segoe UI";
+	static constexpr wil::zwstring_view error_text = L"JavaScript error";
 	static constexpr uint32_t max_image_size = 64 * 1024 * 1024;
 
 	extern cfg_string pin_to;
