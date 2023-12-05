@@ -14,15 +14,6 @@ namespace Component
 		return FileHelper(path.get()).parent_path();
 	}
 
-	uint32_t get_threaded_process_flags()
-	{
-		if (Fb::is_v2())
-		{
-			return threaded_process::flag_silent;
-		}
-		return threaded_process::flag_show_progress | threaded_process::flag_show_delayed | threaded_process::flag_show_item;
-	}
-
 	void popup(wil::zstring_view msg)
 	{
 		popup_message::g_show(msg.data(), name.data());

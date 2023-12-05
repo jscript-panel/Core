@@ -10,7 +10,6 @@ namespace Component
 
 	std::string get_resource_text(int id);
 	std::wstring get_path();
-	uint32_t get_threaded_process_flags();
 	void popup(wil::zstring_view msg);
 
 	static const std::string default_user_agent = fmt::format("{}/{}", dll, version_string);
