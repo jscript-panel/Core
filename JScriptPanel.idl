@@ -405,7 +405,7 @@ library foo_jscript_panel3
 	{
 		HRESULT CalcTextWidth(BSTR text, BSTR font_name, float font_size, [defaultvalue(400)] UINT32 font_weight, [defaultvalue(0)] UINT32 font_style, [defaultvalue(5)] UINT32 font_stretch, [out, retval] float* out);
 		HRESULT CheckFont(BSTR name, [out, retval] VARIANT_BOOL* out);
-		HRESULT ColourPicker(int default_colour, [out, retval] int* out);
+		HRESULT ColourPicker(int default_colour, [defaultvalue(0)] VARIANT_BOOL error_on_cancel, [out, retval] int* out);
 		HRESULT ConvertToAscii(BSTR str, [out, retval] BSTR* out);
 		HRESULT CreateFolder(BSTR path, [out, retval] VARIANT_BOOL* out);
 		HRESULT CreateImage(UINT32 width, UINT32 height, [out, retval] IJSImage** out);
