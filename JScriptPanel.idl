@@ -71,7 +71,7 @@ library foo_jscript_panel3
 		HRESULT FillGradientRectangleAdvanced(float x, float y, float w, float h, BSTR str);
 		HRESULT FillRectangle(float x, float y, float w, float h, __int64 colour);
 		HRESULT FillRoundedRectangle(float x, float y, float w, float h, float radiusX, float radiusY, __int64 colour);
-		HRESULT WriteText(BSTR text, BSTR font, __int64 colour, float x, float y, float w, float h, [defaultvalue(0)] UINT32 text_alignment, [defaultvalue(0)] UINT32 paragraph_alignment, [defaultvalue(0)] UINT32 word_wrapping, [defaultvalue(0)] UINT32 trimming_granularity);
+		HRESULT WriteText(BSTR text, BSTR font, VARIANT colour, float x, float y, float w, float h, [defaultvalue(0)] UINT32 text_alignment, [defaultvalue(0)] UINT32 paragraph_alignment, [defaultvalue(0)] UINT32 word_wrapping, [defaultvalue(0)] UINT32 trimming_granularity);
 		HRESULT WriteTextLayout(ITextLayout* layout, VARIANT colour, float x, float y, float w, float h, [defaultvalue(0)] float vertical_offset);
 	};
 
@@ -419,6 +419,7 @@ library foo_jscript_panel3
 		HRESULT FormatDuration(double seconds, [out, retval] BSTR* out);
 		HRESULT FormatFileSize(UINT64 bytes, [out, retval] BSTR* out);
 		HRESULT GetClipboardText([out, retval] BSTR* out);
+		HRESULT GetCountryFlag(BSTR country_or_code, [out, retval] BSTR* out);
 		HRESULT GetFileSize(BSTR path, [out, retval] UINT64* out);
 		HRESULT GetLastModified(BSTR path, [out, retval] UINT64* out);
 		HRESULT GetSysColour(int index, [out, retval] int* out);
