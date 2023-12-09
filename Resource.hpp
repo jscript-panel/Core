@@ -17,6 +17,7 @@
 #define IDR_CFG_RUBY_BLUE                106
 #define IDR_PANEL_JS                     107
 #define IDR_TOOLBAR_JS                   108
+#define IDR_COUNTRIES_JSON               109
 
 #define IDD_DIALOG_CONFIGURE             110
 #define IDD_DIALOG_FIND_REPLACE          111
