@@ -15,8 +15,5 @@ public:
 	}
 
 private:
-	static wil::com_ptr_t<IDispatch> instance;
+	inline static wil::com_ptr_t<IDispatch> instance;
 };
-
-template <typename T>
-FOOGUIDDECL wil::com_ptr_t<IDispatch> ComObjectSingleton<T>::instance;

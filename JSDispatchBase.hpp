@@ -71,8 +71,5 @@ public:
 	}
 
 private:
-	static TypeInfoCache s_type_info_cache;
+	inline static TypeInfoCache s_type_info_cache;
 };
-
-template <typename T>
-FOOGUIDDECL TypeInfoCache JSDispatchBase<T>::s_type_info_cache;
