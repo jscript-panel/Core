@@ -16,6 +16,19 @@ HRESULT ComArrayWriter::write_strings(const WStrings& strings, VARIANT* out)
 	return S_OK;
 }
 
+HRESULT ComArrayWriter::write_strings(const pfc::array_t<string8>& strings, VARIANT* out)
+{
+	ComArrayWriter writer(strings.get_count());
+
+	for (auto&& string : strings)
+	{
+		RETURN_IF_FAILED(writer.add_item(string));
+	}
+
+	writer.finalise(out);
+	return S_OK;
+}
+
 HRESULT ComArrayWriter::add_item(_variant_t& var)
 {
 	const HRESULT hr = SafeArrayPutElement(m_psa, &m_idx, &var);
