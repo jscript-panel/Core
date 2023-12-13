@@ -47,12 +47,9 @@ static void** arg_helper(auto arg) { return reinterpret_cast<void**>(arg); }
 #include "Plman.hpp"
 #include "Utils.hpp"
 #include "Window.hpp"
-#include "PanelManager.hpp"
+
 #include "PanelBase.hpp"
-
-#include "CallbackData.hpp"
-
-#include "FontHelper.hpp"
+#include "PanelManager.hpp"
 
 #include "IStreamHelpers.hpp"
 #include "AlbumArt.hpp"
