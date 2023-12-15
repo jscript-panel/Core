@@ -3,6 +3,20 @@
 
 ComArrayWriter::ComArrayWriter(size_t count) : m_psa(SafeArrayCreateVector(VT_VARIANT, 0L, static_cast<ULONG>(count))) {}
 
+HRESULT ComArrayWriter::write_ints(const std::vector<int>& ints, VARIANT* out)
+{
+	ComArrayWriter writer(ints.size());
+
+	for (const int i : ints)
+	{
+		auto var = _variant_t(i);
+		RETURN_IF_FAILED(writer.add_item(var));
+	}
+
+	writer.finalise(out);
+	return S_OK;
+}
+
 HRESULT ComArrayWriter::write_strings(const WStrings& strings, VARIANT* out)
 {
 	ComArrayWriter writer(strings.size());
@@ -20,7 +34,7 @@ HRESULT ComArrayWriter::write_strings(const pfc::array_t<string8>& strings, VARI
 {
 	ComArrayWriter writer(strings.get_count());
 
-	for (auto&& string : strings)
+	for (auto&& string : strings | std::views::transform(to_wide))
 	{
 		RETURN_IF_FAILED(writer.add_item(string));
 	}
@@ -40,12 +54,6 @@ HRESULT ComArrayWriter::add_item(_variant_t& var)
 		m_psa = nullptr;
 	}
 	return hr;
-}
-
-HRESULT ComArrayWriter::add_item(wil::zstring_view str)
-{
-	const std::wstring wstr = to_wide(str);
-	return add_item(wstr);
 }
 
 HRESULT ComArrayWriter::add_item(wil::zwstring_view str)
