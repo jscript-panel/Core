@@ -140,56 +140,7 @@ STDMETHODIMP ScriptHost::OnScriptError(IActiveScriptError* err)
 {
 	RETURN_HR_IF_NULL(E_POINTER, err);
 
-	DWORD ctx{};
-	EXCEPINFO excep{};
-	LONG charpos{};
-	Strings errors;
-	ULONG line{};
-	wil::unique_bstr sourceline;
-
-	errors.emplace_back(m_build_string);
-
-	if SUCCEEDED(err->GetExceptionInfo(&excep))
-	{
-		if (excep.pfnDeferredFillIn)
-		{
-			(*excep.pfnDeferredFillIn)(&excep);
-		}
-
-		if (excep.bstrSource)
-		{
-			errors.emplace_back(from_wide(excep.bstrSource));
-			SysFreeString(excep.bstrSource);
-		}
-
-		if (excep.bstrDescription)
-		{
-			errors.emplace_back(from_wide(excep.bstrDescription));
-			SysFreeString(excep.bstrDescription);
-		}
-
-		if (excep.bstrHelpFile)
-		{
-			SysFreeString(excep.bstrHelpFile);
-		}
-	}
-
-	if SUCCEEDED(err->GetSourcePosition(&ctx, &line, &charpos))
-	{
-		const auto it = m_context_to_path_map.find(ctx);
-		if (it != m_context_to_path_map.end())
-		{
-			errors.emplace_back(fmt::format("File: {}", it->second));
-		}
-		errors.emplace_back(fmt::format("Line: {}, Col: {}", line + 1, charpos + 1));
-	}
-
-	if SUCCEEDED(err->GetSourceLineText(&sourceline))
-	{
-		errors.emplace_back(from_wide(sourceline.get()));
-	}
-
-	const std::string error_text = fmt::format("{}", fmt::join(errors, CRLF.data()));
+	const std::string error_text = GetErrorText(err);
 	FB2K_console_formatter() << error_text;
 	fb2k::inMainThread([error_text] { Component::popup(error_text); });
 
@@ -247,22 +198,20 @@ bool ScriptHost::Initialise()
 	return SUCCEEDED(hr);
 }
 
-bool ScriptHost::InvokeMouseCallback(uint32_t msg, WPARAM wp, LPARAM lp)
+bool ScriptHost::InvokeMouseRbtnUp(WPARAM wp, LPARAM lp)
 {
-	const CallbackID id = g_msg_callback_map.at(msg);
-	const auto dispId = GetDISPID(id);
-	if (dispId)
-	{
-		VariantArgs args = { wp, GET_Y_LPARAM(lp), GET_X_LPARAM(lp) }; // reversed
-		DISPPARAMS params = { args.data(), nullptr, to_uint(args.size()), 0 };
-		_variant_t result;
-		m_script_root->Invoke(dispId.value(), IID_NULL, LOCALE_USER_DEFAULT, DISPATCH_METHOD, &params, &result, nullptr, nullptr);
-		if (id == CallbackID::on_mouse_rbtn_up && SUCCEEDED(VariantChangeType(&result, &result, 0, VT_BOOL)))
-		{
-			return to_bool(result.boolVal);
-		}
-	}
-	return false;
+	if (IsKeyPressed(VK_LSHIFT) && IsKeyPressed(VK_LWIN)) return false;
+
+	const auto dispId = GetDISPID(CallbackID::on_mouse_rbtn_up);
+	if (!dispId) return false;
+
+	VariantArgs args = { wp, GET_Y_LPARAM(lp), GET_X_LPARAM(lp) }; // reversed
+	DISPPARAMS params = { args.data(), nullptr, to_uint(args.size()), 0 };
+	_variant_t result;
+
+	if FAILED(m_script_root->Invoke(*dispId, IID_NULL, LOCALE_USER_DEFAULT, DISPATCH_METHOD, &params, &result, nullptr, nullptr)) return false;
+	if FAILED(VariantChangeType(&result, &result, 0, VT_BOOL)) return false;
+	return to_bool(result.boolVal);
 }
 
 std::optional<DISPID> ScriptHost::GetDISPID(CallbackID id)
@@ -290,6 +239,60 @@ std::string ScriptHost::ExtractValue(wil::zstring_view str)
 	return std::string();
 }
 
+std::string ScriptHost::GetErrorText(IActiveScriptError* err)
+{
+	DWORD ctx{}, line{};
+	EXCEPINFO excep{};
+	LONG charpos{};
+	Strings errors;
+	wil::unique_bstr sourceline;
+
+	errors.emplace_back(m_build_string);
+
+	if SUCCEEDED(err->GetExceptionInfo(&excep))
+	{
+		if (excep.pfnDeferredFillIn)
+		{
+			(*excep.pfnDeferredFillIn)(&excep);
+		}
+
+		if (excep.bstrSource)
+		{
+			errors.emplace_back(from_wide(excep.bstrSource));
+			SysFreeString(excep.bstrSource);
+		}
+
+		if (excep.bstrDescription)
+		{
+			errors.emplace_back(from_wide(excep.bstrDescription));
+			SysFreeString(excep.bstrDescription);
+		}
+
+		if (excep.bstrHelpFile)
+		{
+			SysFreeString(excep.bstrHelpFile);
+		}
+	}
+
+	if SUCCEEDED(err->GetSourcePosition(&ctx, &line, &charpos))
+	{
+		const auto it = m_context_to_path_map.find(ctx);
+		if (it != m_context_to_path_map.end())
+		{
+			errors.emplace_back(fmt::format("File: {}", it->second));
+		}
+		errors.emplace_back(fmt::format("Line: {}, Col: {}", line + 1, charpos + 1));
+	}
+
+	if SUCCEEDED(err->GetSourceLineText(&sourceline))
+	{
+		errors.emplace_back(from_wide(sourceline.get()));
+	}
+
+	const std::string error_text = fmt::format("{}", fmt::join(errors, CRLF.data()));
+	return error_text;
+}
+
 void ScriptHost::AddImport(wil::zstring_view str)
 {
 	std::string path = ExtractValue(str);
@@ -312,8 +315,8 @@ void ScriptHost::InvokeCallback(CallbackID id, VariantArgs args)
 	if (dispId)
 	{
 		std::ranges::reverse(args);
-		DISPPARAMS params = { args.data(), nullptr, to_uint(args.size()), 0};
-		m_script_root->Invoke(dispId.value(), IID_NULL, LOCALE_USER_DEFAULT, DISPATCH_METHOD, &params, nullptr, nullptr, nullptr);
+		DISPPARAMS params = { args.data(), nullptr, to_uint(args.size()), 0 };
+		m_script_root->Invoke(*dispId, IID_NULL, LOCALE_USER_DEFAULT, DISPATCH_METHOD, &params, nullptr, nullptr, nullptr);
 	}
 }
 

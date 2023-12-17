@@ -16,7 +16,7 @@ public:
 	STDMETHODIMP OnScriptTerminate(const VARIANT*, const EXCEPINFO*) final;
 	STDMETHODIMP OnStateChange(SCRIPTSTATE state) final;
 	bool Initialise();
-	bool InvokeMouseCallback(uint32_t msg, WPARAM wp, LPARAM lp);
+	bool InvokeMouseRbtnUp(WPARAM wp, LPARAM lp);
 	void InvokeCallback(CallbackID id, VariantArgs args = {});
 	void Reset();
 
@@ -30,6 +30,7 @@ private:
 	HRESULT ParseScript(wil::zstring_view code, wil::zstring_view path);
 	std::optional<DISPID> GetDISPID(CallbackID id);
 	std::string ExtractValue(wil::zstring_view str);
+	std::string GetErrorText(IActiveScriptError* err);
 	void AddImport(wil::zstring_view str);
 	void ParsePreprocessor();
 
