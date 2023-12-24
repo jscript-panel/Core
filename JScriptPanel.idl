@@ -426,7 +426,7 @@ library foo_jscript_panel3
 		HRESULT GetSystemMetrics(int index, [out, retval] int* out);
 		HRESULT Glob(BSTR pattern, [defaultvalue(0x00000010)] DWORD exc_mask, [defaultvalue(0xffffffff)] DWORD inc_mask, [out, retval] VARIANT* out);
 		HRESULT InputBox(BSTR prompt, BSTR title, [defaultvalue("")] BSTR def, [defaultvalue(0)] VARIANT_BOOL error_on_cancel, [out, retval] BSTR* out);
-		HRESULT HTTPRequestAsync(UINT32 window_id, UINT8 type, BSTR url, [defaultvalue("")] BSTR user_agent_or_headers, [defaultvalue("")] BSTR post_data, [defaultvalue("")] BSTR content_type, [out, retval] UINT_PTR* out);
+		HRESULT HTTPRequestAsync(UINT32 window_id, UINT8 type, BSTR url, [defaultvalue("")] BSTR user_agent_or_headers, [defaultvalue("")] BSTR post_data, [out, retval] UINT_PTR* out);
 		HRESULT IsFile(BSTR path, [out, retval] VARIANT_BOOL* out);
 		HRESULT IsFolder(BSTR folder, [out, retval] VARIANT_BOOL* out);
 		HRESULT IsKeyPressed(UINT32 vkey, [out, retval] VARIANT_BOOL* out);
