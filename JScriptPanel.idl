@@ -442,7 +442,7 @@ library foo_jscript_panel3
 		HRESULT ReadTextFile(BSTR path, [defaultvalue(0)] UINT32 codepage, [out, retval] BSTR* out);
 		HRESULT ReadUTF8(BSTR path, [out, retval] BSTR* out);
 		HRESULT RemovePath(BSTR path, [out, retval] VARIANT_BOOL* out);
-		HRESULT ReplaceIllegalChars(BSTR str, [defaultvalue(-1)] VARIANT_BOOL modern, [out, retval] BSTR* out);
+		HRESULT ReplaceIllegalChars(BSTR str, [defaultvalue(-1)] VARIANT_BOOL modern, [defaultvalue(0)] VARIANT_BOOL strip_trailing_periods, [out, retval] BSTR* out);
 		HRESULT Run(BSTR app, [defaultvalue("")] BSTR params);
 		HRESULT RunCmdAsync(UINT32 window_id, BSTR app, BSTR params, [out, retval] UINT_PTR* out);
 		HRESULT SetClipboardText(BSTR str);
