@@ -146,8 +146,7 @@ STDMETHODIMP ScriptHost::OnScriptError(IActiveScriptError* err)
 
 	MessageBeep(MB_ICONASTERISK);
 	if (m_script_engine) m_script_engine->SetScriptState(SCRIPTSTATE_DISCONNECTED);
-	m_panel->UnloadScript();
-	m_panel->repaint();
+	m_panel->Reset();
 	return S_OK;
 }
 

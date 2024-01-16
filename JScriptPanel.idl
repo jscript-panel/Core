@@ -472,7 +472,7 @@ library foo_jscript_panel3
 		HRESULT NotifyOthers(BSTR name, VARIANT info);
 		HRESULT Reload([defaultvalue(0)] VARIANT_BOOL clear_properties);
 		HRESULT Repaint();
-		HRESULT RepaintRect(int x, int y, int w, int h);
+		HRESULT RepaintRect(float x, float y, float w, float h);
 		HRESULT SetCursor(int id);
 		HRESULT SetInterval(IDispatch* func, DWORD delay, [out, retval] UINT_PTR* out);
 		HRESULT SetProperty(BSTR name, VARIANT val);
@@ -482,7 +482,7 @@ library foo_jscript_panel3
 		HRESULT ShowProperties();
 
 		[propget] HRESULT DPI([out, retval] UINT32* out);
-		[propget] HRESULT Height([out, retval] int* out);
+		[propget] HRESULT Height([out, retval] UINT32* out);
 		[propget] HRESULT ID([out, retval] UINT_PTR* out);
 		[propget] HRESULT IsDark([out, retval] VARIANT_BOOL* out);
 		[propget] HRESULT IsDefaultUI([out, retval] VARIANT_BOOL* out);
@@ -493,7 +493,7 @@ library foo_jscript_panel3
 		[propget] HRESULT MinHeight([out, retval] LONG* out);
 		[propget] HRESULT MinWidth([out, retval] LONG* out);
 		[propget] HRESULT Name([out, retval] BSTR* out);
-		[propget] HRESULT Width([out, retval] int* out);
+		[propget] HRESULT Width([out, retval] UINT32* out);
 
 		[propput] HRESULT MaxHeight(LONG height);
 		[propput] HRESULT MaxWidth(LONG width);
