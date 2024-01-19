@@ -344,6 +344,7 @@ void ScriptHost::ParsePreprocessor()
 {
 	m_imports.clear();
 	m_name.clear();
+	m_panel->m_gdi = false;
 
 	static constexpr wil::zstring_view pre_start = "// ==PREPROCESSOR==";
 	static constexpr wil::zstring_view pre_end = "// ==/PREPROCESSOR==";
@@ -374,6 +375,10 @@ void ScriptHost::ParsePreprocessor()
 			else if (line.contains("@version"))
 			{
 				version = ExtractValue(line);
+			}
+			else if (line.contains("@feature"))
+			{
+				m_panel->m_gdi = ExtractValue(line) == "theme_manager";
 			}
 		}
 	}
