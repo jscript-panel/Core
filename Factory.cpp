@@ -19,13 +19,13 @@ void factory_init()
 	}
 
 	g_imaging_factory = wil::CoCreateInstanceNoThrow<IWICImagingFactory2>(CLSID_WICImagingFactory);
-	D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &g_d2d_factory);
-	if SUCCEEDED(DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(g_dwrite_factory), reinterpret_cast<IUnknown**>(&g_dwrite_factory)))
-	{
-		g_dwrite_factory->GetGdiInterop(&g_gdi_interop);
-	}
+	if (!g_imaging_factory) return;
 
-	g_factory_init = g_imaging_factory && g_d2d_factory && g_dwrite_factory && g_gdi_interop;
+	if FAILED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &g_d2d_factory)) return;
+	if FAILED(DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(g_dwrite_factory), reinterpret_cast<IUnknown**>(&g_dwrite_factory))) return;
+	if FAILED(g_dwrite_factory->GetGdiInterop(&g_gdi_interop)) return;
+
+	g_factory_init = true;
 }
 
 void factory_reset()
