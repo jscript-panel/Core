@@ -57,7 +57,7 @@ library foo_jscript_panel3
 	interface IJSGraphics : IDispatch
 	{
 		HRESULT get([out, retval] void** out);
-		HRESULT init(void* render_target, void* brush);
+		HRESULT init(void* context, void* brush);
 
 		HRESULT Clear(__int64 colour);
 		HRESULT DrawEllipse(float centreX, float centreY, float radiusX, float radiusY, float line_width, __int64 colour);
