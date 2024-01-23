@@ -344,7 +344,6 @@ void ScriptHost::ParsePreprocessor()
 {
 	m_imports.clear();
 	m_name.clear();
-	m_panel->m_gdi = false;
 
 	static constexpr wil::zstring_view pre_start = "// ==PREPROCESSOR==";
 	static constexpr wil::zstring_view pre_end = "// ==/PREPROCESSOR==";
