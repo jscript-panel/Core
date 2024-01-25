@@ -351,6 +351,7 @@ library foo_jscript_panel3
 		HRESULT FindOrCreatePlaylist(BSTR name, VARIANT_BOOL unlocked, [out, retval] UINT_PTR* out);
 		HRESULT FindPlaylist(BSTR name, [out, retval] INT_PTR* out);
 		HRESULT GetGUID(UINT32 playlistIndex, [out, retval] BSTR* out);
+		HRESULT GetPlaybackOrders([out, retval] VARIANT* out);
 		HRESULT GetPlayingItemLocation([out, retval] IPlayingItemLocation** out);
 		HRESULT GetPlaylistFocusItemIndex(UINT32 playlistIndex, [out, retval] INT_PTR* out);
 		HRESULT GetPlaylistItemCount(UINT32 playlistIndex, [out, retval] UINT_PTR* out);
