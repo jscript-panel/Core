@@ -4,6 +4,14 @@ using VariantArgs = std::vector<_variant_t>;
 
 static void** arg_helper(auto arg) { return reinterpret_cast<void**>(arg); }
 
+template <typename T>
+static pfc::array_t<T> pfc_array(size_t count)
+{
+	pfc::array_t<T> arr;
+	arr.set_size(count);
+	return arr;
+}
+
 #include "To.hpp"
 #include "StringHelpers.hpp"
 #include "FileHelper.hpp"
