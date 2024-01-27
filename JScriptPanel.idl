@@ -435,7 +435,7 @@ library foo_jscript_panel3
 		HRESULT ListFiles(BSTR folder, [defaultvalue(0)] VARIANT_BOOL recur, [out, retval] VARIANT* out);
 		HRESULT ListFolders(BSTR folder, [defaultvalue(0)] VARIANT_BOOL recur, [out, retval] VARIANT* out);
 		HRESULT ListFonts([out, retval] VARIANT* out);
-		HRESULT LoadImage(BSTR path, [out, retval] IJSImage** out);
+		HRESULT LoadImage(BSTR path, [defaultvalue(0)] UINT32 max_size, [out, retval] IJSImage** out);
 		HRESULT LoadImageAsync(UINT32 window_id, BSTR path);
 		HRESULT LoadSVG(BSTR path_or_xml, [defaultvalue(0)] float max_width, [out, retval] IJSImage** out);
 		HRESULT MessageBox(BSTR prompt, BSTR title, UINT32 flags, [out, retval] int* out);
