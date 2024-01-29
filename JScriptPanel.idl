@@ -442,6 +442,7 @@ library foo_jscript_panel3
 		HRESULT ReadINI(BSTR path, BSTR section, BSTR key, [defaultvalue("")] BSTR default_value, [out, retval] BSTR* out);
 		HRESULT ReadTextFile(BSTR path, [defaultvalue(0)] UINT32 codepage, [out, retval] BSTR* out);
 		HRESULT ReadUTF8(BSTR path, [out, retval] BSTR* out);
+		HRESULT RemoveFolderRecursive(BSTR path, [defaultvalue(0)] UINT32 options, [out, retval] VARIANT_BOOL* out);
 		HRESULT RemovePath(BSTR path, [out, retval] VARIANT_BOOL* out);
 		HRESULT ReplaceIllegalChars(BSTR str, [defaultvalue(-1)] VARIANT_BOOL modern, [defaultvalue(0)] VARIANT_BOOL strip_trailing_periods, [out, retval] BSTR* out);
 		HRESULT Run(BSTR app, [defaultvalue("")] BSTR params);
