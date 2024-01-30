@@ -2,8 +2,9 @@
 
 namespace Component
 {
-	static const D2D1::ColorF White = D2D1::ColorF(D2D1::ColorF::White);
-	static constexpr auto ErrorBackground = RGB(225, 60, 45);
+	static const auto White = D2D1::ColorF(D2D1::ColorF::White);
+	static const auto DarkBackground = D2D1::ColorF(0.125f, 0.125f, 0.125f);
+	static const auto ErrorBackground = D2D1::ColorF(0.882f, 0.235f, 0.176f);
 	static constexpr wil::zwstring_view ErrorText = L"JavaScript error";
 
 	static constexpr wil::zwstring_view Docs = L"https://jscript-panel.github.io/docs/";
