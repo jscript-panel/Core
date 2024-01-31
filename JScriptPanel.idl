@@ -224,15 +224,6 @@ library foo_jscript_panel3
 		HRESULT CalcTextHeight(float max_width, [out, retval] float* out);
 	};
 
-	[uuid(ACBD90C9-E7B7-4AEC-B8C6-84D74810B368)]
-	interface IThemeManager : IDisposable
-	{
-		HRESULT DrawThemeBackground(IJSGraphics* gr, int x, int y, int w, int h);
-		HRESULT GetThemeColour(int propid, [out, retval] int* out);
-		HRESULT IsThemePartDefined(int partid, [defaultvalue(0)] int stateid, [out, retval] VARIANT_BOOL* out);
-		HRESULT SetPartAndStateID(int partid, int stateid);
-	};
-
 	[uuid(B8A66BA6-389D-4C06-A350-BEABEAD2D3AC)]
 	interface ITitleFormat : IDisposable
 	{
@@ -464,7 +455,6 @@ library foo_jscript_panel3
 		HRESULT ClearInterval(UINT32 id);
 		HRESULT ClearTimeout(UINT32 id);
 		HRESULT CreatePopupMenu([out, retval] IMenuObj** out);
-		HRESULT CreateThemeManager(BSTR class_list, [out, retval] IThemeManager** out);
 		HRESULT CreateTooltip([defaultvalue("Segoe UI")] BSTR name, [defaultvalue(16)] int pxSize, [out, retval] ITooltip** out);
 		HRESULT GetColourCUI(UINT8 idx, [out, retval] int* out);
 		HRESULT GetColourDUI(UINT8 idx, [out, retval] int* out);
@@ -488,7 +478,6 @@ library foo_jscript_panel3
 		[propget] HRESULT ID([out, retval] UINT_PTR* out);
 		[propget] HRESULT IsDark([out, retval] VARIANT_BOOL* out);
 		[propget] HRESULT IsDefaultUI([out, retval] VARIANT_BOOL* out);
-		[propget] HRESULT IsThemed([out, retval] VARIANT_BOOL* out);
 		[propget] HRESULT IsVisible([out, retval] VARIANT_BOOL* out);
 		[propget] HRESULT MaxHeight([out, retval] LONG* out);
 		[propget] HRESULT MaxWidth([out, retval] LONG* out);

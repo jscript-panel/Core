@@ -55,16 +55,13 @@
 #define IDC_CHECK_FILTER_RENAME          157
 #define IDC_CHECK_FILTER_REMOVE_PLAYLIST 158
 
-#define IDC_COMBO_EDGE                   160
-
 #define IDC_EDIT_FIND                    170
 #define IDC_EDIT_LINE_NUMBER             171
 #define IDC_EDIT_REPLACE                 172
 #define IDC_EDIT_VALUE                   173
 
-#define IDC_LABEL_EDGE                   180
-#define IDC_LABEL_PROMPT                 181
-#define IDC_LABEL_REPLACE                182
+#define IDC_LABEL_PROMPT                 180
+#define IDC_LABEL_REPLACE                181
 
 #define ID_MENU_ABOUT                    200
 #define ID_MENU_DOCS                     201

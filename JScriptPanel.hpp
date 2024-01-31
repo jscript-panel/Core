@@ -46,7 +46,6 @@ static pfc::array_t<T> pfc_array(size_t count)
 #include "Profiler.hpp"
 #include "SelectionHolder.hpp"
 #include "TextLayout.hpp"
-#include "ThemeManager.hpp"
 #include "TitleFormat.hpp"
 #include "Tooltip.hpp"
 

@@ -375,10 +375,6 @@ void ScriptHost::ParsePreprocessor()
 			{
 				version = ExtractValue(line);
 			}
-			else if (line.contains("@feature"))
-			{
-				m_panel->m_gdi = ExtractValue(line) == "theme_manager";
-			}
 		}
 	}
 
