@@ -60,17 +60,15 @@ library foo_jscript_panel3
 		HRESULT init(void* context, void* brush);
 
 		HRESULT Clear(__int64 colour);
-		HRESULT DrawEllipse(float centreX, float centreY, float radiusX, float radiusY, float line_width, __int64 colour);
+		HRESULT DrawEllipse(float centreX, float centreY, float radiusX, float radiusY, float line_width, VARIANT colour);
 		HRESULT DrawImage(IJSImage* image, float dstX, float dstY, float dstW, float dstH, float srcX, float srcY, float srcW, float srcH, [defaultvalue(1)] float opacity, [defaultvalue(0)] float angle);
 		HRESULT DrawImageWithMask(IJSImage* image, IJSImage* mask_image, float x, float y, float w, float h);
-		HRESULT DrawLine(float x1, float y1, float x2, float y2, float line_width, __int64 colour);
-		HRESULT DrawRectangle(float x, float y, float w, float h, float line_width, __int64 colour);
-		HRESULT DrawRoundedRectangle(float x, float y, float w, float h, float radiusX, float radiusY, float line_width, __int64 colour);
-		HRESULT FillEllipse(float centreX, float centreY, float radiusX, float radiusY, __int64 colour);
-		HRESULT FillGradientRectangle(float x, float y, float w, float h, UINT8 direction, __int64 colour1, __int64 colour2);
-		HRESULT FillGradientRectangleAdvanced(float x, float y, float w, float h, BSTR str);
-		HRESULT FillRectangle(float x, float y, float w, float h, __int64 colour);
-		HRESULT FillRoundedRectangle(float x, float y, float w, float h, float radiusX, float radiusY, __int64 colour);
+		HRESULT DrawLine(float x1, float y1, float x2, float y2, float line_width, VARIANT colour);
+		HRESULT DrawRectangle(float x, float y, float w, float h, float line_width, VARIANT colour);
+		HRESULT DrawRoundedRectangle(float x, float y, float w, float h, float radiusX, float radiusY, float line_width, VARIANT colour);
+		HRESULT FillEllipse(float centreX, float centreY, float radiusX, float radiusY, VARIANT colour);
+		HRESULT FillRectangle(float x, float y, float w, float h, VARIANT colour);
+		HRESULT FillRoundedRectangle(float x, float y, float w, float h, float radiusX, float radiusY, VARIANT colour);
 		HRESULT WriteText(BSTR text, BSTR font, VARIANT colour, float x, float y, float w, float h, [defaultvalue(0)] UINT32 text_alignment, [defaultvalue(0)] UINT32 paragraph_alignment, [defaultvalue(0)] UINT32 word_wrapping, [defaultvalue(0)] UINT32 trimming_granularity);
 		HRESULT WriteTextLayout(ITextLayout* layout, VARIANT colour, float x, float y, float w, float h, [defaultvalue(0)] float vertical_offset);
 	};
