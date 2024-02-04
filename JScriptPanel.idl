@@ -56,7 +56,6 @@ library foo_jscript_panel3
 	[uuid(16A02EF1-23F1-4C5F-A236-F0295BE822D4)]
 	interface IJSGraphics : IDispatch
 	{
-		HRESULT get([out, retval] void** out);
 		HRESULT init(void* context, void* brush);
 
 		HRESULT Clear(__int64 colour);
