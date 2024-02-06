@@ -260,7 +260,7 @@ library foo_jscript_panel3
 		HRESULT AcquireSelectionHolder([out, retval] ISelectionHolder** out);
 		HRESULT AddDirectory();
 		HRESULT AddFiles();
-		HRESULT AddLocationsAsync(UINT32 window_id, VARIANT locations, [out, retval] UINT_PTR* out);
+		HRESULT AddLocationsAsync(UINT32 window_id, VARIANT locations, [out, retval] LONG_PTR* out);
 		HRESULT CheckClipboardContents([out, retval] VARIANT_BOOL* out);
 		HRESULT CheckComponent(BSTR name, [out, retval] VARIANT_BOOL* out);
 		HRESULT ClearPlaylist();
@@ -434,7 +434,7 @@ library foo_jscript_panel3
 		HRESULT RemovePath(BSTR path, [out, retval] VARIANT_BOOL* out);
 		HRESULT ReplaceIllegalChars(BSTR str, [defaultvalue(-1)] VARIANT_BOOL modern, [defaultvalue(0)] VARIANT_BOOL strip_trailing_periods, [out, retval] BSTR* out);
 		HRESULT Run(BSTR app, [defaultvalue("")] BSTR params);
-		HRESULT RunCmdAsync(UINT32 window_id, BSTR app, BSTR params, [out, retval] UINT_PTR* out);
+		HRESULT RunCmdAsync(UINT32 window_id, BSTR app, BSTR params, [out, retval] LONG_PTR* out);
 		HRESULT SetClipboardText(BSTR str);
 		HRESULT ShowPopupMessage(BSTR msg, [defaultvalue("")] BSTR title);
 		HRESULT TextBox(BSTR prompt, BSTR title, [defaultvalue("")] BSTR def, [out, retval] BSTR* out);
