@@ -120,7 +120,7 @@ library foo_jscript_panel3
 
 		HRESULT Compare(IMetadbHandle* handle, [out, retval] VARIANT_BOOL* out);
 		HRESULT GetAlbumArt([defaultvalue(0)] UINT32 art_id, [defaultvalue(-1)] VARIANT_BOOL want_stub, [out, retval] IJSImage** out);
-		HRESULT GetAlbumArtAsync(UINT32 window_id, [defaultvalue(0)] UINT32 art_id, [defaultvalue(-1)] VARIANT_BOOL want_stub);
+		HRESULT GetAlbumArtAsync(UINT32 window_id, [defaultvalue(0)] UINT32 art_id);
 		HRESULT GetAlbumArtEmbedded([defaultvalue(0)] UINT32 art_id, [out, retval] IJSImage** out);
 		HRESULT GetAlbumArtThumbAsync(UINT32 window_id, [defaultvalue(0)] UINT32 art_id, [defaultvalue(300)] UINT32 max_size);
 		HRESULT GetFileInfo([defaultvalue(0)] VARIANT_BOOL full_info, [out, retval] IFileInfo** out);
