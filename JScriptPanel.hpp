@@ -44,7 +44,6 @@ static pfc::array_t<T> pfc_array(size_t count)
 #include "MetadbHandleList.hpp"
 #include "PlayingItemLocation.hpp"
 #include "Profiler.hpp"
-#include "SelectionHolder.hpp"
 #include "TextLayout.hpp"
 #include "TitleFormat.hpp"
 #include "Tooltip.hpp"

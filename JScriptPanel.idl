@@ -205,14 +205,6 @@ library foo_jscript_panel3
 		[propget] HRESULT Time([out, retval] __int64* out);
 	};
 
-	[uuid(D1C338E4-EBF8-45C1-A7BD-401F90CF901B)]
-	interface ISelectionHolder : IDisposable
-	{
-		HRESULT SetPlaylistSelectionTracking();
-		HRESULT SetPlaylistTracking();
-		HRESULT SetSelection(IMetadbHandleList* handles, [defaultvalue(0)] UINT32 type);
-	};
-
 	[uuid(41F4FBFD-98E4-4939-9BB5-35A2D1CFE581)]
 	interface ITextLayout : IDisposable
 	{
@@ -257,7 +249,6 @@ library foo_jscript_panel3
 	[uuid(1518F88D-FE53-478B-815B-BE343640E2E4)]
 	interface IFb : IDispatch
 	{
-		HRESULT AcquireSelectionHolder([out, retval] ISelectionHolder** out);
 		HRESULT AddDirectory();
 		HRESULT AddFiles();
 		HRESULT AddLocationsAsync(UINT32 window_id, VARIANT locations, [out, retval] LONG_PTR* out);
@@ -464,7 +455,10 @@ library foo_jscript_panel3
 		HRESULT RepaintRect(float x, float y, float w, float h);
 		HRESULT SetCursor(int id);
 		HRESULT SetInterval(IDispatch* func, DWORD delay, [out, retval] UINT_PTR* out);
+		HRESULT SetPlaylistSelectionTracking();
+		HRESULT SetPlaylistTracking();
 		HRESULT SetProperty(BSTR name, VARIANT val);
+		HRESULT SetSelection(IMetadbHandleList* handles, [defaultvalue(0)] UINT32 type);
 		HRESULT SetTimeout(IDispatch* func, DWORD delay, [out, retval] UINT_PTR* out);
 		HRESULT SetTooltipFont(BSTR name, int pxSize);
 		HRESULT ShowConfigure();
