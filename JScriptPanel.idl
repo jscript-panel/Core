@@ -430,7 +430,7 @@ library foo_jscript_panel3
 		HRESULT SetClipboardText(BSTR str);
 		HRESULT ShowPopupMessage(BSTR msg, [defaultvalue("")] BSTR title);
 		HRESULT TextBox(BSTR prompt, BSTR title, [defaultvalue("")] BSTR def, [out, retval] BSTR* out);
-		HRESULT TimestampToDateString(UINT64 ts, [out, retval] BSTR* out);
+		HRESULT TimestampToDateString(UINT32 ts, [out, retval] BSTR* out);
 		HRESULT WriteINI(BSTR path, BSTR section, BSTR key, BSTR value, [out, retval] VARIANT_BOOL* out);
 		HRESULT WriteTextFile(BSTR path, BSTR content, [out, retval] VARIANT_BOOL* out);
 
