@@ -2,10 +2,6 @@
 // Microsoft Visual C++ generated include file.
 //
 
-#ifndef IDC_STATIC
-#define IDC_STATIC -1
-#endif
-
 #define IDR_TYPELIB                      1
 
 #define IDR_FB2K_API                     100
