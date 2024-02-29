@@ -177,6 +177,7 @@ library foo_jscript_panel3
 		HRESULT RemoveDuplicatesByFormat(BSTR pattern);
 		HRESULT RemoveFromIdx(UINT32 idx, UINT32 num);
 		HRESULT ReplaceItem(UINT32 idx, IMetadbHandle* handle);
+		HRESULT Reverse();
 		HRESULT RunContextCommand(BSTR command, [out, retval] VARIANT_BOOL* out);
 		HRESULT SaveAs(BSTR path);
 		HRESULT SortByFormat(BSTR pattern, int direction);
