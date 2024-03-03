@@ -173,7 +173,7 @@ bool ScriptHost::Initialise()
 
 			m_script_engine = wil::CoCreateInstanceNoThrow<IActiveScript>(jscript9clsid);
 
-			RETURN_HR_IF(E_FAIL, !g_factory_init);
+			RETURN_HR_IF(E_FAIL, !factory::inited);
 			RETURN_HR_IF(E_FAIL, !m_script_engine);
 			RETURN_IF_FAILED(m_script_engine->QueryInterface(&m_script_property));
 			RETURN_IF_FAILED(m_script_property->SetProperty(SCRIPTPROP_INVOKEVERSIONING, nullptr, &var));
