@@ -87,31 +87,31 @@ STDMETHODIMP ScriptHost::GetItemInfo(LPCOLESTR name, DWORD mask, IUnknown** ppun
 	{
 		RETURN_HR_IF_NULL(E_INVALIDARG, name);
 
-		if (wcscmp(name, L"console") == 0)
+		if (compare_string(name, L"console"))
 		{
 			m_console->AddRef();
 			*ppunk = m_console.get();
 			return S_OK;
 		}
-		else if (wcscmp(name, L"fb") == 0)
+		else if (compare_string(name, L"fb"))
 		{
 			m_fb->AddRef();
 			*ppunk = m_fb.get();
 			return S_OK;
 		}
-		else if (wcscmp(name, L"plman") == 0)
+		else if (compare_string(name, L"plman"))
 		{
 			m_plman->AddRef();
 			*ppunk = m_plman.get();
 			return S_OK;
 		}
-		else if (wcscmp(name, L"utils") == 0)
+		else if (compare_string(name, L"utils"))
 		{
 			m_utils->AddRef();
 			*ppunk = m_utils.get();
 			return S_OK;
 		}
-		else if (wcscmp(name, L"window") == 0)
+		else if (compare_string(name, L"window"))
 		{
 			m_window->AddRef();
 			*ppunk = m_window.get();
