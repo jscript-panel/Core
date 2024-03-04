@@ -389,8 +389,8 @@ library foo_jscript_panel3
 		HRESULT CheckFont(BSTR name, [out, retval] VARIANT_BOOL* out);
 		HRESULT ColourPicker(int default_colour, [defaultvalue(0)] VARIANT_BOOL error_on_cancel, [out, retval] int* out);
 		HRESULT ConvertToAscii(BSTR str, [out, retval] BSTR* out);
-		HRESULT CopyFile(BSTR from, BSTR to, VARIANT_BOOL overwrite, [out, retval] VARIANT_BOOL* out);
-		HRESULT CopyFolder(BSTR from, BSTR to, VARIANT_BOOL overwrite, VARIANT_BOOL recur, [out, retval] VARIANT_BOOL* out);
+		HRESULT CopyFile(BSTR from, BSTR to, [defaultvalue(-1)] VARIANT_BOOL overwrite, [out, retval] VARIANT_BOOL* out);
+		HRESULT CopyFolder(BSTR from, BSTR to, [defaultvalue(-1)] VARIANT_BOOL overwrite, [defaultvalue(-1)] VARIANT_BOOL recur, [out, retval] VARIANT_BOOL* out);
 		HRESULT CreateFolder(BSTR path, [out, retval] VARIANT_BOOL* out);
 		HRESULT CreateImage(UINT32 width, UINT32 height, [out, retval] IJSImage** out);
 		HRESULT CreateProfiler([defaultvalue("")] BSTR name, [out, retval] IProfiler** out);
