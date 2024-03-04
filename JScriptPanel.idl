@@ -389,6 +389,8 @@ library foo_jscript_panel3
 		HRESULT CheckFont(BSTR name, [out, retval] VARIANT_BOOL* out);
 		HRESULT ColourPicker(int default_colour, [defaultvalue(0)] VARIANT_BOOL error_on_cancel, [out, retval] int* out);
 		HRESULT ConvertToAscii(BSTR str, [out, retval] BSTR* out);
+		HRESULT CopyFile(BSTR from, BSTR to, VARIANT_BOOL overwrite, [out, retval] VARIANT_BOOL* out);
+		HRESULT CopyFolder(BSTR from, BSTR to, VARIANT_BOOL overwrite, VARIANT_BOOL recur, [out, retval] VARIANT_BOOL* out);
 		HRESULT CreateFolder(BSTR path, [out, retval] VARIANT_BOOL* out);
 		HRESULT CreateImage(UINT32 width, UINT32 height, [out, retval] IJSImage** out);
 		HRESULT CreateProfiler([defaultvalue("")] BSTR name, [out, retval] IProfiler** out);
@@ -425,6 +427,7 @@ library foo_jscript_panel3
 		HRESULT ReadUTF8(BSTR path, [out, retval] BSTR* out);
 		HRESULT RemoveFolderRecursive(BSTR path, [defaultvalue(0)] UINT32 options, [out, retval] VARIANT_BOOL* out);
 		HRESULT RemovePath(BSTR path, [out, retval] VARIANT_BOOL* out);
+		HRESULT RenamePath(BSTR from, BSTR to, [out, retval] VARIANT_BOOL* out);
 		HRESULT ReplaceIllegalChars(BSTR str, [defaultvalue(-1)] VARIANT_BOOL modern, [defaultvalue(0)] VARIANT_BOOL strip_trailing_periods, [out, retval] BSTR* out);
 		HRESULT Run(BSTR app, [defaultvalue("")] BSTR params);
 		HRESULT RunCmdAsync(UINT32 window_id, BSTR app, BSTR params, [out, retval] LONG_PTR* out);
