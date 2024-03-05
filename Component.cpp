@@ -32,10 +32,10 @@ namespace Component
 			string8 str;
 			advconfig_pin_to.get(str);
 
-			if (str != pin_to.get())
+			if (str != pin_to)
 			{
 				// If pattern has changed, nuke old data before GUID is registered
-				pin_to.set(str);
+				pin_to = str;
 				PlaybackStatistics::api()->erase_orphaned_data(guids::metadb_index);
 			}
 
