@@ -19,8 +19,8 @@ namespace Component
 		popup_message::g_show(msg.data(), name.data());
 	}
 
+	cfgDialogPosition dialog_position(guids::dialog_position);
 	cfg_string pin_to(guids::cfg_string_pin_to, "");
-	cfg_window_placement_v2 window_placement(guids::window_placement);
 
 	namespace
 	{

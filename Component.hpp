@@ -18,6 +18,6 @@ namespace Component
 	static constexpr wil::zwstring_view default_font_name = L"Segoe UI";
 	static constexpr uint32_t max_image_size = 64 * 1024 * 1024;
 
+	extern cfgDialogPosition dialog_position;
 	extern cfg_string pin_to;
-	extern cfg_window_placement_v2 window_placement;
 }
