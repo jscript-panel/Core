@@ -12,6 +12,7 @@ static pfc::array_t<T> pfc_array(size_t count)
 	return arr;
 }
 
+#include "Resource.hpp"
 #include "Factory.hpp"
 #include "To.hpp"
 #include "StringHelpers.hpp"
