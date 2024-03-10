@@ -24,6 +24,27 @@ namespace Component
 
 	namespace
 	{
+		DECLARE_COMPONENT_VERSION(name, version_string, about)
+
+		class InstallationValidator : public component_installation_validator
+		{
+		public:
+			bool is_installed_correctly() final
+			{
+				if (!test_my_name(dll.data())) return false;
+				if (!IsWindows8Point1OrGreater()) return false;
+
+				auto api = core_version_info_v2::get();
+				if (api->test_version(2, 0, 0, 0))
+				{
+					return static_api_test_t<search_index_manager>();
+				}
+				return api->test_version(1, 6, 6, 0);
+			}
+		};
+
+		FB2K_SERVICE_FACTORY(InstallationValidator);
+
 		advconfig_branch_factory advconfig_branch(name.data(), guids::advconfig_branch, advconfig_branch::guid_branch_tools, 0.0);
 		advconfig_string_factory advconfig_pin_to("Playback Statistics Title Format", guids::advconfig_pin_to, guids::advconfig_branch, 0.0, "$lower($meta(artist,0) - %title%)", preferences_state::needs_restart);
 
