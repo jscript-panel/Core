@@ -7,17 +7,7 @@ ScriptHost::ScriptHost(PanelBase* panel)
 	, m_fb(ComObjectSingleton<Fb>::get())
 	, m_plman(ComObjectSingleton<Plman>::get())
 	, m_utils(ComObjectSingleton<Utils>::get())
-	, m_window(new ImplementCOMRefCounter<Window>(panel))
-{
-	if (s_replacements.empty())
-	{
-		s_replacements =
-		{
-			{ "%fb2k_profile_path%", from_wide(Fb::get_profile_path()) },
-			{ "%fb2k_component_path%", from_wide(Component::get_path()) },
-		};
-	}
-}
+	, m_window(new ImplementCOMRefCounter<Window>(panel)) {}
 
 HRESULT ScriptHost::InitCallbackMap()
 {
@@ -294,10 +284,16 @@ std::string ScriptHost::GetErrorText(IActiveScriptError* err)
 
 void ScriptHost::AddImport(wil::zstring_view str)
 {
+	static const std::vector<StringPair> replacements =
+	{
+		{ "%fb2k_profile_path%", from_wide(Fb::get_profile_path()) },
+		{ "%fb2k_component_path%", from_wide(Component::get_path()) },
+	};
+
 	std::string path = ExtractValue(str);
 	if (path.empty()) return;
 
-	for (const auto& [what, with] : s_replacements)
+	for (const auto& [what, with] : replacements)
 	{
 		if (path.starts_with(what))
 		{

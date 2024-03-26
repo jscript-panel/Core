@@ -34,8 +34,6 @@ private:
 	void AddImport(wil::zstring_view str);
 	void ParsePreprocessor();
 
-	inline static std::vector<StringPair> s_replacements;
-
 	DWORD m_last_source_context{};
 	PanelBase* m_panel;
 	Strings m_imports;
