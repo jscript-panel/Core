@@ -59,6 +59,5 @@ static pfc::array_t<T> pfc_array(size_t count)
 #include "PanelBase.hpp"
 #include "PanelManager.hpp"
 
-#include "IStreamHelpers.hpp"
 #include "AlbumArt.hpp"
-#include "ImageHelpers.hpp"
+#include "Img.hpp"
