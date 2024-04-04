@@ -4,7 +4,6 @@
 
 namespace Component
 {
-	std::string get_resource_text(int id);
 	std::wstring get_path();
 	void popup(wil::zstring_view msg);
 

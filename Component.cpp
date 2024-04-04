@@ -2,12 +2,6 @@
 
 namespace Component
 {
-	std::string get_resource_text(int id)
-	{
-		const auto res = uLoadResource(core_api::get_my_instance(), uMAKEINTRESOURCE(id), "TEXT");
-		return std::string(static_cast<const char*>(res->GetPointer()), res->GetSize());
-	}
-
 	std::wstring get_path()
 	{
 		const auto path = wil::GetModuleFileNameW(core_api::get_my_instance());
