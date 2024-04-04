@@ -13,9 +13,9 @@ static pfc::array_t<T> pfc_array(size_t count)
 }
 
 #include "Resource.hpp"
+
+#include "Helpers.hpp"
 #include "Factory.hpp"
-#include "To.hpp"
-#include "StringHelpers.hpp"
 #include "FileHelper.hpp"
 #include "JSONHelper.hpp"
 

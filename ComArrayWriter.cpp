@@ -34,7 +34,7 @@ HRESULT ComArrayWriter::write_strings(const pfc::array_t<string8>& strings, VARI
 {
 	ComArrayWriter writer(strings.get_count());
 
-	for (auto&& string : strings | std::views::transform(to_wide))
+	for (auto&& string : strings | std::views::transform(js::to_wide))
 	{
 		RETURN_IF_FAILED(writer.add_item(string));
 	}

@@ -19,7 +19,7 @@ HRESULT ComArrayReader::convert(const VARIANT& v, pfc::string_list_impl& out)
 
 	for (auto&& item : m_data)
 	{
-		const string8 str = from_wide(item.bstrVal);
+		const string8 str = js::from_wide(item.bstrVal);
 		out.add_item(str);
 	}
 	return S_OK;

@@ -62,7 +62,7 @@ HRESULT ScriptHost::ParseImports()
 HRESULT ScriptHost::ParseScript(wil::zstring_view code, wil::zstring_view path)
 {
 	m_context_to_path_map.emplace(++m_last_source_context, path);
-	const auto wcode = to_wide(code);
+	const auto wcode = js::to_wide(code);
 	return m_parser->ParseScriptText(wcode.data(), nullptr, nullptr, nullptr, m_last_source_context, 0, SCRIPTTEXT_HOSTMANAGESSOURCE | SCRIPTTEXT_ISVISIBLE, nullptr, nullptr);
 }
 
@@ -77,31 +77,31 @@ STDMETHODIMP ScriptHost::GetItemInfo(LPCOLESTR name, DWORD mask, IUnknown** ppun
 	{
 		RETURN_HR_IF_NULL(E_INVALIDARG, name);
 
-		if (compare_string(name, L"console"))
+		if (js::compare_string(name, L"console"))
 		{
 			m_console->AddRef();
 			*ppunk = m_console.get();
 			return S_OK;
 		}
-		else if (compare_string(name, L"fb"))
+		else if (js::compare_string(name, L"fb"))
 		{
 			m_fb->AddRef();
 			*ppunk = m_fb.get();
 			return S_OK;
 		}
-		else if (compare_string(name, L"plman"))
+		else if (js::compare_string(name, L"plman"))
 		{
 			m_plman->AddRef();
 			*ppunk = m_plman.get();
 			return S_OK;
 		}
-		else if (compare_string(name, L"utils"))
+		else if (js::compare_string(name, L"utils"))
 		{
 			m_utils->AddRef();
 			*ppunk = m_utils.get();
 			return S_OK;
 		}
-		else if (compare_string(name, L"window"))
+		else if (js::compare_string(name, L"window"))
 		{
 			m_window->AddRef();
 			*ppunk = m_window.get();
@@ -195,12 +195,12 @@ bool ScriptHost::InvokeMouseRbtnUp(WPARAM wp, LPARAM lp)
 	if (!dispId) return false;
 
 	VariantArgs args = { wp, GET_Y_LPARAM(lp), GET_X_LPARAM(lp) }; // reversed
-	DISPPARAMS params = { args.data(), nullptr, to_uint(args.size()), 0 };
+	DISPPARAMS params = { args.data(), nullptr, js::to_uint(args.size()), 0 };
 	_variant_t result;
 
 	if FAILED(m_script_root->Invoke(*dispId, IID_NULL, LOCALE_USER_DEFAULT, DISPATCH_METHOD, &params, &result, nullptr, nullptr)) return false;
 	if FAILED(VariantChangeType(&result, &result, 0, VT_BOOL)) return false;
-	return to_bool(result.boolVal);
+	return js::to_bool(result.boolVal);
 }
 
 std::optional<DISPID> ScriptHost::GetDISPID(CallbackID id)
@@ -247,13 +247,13 @@ std::string ScriptHost::GetErrorText(IActiveScriptError* err)
 
 		if (excep.bstrSource)
 		{
-			errors.emplace_back(from_wide(excep.bstrSource));
+			errors.emplace_back(js::from_wide(excep.bstrSource));
 			SysFreeString(excep.bstrSource);
 		}
 
 		if (excep.bstrDescription)
 		{
-			errors.emplace_back(from_wide(excep.bstrDescription));
+			errors.emplace_back(js::from_wide(excep.bstrDescription));
 			SysFreeString(excep.bstrDescription);
 		}
 
@@ -275,7 +275,7 @@ std::string ScriptHost::GetErrorText(IActiveScriptError* err)
 
 	if SUCCEEDED(err->GetSourceLineText(&sourceline))
 	{
-		errors.emplace_back(from_wide(sourceline.get()));
+		errors.emplace_back(js::from_wide(sourceline.get()));
 	}
 
 	const std::string error_text = fmt::format("{}", fmt::join(errors, CRLF.data()));
@@ -286,8 +286,8 @@ void ScriptHost::AddImport(wil::zstring_view str)
 {
 	static const std::vector<StringPair> replacements =
 	{
-		{ "%fb2k_profile_path%", from_wide(Fb::get_profile_path()) },
-		{ "%fb2k_component_path%", from_wide(Component::get_path()) },
+		{ "%fb2k_profile_path%", js::from_wide(Fb::get_profile_path()) },
+		{ "%fb2k_component_path%", js::from_wide(Component::get_path()) },
 	};
 
 	std::string path = ExtractValue(str);
@@ -310,7 +310,7 @@ void ScriptHost::InvokeCallback(CallbackID id, VariantArgs args)
 	if (dispId)
 	{
 		std::ranges::reverse(args);
-		DISPPARAMS params = { args.data(), nullptr, to_uint(args.size()), 0 };
+		DISPPARAMS params = { args.data(), nullptr, js::to_uint(args.size()), 0 };
 		m_script_root->Invoke(*dispId, IID_NULL, LOCALE_USER_DEFAULT, DISPATCH_METHOD, &params, nullptr, nullptr, nullptr);
 	}
 }
@@ -353,7 +353,7 @@ void ScriptHost::ParsePreprocessor()
 	{
 		const std::string pre_body = code.substr(start_pos, end_pos - start_pos);
 
-		for (auto&& line : split_string(pre_body, CRLF))
+		for (auto&& line : js::split_string(pre_body, CRLF))
 		{
 			if (line.contains("@import"))
 			{
