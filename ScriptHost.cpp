@@ -195,8 +195,11 @@ bool ScriptHost::InvokeMouseRbtnUp(WPARAM wp, LPARAM lp)
 	if (!dispId) return false;
 
 	VariantArgs args = { wp, GET_Y_LPARAM(lp), GET_X_LPARAM(lp) }; // reversed
-	DISPPARAMS params = { args.data(), nullptr, js::to_uint(args.size()), 0 };
 	_variant_t result;
+
+	DISPPARAMS params{};
+	params.rgvarg = args.data();
+	params.cArgs = js::to_uint(args.size());
 
 	if FAILED(m_script_root->Invoke(*dispId, IID_NULL, LOCALE_USER_DEFAULT, DISPATCH_METHOD, &params, &result, nullptr, nullptr)) return false;
 	if FAILED(VariantChangeType(&result, &result, 0, VT_BOOL)) return false;
@@ -310,7 +313,11 @@ void ScriptHost::InvokeCallback(CallbackID id, VariantArgs args)
 	if (dispId)
 	{
 		std::ranges::reverse(args);
-		DISPPARAMS params = { args.data(), nullptr, js::to_uint(args.size()), 0 };
+
+		DISPPARAMS params{};
+		params.rgvarg = args.data();
+		params.cArgs = js::to_uint(args.size());
+
 		m_script_root->Invoke(*dispId, IID_NULL, LOCALE_USER_DEFAULT, DISPATCH_METHOD, &params, nullptr, nullptr, nullptr);
 	}
 }
