@@ -1,13 +1,8 @@
 #pragma once
 
-namespace uwm
-{
-	static constexpr uint32_t invoke_timer = WM_USER + 1;
-}
-
 enum class CallbackID : uint32_t
 {
-	on_always_on_top_changed = WM_USER + 10,
+	on_always_on_top_changed = WM_USER + 1,
 	on_char,
 	on_colours_changed,
 	on_console_refresh,
@@ -78,6 +73,7 @@ enum class CallbackID : uint32_t
 	on_selection_changed,
 	on_size,
 	on_volume_change,
+	uwm_timer,
 };
 
 static const std::unordered_map<CallbackID, std::wstring> g_callback_name_map =
