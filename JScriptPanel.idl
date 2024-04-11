@@ -363,7 +363,7 @@ library foo_jscript_panel3
 		HRESULT RemovePlaylistSwitch(UINT32 playlistIndex, [out, retval] VARIANT_BOOL* out);
 		HRESULT RenamePlaylist(UINT32 playlistIndex, BSTR name, [out, retval] VARIANT_BOOL* out);
 		HRESULT ReplacePlaylistItem(UINT32 playlistIndex, UINT32 playlistItemIndex, IMetadbHandle* handle, [out, retval] VARIANT_BOOL* out);
-		HRESULT SelectQueryItems(UINT32 playlistIndex, BSTR query);
+		HRESULT SelectQueryItems(UINT32 playlistIndex, BSTR query, [out, retval] VARIANT* out);
 		HRESULT SetActivePlaylistContext();
 		HRESULT SetPlaylistFocusItem(UINT32 playlistIndex, UINT32 playlistItemIndex);
 		HRESULT SetPlaylistSelection(UINT32 playlistIndex, VARIANT affectedItems, VARIANT_BOOL state);
