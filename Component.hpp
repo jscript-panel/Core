@@ -10,8 +10,8 @@ namespace Component
 	static constexpr wil::zstring_view name = "JScript Panel 3";
 	static constexpr wil::zstring_view dll = "foo_jscript_panel3.dll";
 
-	static constexpr uint32_t version_number = 30422;
-	static constexpr wil::zstring_view version_string = "3.4.22";
+	static constexpr uint32_t version_number = 30423;
+	static constexpr wil::zstring_view version_string = "3.4.23";
 	static constexpr wil::zstring_view about =
 		"Copyright (C) 2015-2024 marc2003\n\n"
 		"Build: " __TIME__ ", " __DATE__ "\n\n"
