@@ -43,6 +43,20 @@ HRESULT ComArrayWriter::write_strings(const pfc::array_t<string8>& strings, VARI
 	return S_OK;
 }
 
+HRESULT ComArrayWriter::write_uints(const std::vector<size_t>& uints, VARIANT* out)
+{
+	ComArrayWriter writer(uints.size());
+
+	for (const size_t i : uints)
+	{
+		auto var = _variant_t(i);
+		RETURN_IF_FAILED(writer.add_item(var));
+	}
+
+	writer.finalise(out);
+	return S_OK;
+}
+
 HRESULT ComArrayWriter::add_item(_variant_t& var)
 {
 	const HRESULT hr = SafeArrayPutElement(m_psa, &m_idx, &var);
