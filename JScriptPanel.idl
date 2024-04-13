@@ -150,7 +150,7 @@ library foo_jscript_panel3
 		HRESULT AddItem(IMetadbHandle* handle);
 		HRESULT AddItems(IMetadbHandleList* handles);
 		HRESULT AttachImage(BSTR path, [defaultvalue(0)] UINT32 art_id);
-		HRESULT AttachImage2(IJSImage* image, [defaultvalue(0)] UINT32 art_id, [defaultvalue(0)] UINT32 type);
+		HRESULT AttachImage2(IJSImage* image, [defaultvalue(0)] UINT32 art_id, [defaultvalue(0)] UINT32 format);
 		HRESULT CalcTotalDuration([out, retval] double* out);
 		HRESULT CalcTotalSize([out, retval] UINT64* out);
 		HRESULT ClearStats();
