@@ -47,7 +47,7 @@ HRESULT ComArrayReader::init(const VARIANT& v, VARTYPE vt)
 	const size_t count = result.ulVal;
 	m_data.resize(count);
 
-	for (const size_t i : std::views::iota(0U, count))
+	for (const size_t i : std::views::iota(size_t{}, count))
 	{
 		RETURN_IF_FAILED(get_property(pdisp, std::to_wstring(i), vt, m_data[i]));
 	}
