@@ -3,6 +3,7 @@
 
 ComArrayWriter::ComArrayWriter(size_t count) : m_psa(SafeArrayCreateVector(VT_VARIANT, 0L, static_cast<ULONG>(count))) {}
 
+#pragma region static
 HRESULT ComArrayWriter::write_ints(const std::vector<int>& ints, VARIANT* out)
 {
 	ComArrayWriter writer(ints.size());
@@ -24,6 +25,20 @@ HRESULT ComArrayWriter::write_strings(const WStrings& strings, VARIANT* out)
 	for (auto&& string : strings)
 	{
 		RETURN_IF_FAILED(writer.add_item(string));
+	}
+
+	writer.finalise(out);
+	return S_OK;
+}
+
+HRESULT ComArrayWriter::write_strings(const fb2k::array_typed<fb2k::string>& strings, VARIANT* out)
+{
+	ComArrayWriter writer(strings.get_count());
+
+	for (auto&& string : strings)
+	{
+		const auto wstr = js::to_wide(string->c_str());
+		RETURN_IF_FAILED(writer.add_item(wstr));
 	}
 
 	writer.finalise(out);
@@ -56,6 +71,7 @@ HRESULT ComArrayWriter::write_uints(const std::vector<size_t>& uints, VARIANT* o
 	writer.finalise(out);
 	return S_OK;
 }
+#pragma endregion
 
 HRESULT ComArrayWriter::add_item(_variant_t& var)
 {
