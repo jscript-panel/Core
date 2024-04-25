@@ -306,6 +306,7 @@ library foo_jscript_panel3
 		[propget] HRESULT ProfilePath([out, retval] BSTR* out);
 		[propget] HRESULT ReplaygainMode([out, retval] UINT32* out);
 		[propget] HRESULT StopAfterCurrent([out, retval] VARIANT_BOOL* out);
+		[propget] HRESULT VersionString([out, retval] BSTR* out);
 		[propget] HRESULT Volume([out, retval] float* out);
 
 		[propput] HRESULT AlwaysOnTop(VARIANT_BOOL b);
