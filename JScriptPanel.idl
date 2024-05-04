@@ -328,7 +328,7 @@ library foo_jscript_panel3
 		HRESULT CreateAutoPlaylist(UINT32 playlistIndex, BSTR name, BSTR query, [defaultvalue("")] BSTR sort, [defaultvalue(0)] UINT32 flags, [out, retval] INT_PTR* out);
 		HRESULT CreatePlaylist([defaultvalue(0xffffffff)] UINT32 playlistIndex, [defaultvalue("")] BSTR name, [out, retval] UINT_PTR* out);
 		HRESULT DuplicatePlaylist(UINT32 playlistIndex, BSTR name, [out, retval] UINT_PTR* out);
-		HRESULT ExecutePlaylistDefaultAction(UINT32 playlistIndex, UINT32 playlistItemIndex, [out, retval] VARIANT_BOOL* out);
+		HRESULT ExecutePlaylistDefaultAction(UINT32 playlistIndex, UINT32 playlistItemIndex);
 		HRESULT FindByGUID(BSTR str, [out, retval] INT_PTR* out);
 		HRESULT FindOrCreatePlaylist(BSTR name, VARIANT_BOOL unlocked, [out, retval] UINT_PTR* out);
 		HRESULT FindPlaylist(BSTR name, [out, retval] INT_PTR* out);
