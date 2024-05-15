@@ -25,15 +25,7 @@ namespace Component
 		public:
 			bool is_installed_correctly() final
 			{
-				if (!test_my_name(dll.data())) return false;
-				if (!IsWindows8Point1OrGreater()) return false;
-
-				auto api = core_version_info_v2::get();
-				if (api->test_version(2, 0, 0, 0))
-				{
-					return static_api_test_t<search_index_manager>();
-				}
-				return api->test_version(1, 6, 6, 0);
+				return test_my_name(dll.data()) && IsWindows10OrGreater() && core_version_info_v2::get()->test_version(2, 1, 0, 0);
 			}
 		};
 

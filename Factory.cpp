@@ -7,7 +7,7 @@ extern void destroy_resvg_font_options();
 
 namespace factory
 {
-	D2D1_DRAW_TEXT_OPTIONS d2d_text_options = D2D1_DRAW_TEXT_OPTIONS_CLIP;
+	D2D1_DRAW_TEXT_OPTIONS d2d_text_options = D2D1_DRAW_TEXT_OPTIONS_CLIP | D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT;
 	bool inited{};
 	wil::com_ptr_nothrow<IWICImagingFactory2> imaging;
 	wil::com_ptr_t<ID2D1Factory1> d2d;
@@ -17,11 +17,6 @@ namespace factory
 
 	void init()
 	{
-		if (IsWindows10OrGreater())
-		{
-			d2d_text_options |= D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT;
-		}
-
 		imaging = wil::CoCreateInstanceNoThrow<IWICImagingFactory2>(CLSID_WICImagingFactory);
 		if (!imaging) return;
 

@@ -123,7 +123,7 @@ library foo_jscript_panel3
 		HRESULT GetAlbumArtAsync(UINT32 window_id, [defaultvalue(0)] UINT32 art_id);
 		HRESULT GetAlbumArtEmbedded([defaultvalue(0)] UINT32 art_id, [out, retval] IJSImage** out);
 		HRESULT GetAlbumArtThumbAsync(UINT32 window_id, [defaultvalue(0)] UINT32 art_id, [defaultvalue(300)] UINT32 max_size);
-		HRESULT GetFileInfo([defaultvalue(0)] VARIANT_BOOL full_info, [out, retval] IFileInfo** out);
+		HRESULT GetFileInfo([out, retval] IFileInfo** out);
 		HRESULT IsInLibrary([out, retval] VARIANT_BOOL* out);
 		HRESULT SetFirstPlayed(UINT32 first_played);
 		HRESULT SetLastPlayed(UINT32 last_played);
@@ -299,7 +299,6 @@ library foo_jscript_panel3
 		[propget] HRESULT FoobarPath([out, retval] BSTR* out);
 		[propget] HRESULT IsPaused([out, retval] VARIANT_BOOL* out);
 		[propget] HRESULT IsPlaying([out, retval] VARIANT_BOOL* out);
-		[propget] HRESULT IsV2([out, retval] VARIANT_BOOL* out);
 		[propget] HRESULT PlaybackFollowCursor([out, retval] VARIANT_BOOL* out);
 		[propget] HRESULT PlaybackLength([out, retval] double* out);
 		[propget] HRESULT PlaybackTime([out, retval] double* out);
