@@ -271,6 +271,7 @@ library foo_jscript_panel3
 		HRESULT GetSelection([defaultvalue(0)] UINT32 flags, [out, retval] IMetadbHandleList** out);
 		HRESULT GetSelectionType([out, retval] UINT_PTR* out);
 		HRESULT IsLibraryEnabled([out, retval] VARIANT_BOOL* out);
+		HRESULT IsLibraryInitialised([out, retval] VARIANT_BOOL* out);
 		HRESULT LoadPlaylist();
 		HRESULT Next();
 		HRESULT Pause();
