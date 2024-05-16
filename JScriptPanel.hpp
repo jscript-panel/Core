@@ -47,4 +47,4 @@
 #include "PanelManager.hpp"
 
 #include "AlbumArt.hpp"
-#include "Img.hpp"
+#include "Image.hpp"
