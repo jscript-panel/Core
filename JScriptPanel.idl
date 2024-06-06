@@ -56,8 +56,6 @@ library foo_jscript_panel3
 	[uuid(16A02EF1-23F1-4C5F-A236-F0295BE822D4)]
 	interface IJSGraphics : IDispatch
 	{
-		HRESULT init(void* context, void* brush);
-
 		HRESULT Clear(__int64 colour);
 		HRESULT DrawEllipse(float centreX, float centreY, float radiusX, float radiusY, float line_width, VARIANT colour);
 		HRESULT DrawImage(IJSImage* image, float dstX, float dstY, float dstW, float dstH, float srcX, float srcY, float srcW, float srcH, [defaultvalue(1)] float opacity, [defaultvalue(0)] float angle);
@@ -70,6 +68,7 @@ library foo_jscript_panel3
 		HRESULT FillRoundedRectangle(float x, float y, float w, float h, float radiusX, float radiusY, VARIANT colour);
 		HRESULT WriteText(BSTR text, BSTR font, VARIANT colour, float x, float y, float w, float h, [defaultvalue(0)] UINT32 text_alignment, [defaultvalue(0)] UINT32 paragraph_alignment, [defaultvalue(0)] UINT32 word_wrapping, [defaultvalue(0)] UINT32 trimming_granularity);
 		HRESULT WriteTextLayout(ITextLayout* layout, VARIANT colour, float x, float y, float w, float h, [defaultvalue(0)] float vertical_offset);
+		void init(void* context, void* brush);
 	};
 
 	[uuid(0AE6C5C9-4FF1-4605-8025-C8280A5428C3)]
