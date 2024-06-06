@@ -9,7 +9,7 @@ library foo_jscript_panel3
 	[uuid(9818CD0D-CD94-4050-AAC6-B605314F5FAB)]
 	interface IDisposable : IDispatch
 	{
-		HRESULT Dispose();
+		void Dispose();
 	};
 
 	interface IJSImage;

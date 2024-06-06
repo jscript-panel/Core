@@ -19,9 +19,9 @@ public:
 		const long n = --m_counter;
 		if (n == 0)
 		{
-			if constexpr (requires { this->FinalRelease(); })
+			if constexpr (requires { this->Dispose(); })
 			{
-				this->FinalRelease();
+				this->Dispose();
 			}
 			delete this;
 		}

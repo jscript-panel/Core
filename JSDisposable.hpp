@@ -7,7 +7,7 @@ protected:
 	JSDisposable() {}
 	~JSDisposable() {}
 
-	virtual void FinalRelease() = 0;
+	virtual void Dispose() = 0;
 
 public:
 	COM_QI_BEGIN()
@@ -16,10 +16,4 @@ public:
 		COM_QI_ENTRY(IDisposable)
 		COM_QI_ENTRY(T)
 	COM_QI_END()
-
-	STDMETHODIMP Dispose() final
-	{
-		this->FinalRelease();
-		return S_OK;
-	}
 };
