@@ -183,8 +183,13 @@ bool ScriptHost::Initialise()
 			return S_OK;
 		}();
 
-	if FAILED(hr) Reset();
-	return SUCCEEDED(hr);
+	if FAILED(hr)
+	{
+		Reset();
+		return false;
+	}
+
+	return true;
 }
 
 bool ScriptHost::InvokeMouseRbtnUp(WPARAM wp, LPARAM lp)
