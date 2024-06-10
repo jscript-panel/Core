@@ -5,7 +5,6 @@
 #define IDR_TYPELIB                      1
 
 #define IDR_FB2K_API                     100
-#define IDR_FB2K_V2_API                  101
 #define IDR_JS_API                       102
 #define IDR_CFG_BRIGHT                   103
 #define IDR_CFG_DEFAULT                  104
