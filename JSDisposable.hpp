@@ -7,7 +7,7 @@ protected:
 	JSDisposable() {}
 	~JSDisposable() {}
 
-	virtual void Dispose() = 0;
+	virtual void __stdcall Dispose() = 0;
 
 public:
 	COM_QI_BEGIN()
