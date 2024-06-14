@@ -296,6 +296,7 @@ library foo_jscript_panel3
 		[propget] HRESULT AlwaysOnTop([out, retval] VARIANT_BOOL* out);
 		[propget] HRESULT ComponentPath([out, retval] BSTR* out);
 		[propget] HRESULT CursorFollowPlayback([out, retval] VARIANT_BOOL* out);
+		[propget] HRESULT CustomVolume([out, retval] int* out);
 		[propget] HRESULT FoobarPath([out, retval] BSTR* out);
 		[propget] HRESULT IsPaused([out, retval] VARIANT_BOOL* out);
 		[propget] HRESULT IsPlaying([out, retval] VARIANT_BOOL* out);
