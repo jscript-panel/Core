@@ -213,7 +213,7 @@ bool ScriptHost::InvokeMouseRbtnUp(WPARAM wp, LPARAM lp)
 
 std::optional<DISPID> ScriptHost::GetDISPID(CallbackID id)
 {
-	if (m_script_root)
+	if (m_state == SCRIPTSTATE_CONNECTED && m_script_root)
 	{
 		const auto it = m_callback_map.find(id);
 		if (it != m_callback_map.end())
