@@ -22,7 +22,7 @@ namespace factory
 		const auto hr = []
 			{
 				RETURN_IF_FAILED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &d2d));
-				RETURN_IF_FAILED(DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(dwrite), reinterpret_cast<IUnknown**>(&dwrite)));
+				RETURN_IF_FAILED(DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(dwrite), dwrite.put_unknown()));
 				RETURN_IF_FAILED(dwrite->GetGdiInterop(&gdi_interop));
 				RETURN_IF_FAILED(WriteText::create_format(error_text_format, Component::DefaultFont, 24.f, 700));
 				RETURN_IF_FAILED(error_text_format->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER));
