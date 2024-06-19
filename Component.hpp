@@ -28,6 +28,7 @@ namespace Component
 
 	static constexpr uint32_t max_image_size = 64 * 1024 * 1024;
 
+	static const auto Black = D2D1::ColorF(D2D1::ColorF::Black);
 	static const auto White = D2D1::ColorF(D2D1::ColorF::White);
 	static const auto DarkBackground = D2D1::ColorF(0.125f, 0.125f, 0.125f);
 	static const auto ErrorBackground = D2D1::ColorF(0.882f, 0.235f, 0.176f);
