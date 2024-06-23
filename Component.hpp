@@ -21,17 +21,10 @@ namespace Component
 	static const std::string name_version = fmt::format("{}{}", name, version_string.substr(1));
 	static const std::string default_user_agent = fmt::format("{}/{}", dll, version_string);
 
-	static constexpr wil::zwstring_view DefaultFont = L"Segoe UI";
-	static constexpr wil::zwstring_view ErrorText = L"JavaScript error";
 	static constexpr wil::zwstring_view Docs = L"https://jscript-panel.github.io/docs/";
 	static constexpr wil::zwstring_view Releases = L"https://github.com/jscript-panel/release/releases";
 
 	static constexpr uint32_t max_image_size = 64 * 1024 * 1024;
-
-	static const auto Black = D2D1::ColorF(D2D1::ColorF::Black);
-	static const auto White = D2D1::ColorF(D2D1::ColorF::White);
-	static const auto DarkBackground = D2D1::ColorF(0.125f, 0.125f, 0.125f);
-	static const auto ErrorBackground = D2D1::ColorF(0.882f, 0.235f, 0.176f);
 
 	extern cfgDialogPosition dialog_position;
 	extern cfg_string pin_to;
