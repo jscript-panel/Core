@@ -15,6 +15,7 @@ public:
 	STDMETHODIMP OnScriptError(IActiveScriptError* err) final;
 	STDMETHODIMP OnScriptTerminate(const VARIANT*, const EXCEPINFO*) final;
 	STDMETHODIMP OnStateChange(SCRIPTSTATE state) final;
+	bool CheckCallbackID(CallbackID id);
 	bool Initialise();
 	bool InvokeMouseRbtnUp(WPARAM wp, LPARAM lp);
 	void InvokeCallback(CallbackID id, VariantArgs args = {});

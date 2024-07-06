@@ -151,6 +151,11 @@ STDMETHODIMP ScriptHost::OnStateChange(SCRIPTSTATE state)
 	return S_OK;
 }
 
+bool ScriptHost::CheckCallbackID(CallbackID id)
+{
+	return m_state == SCRIPTSTATE_CONNECTED && m_callback_map.contains(id);
+}
+
 bool ScriptHost::Initialise()
 {
 	ParsePreprocessor();
