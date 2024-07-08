@@ -2,8 +2,8 @@
 
 #include "Resource.hpp"
 
-#include "Helpers.hpp"
 #include "Factory.hpp"
+#include "Helpers.hpp"
 #include "FileHelper.hpp"
 
 #include "CallbackID.hpp"
@@ -44,7 +44,6 @@
 #include "Window.hpp"
 
 #include "PanelBase.hpp"
-#include "PanelManager.hpp"
 
 #include "AlbumArt.hpp"
 #include "Image.hpp"
