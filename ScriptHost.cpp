@@ -153,7 +153,17 @@ STDMETHODIMP ScriptHost::OnStateChange(SCRIPTSTATE state)
 
 bool ScriptHost::CheckCallbackID(CallbackID id)
 {
-	return m_state == SCRIPTSTATE_CONNECTED && m_callback_map.contains(id);
+	return Connected() && m_callback_map.contains(id);
+}
+
+bool ScriptHost::Connected()
+{
+	return m_state == SCRIPTSTATE_CONNECTED;
+}
+
+bool ScriptHost::Error()
+{
+	return m_state == SCRIPTSTATE_DISCONNECTED;
 }
 
 bool ScriptHost::Initialise()
@@ -218,7 +228,7 @@ bool ScriptHost::InvokeMouseRbtnUp(WPARAM wp, LPARAM lp)
 
 std::optional<DISPID> ScriptHost::GetDISPID(CallbackID id)
 {
-	if (m_state == SCRIPTSTATE_CONNECTED && m_script_root)
+	if (m_script_root && Connected())
 	{
 		const auto it = m_callback_map.find(id);
 		if (it != m_callback_map.end())
@@ -334,7 +344,7 @@ void ScriptHost::InvokeCallback(CallbackID id, VariantArgs args)
 
 void ScriptHost::Reset()
 {
-	if (m_script_engine && m_state == SCRIPTSTATE_CONNECTED)
+	if (m_script_engine && Connected())
 	{
 		wil::com_ptr_t<IActiveScriptGarbageCollector> gc;
 		if SUCCEEDED(m_script_engine->QueryInterface(&gc))

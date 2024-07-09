@@ -16,12 +16,13 @@ public:
 	STDMETHODIMP OnScriptTerminate(const VARIANT*, const EXCEPINFO*) final;
 	STDMETHODIMP OnStateChange(SCRIPTSTATE state) final;
 	bool CheckCallbackID(CallbackID id);
+	bool Connected();
+	bool Error();
 	bool Initialise();
 	bool InvokeMouseRbtnUp(WPARAM wp, LPARAM lp);
 	void InvokeCallback(CallbackID id, VariantArgs args = {});
 	void Reset();
 
-	SCRIPTSTATE m_state{};
 	std::string m_build_string, m_name;
 	std::unordered_map<CallbackID, DISPID> m_callback_map;
 
@@ -37,6 +38,7 @@ private:
 
 	DWORD m_last_source_context{};
 	PanelBase* m_panel;
+	SCRIPTSTATE m_state{};
 	Strings m_imports;
 	std::unordered_map<DWORD, std::string> m_context_to_path_map;
 	wil::com_ptr_nothrow<IActiveScript> m_script_engine;
