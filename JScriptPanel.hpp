@@ -4,6 +4,8 @@
 
 #include "Factory.hpp"
 #include "Helpers.hpp"
+#include "Text.hpp"
+#include "Colour.hpp"
 #include "FileHelper.hpp"
 
 #include "CallbackID.hpp"
