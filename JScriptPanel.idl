@@ -210,6 +210,7 @@ library foo_jscript_panel3
 	interface ITextLayout : IDisposable
 	{
 		HRESULT get([out, retval] void** out);
+		HRESULT get_rgb([out, retval] void** out);
 
 		HRESULT CalcTextHeight(float max_width, [out, retval] float* out);
 	};
