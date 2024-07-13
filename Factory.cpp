@@ -21,10 +21,14 @@ namespace factory
 
 		const auto hr = []
 			{
+				auto font = Font();
+				font.m_size = 24.f;
+				font.m_weight = DWRITE_FONT_WEIGHT_BOLD;
+
 				RETURN_IF_FAILED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &d2d));
 				RETURN_IF_FAILED(DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(dwrite), dwrite.put_unknown()));
 				RETURN_IF_FAILED(dwrite->GetGdiInterop(&gdi_interop));
-				RETURN_IF_FAILED(WriteText::create_format(error_text_format, DefaultFont, 24.f, 700));
+				RETURN_IF_FAILED(WriteText::create_format(error_text_format, font));
 				RETURN_IF_FAILED(error_text_format->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER));
 				RETURN_IF_FAILED(error_text_format->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER));
 				return S_OK;
