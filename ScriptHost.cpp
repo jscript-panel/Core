@@ -59,7 +59,7 @@ HRESULT ScriptHost::ParseImports()
 	return S_OK;
 }
 
-HRESULT ScriptHost::ParseScript(wil::zstring_view code, wil::zstring_view path)
+HRESULT ScriptHost::ParseScript(std::string_view code, std::string_view path)
 {
 	m_context_to_path_map.emplace(++m_last_source_context, path);
 	const auto wcode = js::to_wide(code);
@@ -239,7 +239,7 @@ std::optional<DISPID> ScriptHost::GetDISPID(CallbackID id)
 	return std::nullopt;
 }
 
-std::string ScriptHost::ExtractValue(wil::zstring_view str)
+std::string ScriptHost::ExtractValue(std::string_view str)
 {
 	static constexpr char q = '"';
 	const size_t first = str.find_first_of(q);
@@ -305,7 +305,7 @@ std::string ScriptHost::GetErrorText(IActiveScriptError* err)
 	return error_text;
 }
 
-void ScriptHost::AddImport(wil::zstring_view str)
+void ScriptHost::AddImport(std::string_view str)
 {
 	static const std::vector<StringPair> replacements =
 	{
@@ -368,8 +368,8 @@ void ScriptHost::ParsePreprocessor()
 	m_imports.clear();
 	m_name.clear();
 
-	static constexpr wil::zstring_view pre_start = "// ==PREPROCESSOR==";
-	static constexpr wil::zstring_view pre_end = "// ==/PREPROCESSOR==";
+	static constexpr std::string_view pre_start = "// ==PREPROCESSOR==";
+	static constexpr std::string_view pre_end = "// ==/PREPROCESSOR==";
 
 	const std::string code = m_panel->m_config.m_code.get_ptr();
 	std::string author, version;

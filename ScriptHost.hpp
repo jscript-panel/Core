@@ -29,11 +29,11 @@ public:
 private:
 	HRESULT InitCallbackMap();
 	HRESULT ParseImports();
-	HRESULT ParseScript(wil::zstring_view code, wil::zstring_view path);
+	HRESULT ParseScript(std::string_view code, std::string_view path);
 	std::optional<DISPID> GetDISPID(CallbackID id);
-	std::string ExtractValue(wil::zstring_view str);
+	std::string ExtractValue(std::string_view str);
 	std::string GetErrorText(IActiveScriptError* err);
-	void AddImport(wil::zstring_view str);
+	void AddImport(std::string_view str);
 	void ParsePreprocessor();
 
 	DWORD m_last_source_context{};

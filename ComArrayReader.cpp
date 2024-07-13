@@ -25,7 +25,7 @@ HRESULT ComArrayReader::convert(const VARIANT& v, pfc::string_list_impl& out)
 	return S_OK;
 }
 
-HRESULT ComArrayReader::get_property(IDispatch* pdisp, wil::zwstring_view name, VARTYPE vt, VARIANT& result)
+HRESULT ComArrayReader::get_property(IDispatch* pdisp, std::wstring_view name, VARTYPE vt, VARIANT& result)
 {
 	auto cname = const_cast<LPOLESTR>(name.data());
 	DISPID dispId{};

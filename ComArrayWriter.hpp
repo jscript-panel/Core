@@ -13,7 +13,7 @@ private:
 	ComArrayWriter(size_t count);
 
 	HRESULT add_item(_variant_t& var);
-	HRESULT add_item(wil::zwstring_view str);
+	HRESULT add_item(std::wstring_view str);
 	void finalise(VARIANT* out);
 
 	SAFEARRAY* m_psa{};

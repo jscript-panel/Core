@@ -4,8 +4,8 @@ namespace factory
 {
 	static constexpr D2D1_DRAW_TEXT_OPTIONS d2d_text_options = D2D1_DRAW_TEXT_OPTIONS_CLIP | D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT;
 
-	static constexpr wil::zwstring_view DefaultFont = L"Segoe UI";
-	static constexpr wil::zwstring_view ErrorText = L"JavaScript error";
+	static constexpr std::wstring_view DefaultFont = L"Segoe UI";
+	static constexpr std::wstring_view ErrorText = L"JavaScript error";
 
 	static const auto DarkBackground = D2D1::ColorF(0.125f, 0.125f, 0.125f);
 	static const auto ErrorBackground = D2D1::ColorF(0.882f, 0.235f, 0.176f);

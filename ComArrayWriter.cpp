@@ -86,7 +86,7 @@ HRESULT ComArrayWriter::add_item(_variant_t& var)
 	return hr;
 }
 
-HRESULT ComArrayWriter::add_item(wil::zwstring_view str)
+HRESULT ComArrayWriter::add_item(std::wstring_view str)
 {
 	auto var = _variant_t(str.data());
 	return add_item(var);

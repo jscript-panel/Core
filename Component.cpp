@@ -8,7 +8,7 @@ namespace Component
 		return FileHelper(path.get()).parent_path();
 	}
 
-	void popup(wil::zstring_view msg)
+	void popup(std::string_view msg)
 	{
 		popup_message::g_show(msg.data(), name.data());
 	}
