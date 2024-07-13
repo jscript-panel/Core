@@ -66,7 +66,7 @@ library foo_jscript_panel3
 		HRESULT FillEllipse(float centreX, float centreY, float radiusX, float radiusY, VARIANT colour);
 		HRESULT FillRectangle(float x, float y, float w, float h, VARIANT colour);
 		HRESULT FillRoundedRectangle(float x, float y, float w, float h, float radiusX, float radiusY, VARIANT colour);
-		HRESULT WriteText(BSTR text, BSTR font, VARIANT colour, float x, float y, float w, float h, [defaultvalue(0)] UINT32 text_alignment, [defaultvalue(0)] UINT32 paragraph_alignment, [defaultvalue(0)] UINT32 word_wrapping, [defaultvalue(0)] UINT32 trimming_granularity);
+		HRESULT WriteText(BSTR text, BSTR font_str, VARIANT colour, float x, float y, float w, float h, [defaultvalue(0)] UINT32 text_alignment, [defaultvalue(0)] UINT32 paragraph_alignment, [defaultvalue(0)] UINT32 word_wrapping, [defaultvalue(0)] UINT32 trimming_granularity);
 		HRESULT WriteTextLayout(ITextLayout* layout, VARIANT colour, float x, float y, float w, float h, [defaultvalue(0)] float vertical_offset);
 		void init(void* context, void* brush);
 	};
@@ -209,8 +209,8 @@ library foo_jscript_panel3
 	[uuid(41F4FBFD-98E4-4939-9BB5-35A2D1CFE581)]
 	interface ITextLayout : IDisposable
 	{
+		HRESULT apply_colour(void* context, VARIANT colour);
 		HRESULT get([out, retval] void** out);
-		HRESULT get_rgb([out, retval] void** out);
 
 		HRESULT CalcTextHeight(float max_width, [out, retval] float* out);
 	};
