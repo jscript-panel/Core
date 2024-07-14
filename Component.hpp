@@ -11,7 +11,7 @@ namespace Component
 	static constexpr std::string_view dll = "foo_jscript_panel3.dll";
 
 	static constexpr uint32_t version_number = 30600;
-	static constexpr std::string_view version_string = "3.6.0-Beta.1";
+	static constexpr std::string_view version_string = "3.6.0-Beta.2";
 	static constexpr std::string_view about =
 		"Copyright (C) 2015-2024 marc2003\n\n"
 		"Build: " __TIME__ ", " __DATE__ "\n\n"
