@@ -1,7 +1,7 @@
 #include "stdafx.hpp"
 #include "WriteText.hpp"
 
-#ifdef NDEBUG
+#if ENABLE_RESVG
 extern void destroy_resvg_font_options();
 #endif
 
@@ -45,7 +45,7 @@ namespace factory
 		imaging.reset();
 		error_text_format.reset();
 
-#ifdef NDEBUG
+#if ENABLE_RESVG
 		destroy_resvg_font_options();
 #endif
 	}
