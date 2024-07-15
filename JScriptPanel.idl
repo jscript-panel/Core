@@ -67,6 +67,7 @@ library foo_jscript_panel3
 		HRESULT FillRectangle(float x, float y, float w, float h, VARIANT colour);
 		HRESULT FillRoundedRectangle(float x, float y, float w, float h, float radiusX, float radiusY, VARIANT colour);
 		HRESULT WriteText(BSTR text, BSTR font_str, VARIANT colour, float x, float y, float w, float h, [defaultvalue(0)] UINT32 text_alignment, [defaultvalue(0)] UINT32 paragraph_alignment, [defaultvalue(0)] UINT32 word_wrapping, [defaultvalue(0)] UINT32 trimming_granularity);
+		HRESULT WriteText2(BSTR text, BSTR font_str, __int64 colour, float x, float y, float w, float h, [defaultvalue(0)] UINT32 text_alignment, [defaultvalue(0)] UINT32 paragraph_alignment, [defaultvalue(0)] UINT32 word_wrapping, [defaultvalue(0)] UINT32 trimming_granularity);
 		HRESULT WriteTextLayout(ITextLayout* layout, VARIANT colour, float x, float y, float w, float h, [defaultvalue(0)] float vertical_offset);
 		void init(void* context, void* brush);
 	};
