@@ -261,6 +261,7 @@ library foo_jscript_panel3
 		HRESULT CreateContextMenuManager([out, retval] IContextMenuManager** out);
 		HRESULT CreateHandleList([optional] VARIANT var, [out, retval] IMetadbHandleList** out);
 		HRESULT CreateMainMenuManager(BSTR name, [out, retval] IMainMenuManager** out);
+		HRESULT EnableAdvancedLogging();
 		HRESULT Exit();
 		HRESULT GetAlbumArtStub([defaultvalue(0)] UINT32 art_id, [out, retval] IJSImage** out);
 		HRESULT GetClipboardContents([out, retval] IMetadbHandleList** out);
