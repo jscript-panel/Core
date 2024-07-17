@@ -17,6 +17,7 @@ namespace factory
 	extern wil::com_ptr_t<IDWriteFactory> dwrite;
 	extern wil::com_ptr_t<IDWriteGdiInterop> gdi_interop;
 	extern wil::com_ptr_t<IDWriteTextFormat> error_text_format;
+	extern wil::com_ptr_t<IDWriteTypography> typography;
 
 	void reset();
 }

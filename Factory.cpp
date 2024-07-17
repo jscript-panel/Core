@@ -13,6 +13,20 @@ namespace factory
 	wil::com_ptr_t<IDWriteFactory> dwrite;
 	wil::com_ptr_t<IDWriteGdiInterop> gdi_interop;
 	wil::com_ptr_t<IDWriteTextFormat> error_text_format;
+	wil::com_ptr_t<IDWriteTypography> typography;
+
+	HRESULT create_error_text_format()
+	{
+		auto font = Font();
+		font.m_size = 24.f;
+		font.m_weight = DWRITE_FONT_WEIGHT_BOLD;
+
+		auto params = FormatParams();
+		params.m_text_alignment = DWRITE_TEXT_ALIGNMENT_CENTER;
+		params.m_paragraph_alignment = DWRITE_PARAGRAPH_ALIGNMENT_CENTER;
+
+		return WriteText::create_format(error_text_format, font, params);
+	}
 
 	void init()
 	{
@@ -21,16 +35,12 @@ namespace factory
 
 		const auto hr = []
 			{
-				auto font = Font();
-				font.m_size = 24.f;
-				font.m_weight = DWRITE_FONT_WEIGHT_BOLD;
-
 				RETURN_IF_FAILED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &d2d));
 				RETURN_IF_FAILED(DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(dwrite), dwrite.put_unknown()));
 				RETURN_IF_FAILED(dwrite->GetGdiInterop(&gdi_interop));
-				RETURN_IF_FAILED(WriteText::create_format(error_text_format, font));
-				RETURN_IF_FAILED(error_text_format->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER));
-				RETURN_IF_FAILED(error_text_format->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER));
+				RETURN_IF_FAILED(dwrite->CreateTypography(&typography));
+				RETURN_IF_FAILED(typography->AddFontFeature({ DWRITE_FONT_FEATURE_TAG_TABULAR_FIGURES, 1 }));
+				RETURN_IF_FAILED(create_error_text_format());
 				return S_OK;
 			}();
 
@@ -44,6 +54,7 @@ namespace factory
 		gdi_interop.reset();
 		imaging.reset();
 		error_text_format.reset();
+		typography.reset();
 
 #if ENABLE_RESVG
 		destroy_resvg_font_options();
