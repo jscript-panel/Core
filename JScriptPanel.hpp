@@ -1,20 +1,17 @@
 #pragma once
 
 #include "Resource.hpp"
-
+#include "Component.hpp"
 #include "Factory.hpp"
-#include "Helpers.hpp"
+
+#include "To.hpp"
 #include "Text.hpp"
+#include "Misc.hpp"
 #include "Colour.hpp"
 #include "FileHelper.hpp"
 
 #include "CallbackID.hpp"
 #include "GUIDS.hpp"
-
-#include "Component.hpp"
-#include "PlaybackStatistics.hpp"
-#include "MetadbIndex.hpp"
-
 #include "JScriptPanel_h.h"
 #include "ComArrayReader.hpp"
 #include "ComArrayWriter.hpp"
@@ -23,6 +20,7 @@
 #include "JSDispatchBase.hpp"
 #include "JSDispatch.hpp"
 #include "JSDisposable.hpp"
+#include "SimpleThreadPool.hpp"
 
 #include "ContextMenuManager.hpp"
 #include "DropAction.hpp"
@@ -45,7 +43,9 @@
 #include "Utils.hpp"
 #include "Window.hpp"
 
-#include "PanelBase.hpp"
-
 #include "AlbumArt.hpp"
 #include "Image.hpp"
+
+#include "PanelBase.hpp"
+#include "PlaybackStatistics.hpp"
+#include "MetadbIndex.hpp"
