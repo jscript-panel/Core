@@ -21,6 +21,7 @@ public:
 	bool Initialise();
 	bool InvokeMouseRbtnUp(WPARAM wp, LPARAM lp);
 	void InvokeCallback(CallbackID id, VariantArgs args = {});
+	void InvokeMouseCallback(uint32_t msg, WPARAM wp, LPARAM lp);
 	void Reset();
 
 	std::string m_build_string, m_name;

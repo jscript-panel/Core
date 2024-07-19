@@ -342,6 +342,12 @@ void ScriptHost::InvokeCallback(CallbackID id, VariantArgs args)
 	}
 }
 
+void ScriptHost::InvokeMouseCallback(uint32_t msg, WPARAM wp, LPARAM lp)
+{
+	const auto id = g_msg_callback_map.at(msg);
+	InvokeCallback(id, { GET_X_LPARAM(lp), GET_Y_LPARAM(lp), wp });
+}
+
 void ScriptHost::Reset()
 {
 	if (m_script_engine && Connected())
