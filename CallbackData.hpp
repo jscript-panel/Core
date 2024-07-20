@@ -55,7 +55,7 @@ struct AlbumArtCallbackData
 
 struct ImageCallbackData
 {
-	ImageCallbackData(std::wstring path, IJSImage* image) : m_path(path.data()), m_image(image) {}
+	ImageCallbackData(std::wstring_view path, IJSImage* image) : m_path(path.data()), m_image(image) {}
 
 	~ImageCallbackData()
 	{
