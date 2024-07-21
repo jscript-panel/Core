@@ -5,6 +5,7 @@
 namespace Component
 {
 	std::wstring get_path();
+	void log(std::string_view msg);
 	void popup(std::string_view msg);
 
 	static constexpr std::string_view name = "JScript Panel 3";

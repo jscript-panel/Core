@@ -8,6 +8,11 @@ namespace Component
 		return FileHelper(path.get()).parent_path();
 	}
 
+	void log(std::string_view msg)
+	{
+		FB2K_console_formatter() << fmt::format("{}: {}", name_version, msg);
+	}
+
 	void popup(std::string_view msg)
 	{
 		popup_message::g_show(msg.data(), name.data());
