@@ -44,7 +44,14 @@ namespace factory
 				return S_OK;
 			}();
 
-		inited = SUCCEEDED(hr);
+		if SUCCEEDED(hr)
+		{
+			inited = true;
+		}
+		else
+		{
+			Component::log(format_hresult(hr));
+		}
 	}
 
 	void reset()
