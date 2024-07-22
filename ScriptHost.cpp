@@ -309,8 +309,8 @@ void ScriptHost::AddImport(std::string_view str)
 {
 	static const std::vector<StringPair> replacements =
 	{
-		{ "%fb2k_profile_path%", js::from_wide(Fb::get_profile_path()) },
-		{ "%fb2k_component_path%", js::from_wide(Component::get_path()) },
+		{ "%fb2k_profile_path%", js::from_wide(Path::profile()) },
+		{ "%fb2k_component_path%", js::from_wide(Path::component()) },
 	};
 
 	std::string path = ExtractValue(str);

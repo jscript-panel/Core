@@ -2,12 +2,6 @@
 
 namespace Component
 {
-	std::wstring get_path()
-	{
-		const auto path = wil::GetModuleFileNameW(core_api::get_my_instance());
-		return FileHelper(path.get()).parent_path();
-	}
-
 	void log(std::string_view msg)
 	{
 		FB2K_console_formatter() << fmt::format("{}: {}", name_version, msg);

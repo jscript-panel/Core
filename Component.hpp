@@ -4,7 +4,6 @@
 
 namespace Component
 {
-	std::wstring get_path();
 	void log(std::string_view msg);
 	void popup(std::string_view msg, std::string_view title = "");
 

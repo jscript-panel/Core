@@ -9,6 +9,7 @@
 #include "Misc.hpp"
 #include "Colour.hpp"
 #include "FileHelper.hpp"
+#include "Path.hpp"
 
 #include "CallbackID.hpp"
 #include "GUIDS.hpp"
