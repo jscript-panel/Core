@@ -35,15 +35,18 @@ public:
 
 		const ULONG hash = LHashValOfName(LANG_NEUTRAL, names[0]);
 		const auto it = s_type_info_cache.cache.find(hash);
+
 		if (it != s_type_info_cache.cache.end())
 		{
 			dispids[0] = it->second;
 		}
 		else
 		{
-			RETURN_IF_FAILED(s_type_info_cache.type_info->GetIDsOfNames(&names[0], 1, &dispids[0]));
+			RETURN_IF_FAILED_EXPECTED(s_type_info_cache.type_info->GetIDsOfNames(&names[0], 1, &dispids[0]));
+
 			s_type_info_cache.cache.emplace(hash, dispids[0]);
 		}
+
 		return S_OK;
 	}
 
