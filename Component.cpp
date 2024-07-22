@@ -13,9 +13,16 @@ namespace Component
 		FB2K_console_formatter() << fmt::format("{}: {}", name_version, msg);
 	}
 
-	void popup(std::string_view msg)
+	void popup(std::string_view msg, std::string_view title)
 	{
-		popup_message::g_show(msg.data(), name.data());
+		if (title.empty())
+		{
+			popup_message::g_show(msg.data(), name.data());
+		}
+		else
+		{
+			popup_message::g_show(msg.data(), title.data());
+		}
 	}
 
 	cfgDialogPosition dialog_position(guids::dialog_position);
