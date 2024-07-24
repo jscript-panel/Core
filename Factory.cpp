@@ -25,7 +25,7 @@ namespace factory
 		params.m_text_alignment = DWRITE_TEXT_ALIGNMENT_CENTER;
 		params.m_paragraph_alignment = DWRITE_PARAGRAPH_ALIGNMENT_CENTER;
 
-		return WriteText::create_format(error_text_format, font, params);
+		return font.create_format(error_text_format, params);
 	}
 
 	void init()
