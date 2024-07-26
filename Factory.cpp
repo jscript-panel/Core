@@ -1,5 +1,5 @@
 #include "stdafx.hpp"
-#include "WriteText.hpp"
+#include "Font.hpp"
 
 #if ENABLE_RESVG
 extern void destroy_resvg_font_options();
