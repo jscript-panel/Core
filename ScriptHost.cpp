@@ -219,7 +219,7 @@ bool ScriptHost::InvokeMouseRbtnUp(WPARAM wp, LPARAM lp)
 
 	DISPPARAMS params{};
 	params.rgvarg = args.data();
-	params.cArgs = js::to_uint(args.size());
+	params.cArgs = js::sizeu(args);
 
 	if FAILED(m_script_root->Invoke(*dispId, IID_NULL, LOCALE_USER_DEFAULT, DISPATCH_METHOD, &params, &result, nullptr, nullptr)) return false;
 	if FAILED(VariantChangeType(&result, &result, 0, VT_BOOL)) return false;
@@ -336,7 +336,7 @@ void ScriptHost::InvokeCallback(CallbackID id, VariantArgs args)
 
 		DISPPARAMS params{};
 		params.rgvarg = args.data();
-		params.cArgs = js::to_uint(args.size());
+		params.cArgs = js::sizeu(args);
 
 		m_script_root->Invoke(*dispId, IID_NULL, LOCALE_USER_DEFAULT, DISPATCH_METHOD, &params, nullptr, nullptr, nullptr);
 	}
