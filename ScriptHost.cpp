@@ -244,11 +244,13 @@ std::string ScriptHost::ExtractValue(std::string_view str)
 	static constexpr char q = '"';
 	const size_t first = str.find_first_of(q);
 	const size_t last = str.find_last_of(q);
+
 	if (first < last && last < str.length())
 	{
 		return std::string(str.substr(first + 1, last - first - 1));
 	}
-	return std::string();
+
+	return {};
 }
 
 std::string ScriptHost::GetErrorText(IActiveScriptError* err)
