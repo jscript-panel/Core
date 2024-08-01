@@ -209,10 +209,12 @@ bool ScriptHost::Initialise()
 
 bool ScriptHost::InvokeMouseRbtnUp(WPARAM wp, LPARAM lp)
 {
-	if (IsKeyPressed(VK_LSHIFT) && IsKeyPressed(VK_LWIN)) return false;
+	if (IsKeyPressed(VK_LSHIFT) && IsKeyPressed(VK_LWIN))
+		return false;
 
 	const auto dispId = GetDISPID(CallbackID::on_mouse_rbtn_up);
-	if (!dispId) return false;
+	if (!dispId)
+		return false;
 
 	VariantArgs args = { wp, GET_Y_LPARAM(lp), GET_X_LPARAM(lp) }; // reversed
 	_variant_t result;
@@ -221,8 +223,12 @@ bool ScriptHost::InvokeMouseRbtnUp(WPARAM wp, LPARAM lp)
 	params.rgvarg = args.data();
 	params.cArgs = js::sizeu(args);
 
-	if FAILED(m_script_root->Invoke(*dispId, IID_NULL, LOCALE_USER_DEFAULT, DISPATCH_METHOD, &params, &result, nullptr, nullptr)) return false;
-	if FAILED(VariantChangeType(&result, &result, 0, VT_BOOL)) return false;
+	if FAILED(m_script_root->Invoke(*dispId, IID_NULL, LOCALE_USER_DEFAULT, DISPATCH_METHOD, &params, &result, nullptr, nullptr))
+		return false;
+
+	if FAILED(VariantChangeType(&result, &result, 0, VT_BOOL))
+		return false;
+
 	return js::to_bool(result.boolVal);
 }
 
