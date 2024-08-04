@@ -14,8 +14,6 @@
 #include "CallbackID.hpp"
 #include "GUIDS.hpp"
 #include "JScriptPanel_h.h"
-#include "ComArrayReader.hpp"
-#include "ComArrayWriter.hpp"
 #include "ComObject.hpp"
 #include "ComObjectSingleton.hpp"
 #include "JSDispatchBase.hpp"
@@ -50,3 +48,6 @@
 #include "PanelBase.hpp"
 #include "PlaybackStatistics.hpp"
 #include "MetadbIndex.hpp"
+
+#include "ComArrayReader.hpp"
+#include "ComArrayWriter.hpp"
