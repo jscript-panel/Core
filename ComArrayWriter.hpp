@@ -3,6 +3,7 @@
 class ComArrayWriter
 {
 public:
+	static HRESULT write_handles_map(const MetadbHandleList::Map& map, VARIANT* out);
 	static HRESULT write_ints(const std::vector<int>& ints, VARIANT* out);
 	static HRESULT write_strings(const WStrings& strings, VARIANT* out);
 	static HRESULT write_strings(const fb2k::array_typed<fb2k::string>& strings, VARIANT* out);

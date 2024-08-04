@@ -4,6 +4,21 @@
 ComArrayWriter::ComArrayWriter(size_t count) : m_psa(SafeArrayCreateVector(VT_VARIANT, 0L, static_cast<ULONG>(count))) {}
 
 #pragma region static
+HRESULT ComArrayWriter::write_handles_map(const MetadbHandleList::Map& map, VARIANT* out)
+{
+	ComArrayWriter writer(map.size() * 2);
+
+	for (auto&& item : map)
+	{
+		auto var = _variant_t(new ComObject<MetadbHandleList>(item.second));
+		RETURN_IF_FAILED(writer.add_item(item.first));
+		RETURN_IF_FAILED(writer.add_item(var));
+	}
+
+	writer.finalise(out);
+	return S_OK;
+}
+
 HRESULT ComArrayWriter::write_ints(const std::vector<int>& ints, VARIANT* out)
 {
 	ComArrayWriter writer(ints.size());
