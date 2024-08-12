@@ -4,6 +4,22 @@
 ComArrayWriter::ComArrayWriter(size_t count) : m_psa(SafeArrayCreateVector(VT_VARIANT, 0L, static_cast<ULONG>(count))) {}
 
 #pragma region static
+HRESULT ComArrayWriter::write_audio_chunk_data(const audio_chunk_impl& chunk, VARIANT* out)
+{
+	const auto size = chunk.get_used_size();
+	const auto data = chunk.get_data();
+	ComArrayWriter writer(size);
+
+	for (const size_t i : std::views::iota(size_t{}, size))
+	{
+		auto var = _variant_t(data[i]);
+		RETURN_IF_FAILED(writer.add_item(var));
+	}
+
+	writer.finalise(out);
+	return S_OK;
+}
+
 HRESULT ComArrayWriter::write_handles_map(const MetadbHandleList::Map& map, VARIANT* out)
 {
 	ComArrayWriter writer(map.size() * 2);

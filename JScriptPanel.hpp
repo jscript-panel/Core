@@ -21,6 +21,7 @@
 #include "JSDisposable.hpp"
 #include "SimpleThreadPool.hpp"
 
+#include "AudioChunk.hpp"
 #include "ContextMenuManager.hpp"
 #include "DropAction.hpp"
 #include "FileInfo.hpp"

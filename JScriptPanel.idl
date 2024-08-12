@@ -17,6 +17,16 @@ library foo_jscript_panel3
 	interface IMetadbHandleList;
 	interface ITextLayout;
 
+	[uuid(8F734FCC-C978-4A62-8649-99509E07ED95)]
+	interface IAudioChunk : IDispatch
+	{
+		[propget] HRESULT ChannelConfig([out, retval] UINT32* out);
+		[propget] HRESULT ChannelCount([out, retval] UINT32* out);
+		[propget] HRESULT Data([out, retval] VARIANT* out);
+		[propget] HRESULT SampleCount([out, retval] UINT_PTR* out);
+		[propget] HRESULT SampleRate([out, retval] UINT32* out);
+	};
+
 	[uuid(9080B381-661D-48F2-93E5-3174ED79879A)]
 	interface IContextMenuManager : IDisposable
 	{
@@ -266,6 +276,7 @@ library foo_jscript_panel3
 		HRESULT EnableAdvancedLogging();
 		HRESULT Exit();
 		HRESULT GetAlbumArtStub([defaultvalue(0)] UINT32 art_id, [out, retval] IJSImage** out);
+		HRESULT GetAudioChunk(double requested_length, [defaultvalue(0)] double offset, [out, retval] IAudioChunk** out);
 		HRESULT GetClipboardContents([out, retval] IMetadbHandleList** out);
 		HRESULT GetDSPPresets([out, retval] BSTR* out);
 		HRESULT GetFocusItem([out, retval] IMetadbHandle** out);
