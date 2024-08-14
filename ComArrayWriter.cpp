@@ -4,16 +4,13 @@
 ComArrayWriter::ComArrayWriter(size_t count) : m_psa(SafeArrayCreateVector(VT_VARIANT, 0L, static_cast<ULONG>(count))) {}
 
 #pragma region static
-HRESULT ComArrayWriter::write_audio_chunk_data(const audio_chunk_impl& chunk, VARIANT* out)
+HRESULT ComArrayWriter::write_audio_samples(std::span<audio_sample> samples, VARIANT* out)
 {
-	const auto size = chunk.get_used_size();
-	const auto data = chunk.get_data();
-	ComArrayWriter writer(size);
+	ComArrayWriter writer(samples.size());
 
-	for (const size_t i : std::views::iota(size_t{}, size))
+	for (auto&& sample : samples)
 	{
-		auto var = _variant_t(data[i]);
-		RETURN_IF_FAILED(writer.add_item(var));
+		RETURN_IF_FAILED(writer.add_item(sample));
 	}
 
 	writer.finalise(out);
@@ -35,14 +32,13 @@ HRESULT ComArrayWriter::write_handles_map(const MetadbHandleList::Map& map, VARI
 	return S_OK;
 }
 
-HRESULT ComArrayWriter::write_ints(const std::vector<int>& ints, VARIANT* out)
+HRESULT ComArrayWriter::write_ints(std::span<int> ints, VARIANT* out)
 {
 	ComArrayWriter writer(ints.size());
 
 	for (const int i : ints)
 	{
-		auto var = _variant_t(i);
-		RETURN_IF_FAILED(writer.add_item(var));
+		RETURN_IF_FAILED(writer.add_item(i));
 	}
 
 	writer.finalise(out);
@@ -89,14 +85,13 @@ HRESULT ComArrayWriter::write_strings(const pfc::array_t<string8>& strings, VARI
 	return S_OK;
 }
 
-HRESULT ComArrayWriter::write_uints(const std::vector<size_t>& uints, VARIANT* out)
+HRESULT ComArrayWriter::write_uints(std::span<size_t> uints, VARIANT* out)
 {
 	ComArrayWriter writer(uints.size());
 
 	for (const size_t i : uints)
 	{
-		auto var = _variant_t(i);
-		RETURN_IF_FAILED(writer.add_item(var));
+		RETURN_IF_FAILED(writer.add_item(i));
 	}
 
 	writer.finalise(out);
@@ -115,6 +110,12 @@ HRESULT ComArrayWriter::add_item(_variant_t& var)
 		m_psa = nullptr;
 	}
 	return hr;
+}
+
+HRESULT ComArrayWriter::add_item(js::IsNum auto num)
+{
+	auto var = _variant_t(num);
+	return add_item(var);
 }
 
 HRESULT ComArrayWriter::add_item(std::wstring_view str)
