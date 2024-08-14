@@ -322,7 +322,8 @@ void ScriptHost::AddImport(std::string_view str)
 	};
 
 	std::string path = ExtractValue(str);
-	if (path.empty()) return;
+	if (path.empty())
+		return;
 
 	for (const auto& [what, with] : replacements)
 	{

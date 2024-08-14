@@ -31,7 +31,8 @@ namespace factory
 	void init()
 	{
 		imaging = wil::CoCreateInstanceNoThrow<IWICImagingFactory2>(CLSID_WICImagingFactory);
-		if (!imaging) return;
+		if (!imaging)
+			return;
 
 		const auto hr = []
 			{
