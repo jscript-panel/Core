@@ -2,6 +2,22 @@
 
 namespace Component
 {
+	std::string about()
+	{
+		const std::string msvc = std::to_string(_MSC_FULL_VER);
+
+		return fmt::format(
+			"Copyright(C) 2015 - 2024 marc2003\n\nBuild: {}, {}\n\nfoobar2000 SDK: {}\nColumns UI SDK: {}\nMSVC: {}.{}.{}",
+			__TIME__,
+			__DATE__,
+			FOOBAR2000_SDK_VERSION,
+			UI_EXTENSION_VERSION,
+			msvc.substr(0, 2),
+			msvc.substr(2, 2),
+			msvc.substr(4)
+		);
+	}
+
 	void log(std::string_view msg)
 	{
 		FB2K_console_formatter() << fmt::format("{}: {}", name_version, msg);
@@ -22,7 +38,7 @@ namespace Component
 	cfgDialogPosition dialog_position(guids::dialog_position);
 	cfg_string pin_to(guids::cfg_string_pin_to, "");
 
-	DECLARE_COMPONENT_VERSION(name, version_string, about)
+	DECLARE_COMPONENT_VERSION(name, version_string, about())
 
 	class InstallationValidator : public component_installation_validator
 	{
