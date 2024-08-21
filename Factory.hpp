@@ -12,6 +12,7 @@ namespace factory
 	static const auto White = D2D1::ColorF(D2D1::ColorF::White);
 
 	extern bool inited;
+	extern std::vector<std::wstring> font_names;
 	extern wil::com_ptr_nothrow<IWICImagingFactory2> imaging;
 	extern wil::com_ptr_t<ID2D1Factory1> d2d;
 	extern wil::com_ptr_t<IDWriteFactory> dwrite;
@@ -19,5 +20,7 @@ namespace factory
 	extern wil::com_ptr_t<IDWriteTextFormat> error_text_format;
 	extern wil::com_ptr_t<IDWriteTypography> typography;
 
+	bool check_font_name(std::wstring_view name);
+	std::wstring get_font_name(IDWriteLocalizedStrings* localised_strings);
 	void reset();
 }

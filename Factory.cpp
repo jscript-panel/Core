@@ -8,6 +8,7 @@ extern void destroy_resvg_font_options();
 namespace factory
 {
 	bool inited{};
+	std::vector<std::wstring> font_names;
 	wil::com_ptr_nothrow<IWICImagingFactory2> imaging;
 	wil::com_ptr_t<ID2D1Factory1> d2d;
 	wil::com_ptr_t<IDWriteFactory> dwrite;
@@ -28,31 +29,32 @@ namespace factory
 		return font.create_format(error_text_format, params);
 	}
 
-	void init()
+	bool check_font_name(std::wstring_view name)
 	{
-		imaging = wil::CoCreateInstanceNoThrow<IWICImagingFactory2>(CLSID_WICImagingFactory);
-		if (!imaging)
-			return;
-
-		const auto hr = []
+		const auto it = std::ranges::find_if(font_names, [name](std::wstring_view font_name)
 			{
-				RETURN_IF_FAILED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &d2d));
-				RETURN_IF_FAILED(DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(dwrite), dwrite.put_unknown()));
-				RETURN_IF_FAILED(dwrite->GetGdiInterop(&gdi_interop));
-				RETURN_IF_FAILED(dwrite->CreateTypography(&typography));
-				RETURN_IF_FAILED(typography->AddFontFeature({ DWRITE_FONT_FEATURE_TAG_TABULAR_FIGURES, 1 }));
-				RETURN_IF_FAILED(create_error_text_format());
-				return S_OK;
-			}();
+				return js::compare_string(name, font_name);
+			});
 
-		if SUCCEEDED(hr)
+		return it != font_names.end();
+	}
+
+	std::wstring get_font_name(IDWriteLocalizedStrings* localised_strings)
+	{
+		uint32_t length{};
+
+		if SUCCEEDED(localised_strings->GetStringLength(0, &length))
 		{
-			inited = true;
+			std::wstring name;
+			name.resize(length);
+
+			if SUCCEEDED(localised_strings->GetString(0, name.data(), length + 1))
+			{
+				return name;
+			}
 		}
-		else
-		{
-			Component::log(format_hresult(hr));
-		}
+
+		return DefaultFont.data();
 	}
 
 	void reset()
@@ -69,5 +71,61 @@ namespace factory
 #endif
 	}
 
-	FB2K_ON_INIT_STAGE(init, init_stages::before_ui_init)
+	namespace
+	{
+		HRESULT init_fonts()
+		{
+			wil::com_ptr_t<IDWriteFontCollection> font_collection;
+			RETURN_IF_FAILED(dwrite->GetSystemFontCollection(&font_collection, TRUE));
+
+			const uint32_t family_count = font_collection->GetFontFamilyCount();
+			wil::com_ptr_t<IDWriteFontFamily> font_family;
+			wil::com_ptr_t<IDWriteLocalizedStrings> family_names;
+
+			for (const uint32_t i : std::views::iota(0U, family_count))
+			{
+				if FAILED(font_collection->GetFontFamily(i, &font_family))
+					continue;
+
+				if FAILED(font_family->GetFamilyNames(&family_names))
+					continue;
+
+				const auto name = get_font_name(family_names.get());
+				font_names.emplace_back(name);
+			}
+
+			js::sort_strings(font_names);
+			return S_OK;
+		}
+
+		void init()
+		{
+			imaging = wil::CoCreateInstanceNoThrow<IWICImagingFactory2>(CLSID_WICImagingFactory);
+			if (!imaging)
+				return;
+
+			const auto hr = []
+				{
+					RETURN_IF_FAILED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &d2d));
+					RETURN_IF_FAILED(DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(dwrite), dwrite.put_unknown()));
+					RETURN_IF_FAILED(dwrite->GetGdiInterop(&gdi_interop));
+					RETURN_IF_FAILED(dwrite->CreateTypography(&typography));
+					RETURN_IF_FAILED(typography->AddFontFeature({ DWRITE_FONT_FEATURE_TAG_TABULAR_FIGURES, 1 }));
+					RETURN_IF_FAILED(create_error_text_format());
+					RETURN_IF_FAILED(init_fonts());
+					return S_OK;
+				}();
+
+			if SUCCEEDED(hr)
+			{
+				inited = true;
+			}
+			else
+			{
+				Component::log(format_hresult(hr));
+			}
+		}
+
+		FB2K_ON_INIT_STAGE(init, init_stages::before_ui_init)
+	}
 }
