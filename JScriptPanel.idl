@@ -222,7 +222,7 @@ library foo_jscript_panel3
 	[uuid(41F4FBFD-98E4-4939-9BB5-35A2D1CFE581)]
 	interface ITextLayout : IDisposable
 	{
-		HRESULT render(void* ctx, void* br, float x, float y, float w, float h, float vertical_offset, VARIANT colour);
+		HRESULT Draw(void* ctx, void* br, float x, float y, float w, float h, float vertical_offset, VARIANT colour);
 
 		HRESULT CalcTextHeight(float max_width, [out, retval] float* out);
 	};
