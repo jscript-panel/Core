@@ -176,7 +176,7 @@ bool ScriptHost::Initialise()
 			static constexpr long version = 1L + SCRIPTLANGUAGEVERSION_5_8;
 			auto var = _variant_t(version);
 
-			m_script_engine = wil::CoCreateInstanceNoThrow<IActiveScript>(jscript9clsid);
+			m_script_engine = wil::CoCreateInstance<IActiveScript>(jscript9clsid);
 
 			RETURN_HR_IF(E_FAIL, !factory::inited);
 			RETURN_HR_IF(E_FAIL, !m_script_engine);

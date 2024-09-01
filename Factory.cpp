@@ -9,7 +9,7 @@ namespace factory
 {
 	bool inited{};
 	std::vector<std::wstring> font_names;
-	wil::com_ptr_nothrow<IWICImagingFactory2> imaging;
+	wil::com_ptr_t<IWICImagingFactory2> imaging;
 	wil::com_ptr_t<ID2D1Factory1> d2d;
 	wil::com_ptr_t<IDWriteFactory> dwrite;
 	wil::com_ptr_t<IDWriteGdiInterop> gdi_interop;
@@ -100,7 +100,7 @@ namespace factory
 
 		void init()
 		{
-			imaging = wil::CoCreateInstanceNoThrow<IWICImagingFactory2>(CLSID_WICImagingFactory);
+			imaging = wil::CoCreateInstance<IWICImagingFactory2>(CLSID_WICImagingFactory2);
 			if (!imaging)
 				return;
 

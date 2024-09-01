@@ -42,7 +42,7 @@ private:
 	SCRIPTSTATE m_state{};
 	Strings m_imports;
 	std::unordered_map<DWORD, std::string> m_context_to_path_map;
-	wil::com_ptr_nothrow<IActiveScript> m_script_engine;
+	wil::com_ptr_t<IActiveScript> m_script_engine;
 	wil::com_ptr_t<IActiveScriptProperty> m_script_property;
 	wil::com_ptr_t<IActiveScriptParse> m_parser;
 	wil::com_ptr_t<IDispatch> m_script_root;
