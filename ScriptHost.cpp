@@ -46,16 +46,16 @@ HRESULT ScriptHost::ParseImports()
 {
 	for (auto&& path : m_imports)
 	{
-		FileHelper f(path);
-		if (f.is_file())
+		if (FileHelper(path).is_file())
 		{
-			RETURN_IF_FAILED(ParseScript(f.read(), path));
+			RETURN_IF_FAILED(ParseScript(TextFile(path).read(), path));
 		}
 		else
 		{
-			FB2K_console_formatter() << fmt::format("{}: file not found {}", m_build_string, path);
+			FB2K_console_formatter() << fmt::format("{}: import file not found {}", m_build_string, path);
 		}
 	}
+
 	return S_OK;
 }
 
@@ -135,7 +135,12 @@ STDMETHODIMP ScriptHost::OnScriptError(IActiveScriptError* err)
 	fb2k::inMainThread([error_text] { Component::popup(error_text); });
 
 	MessageBeep(MB_ICONASTERISK);
-	if (m_script_engine) m_script_engine->SetScriptState(SCRIPTSTATE_DISCONNECTED);
+
+	if (m_script_engine)
+	{
+		m_script_engine->SetScriptState(SCRIPTSTATE_DISCONNECTED);
+	}
+
 	m_panel->Reset();
 	return S_OK;
 }
@@ -238,10 +243,9 @@ std::optional<DISPID> ScriptHost::GetDISPID(CallbackID id)
 	{
 		const auto it = m_callback_map.find(id);
 		if (it != m_callback_map.end())
-		{
 			return it->second;
-		}
 	}
+
 	return std::nullopt;
 }
 
@@ -252,9 +256,7 @@ std::string ScriptHost::ExtractValue(std::string_view str)
 	const size_t last = str.find_last_of(q);
 
 	if (first < last && last < str.length())
-	{
 		return std::string(str.substr(first + 1, last - first - 1));
-	}
 
 	return {};
 }
@@ -297,10 +299,12 @@ std::string ScriptHost::GetErrorText(IActiveScriptError* err)
 	if SUCCEEDED(err->GetSourcePosition(&ctx, &line, &charpos))
 	{
 		const auto it = m_context_to_path_map.find(ctx);
+
 		if (it != m_context_to_path_map.end())
 		{
 			errors.emplace_back(fmt::format("File: {}", it->second));
 		}
+
 		errors.emplace_back(fmt::format("Line: {}, Col: {}", line + 1, charpos + 1));
 	}
 
@@ -333,6 +337,7 @@ void ScriptHost::AddImport(std::string_view str)
 			break;
 		}
 	}
+
 	m_imports.emplace_back(path);
 }
 
@@ -362,6 +367,7 @@ void ScriptHost::Reset()
 	if (m_script_engine && Connected())
 	{
 		wil::com_ptr_t<IActiveScriptGarbageCollector> gc;
+
 		if SUCCEEDED(m_script_engine->QueryInterface(&gc))
 		{
 			gc->CollectGarbage(SCRIPTGCTYPE_EXHAUSTIVE);
@@ -416,9 +422,20 @@ void ScriptHost::ParsePreprocessor()
 		}
 	}
 
-	if (m_name.empty()) m_name = fmt::format("id:{}", m_panel->m_id);
-	if (version.length()) version = fmt::format(" v{}", version);
-	if (author.length()) author = fmt::format(" by {}", author);
+	if (m_name.empty())
+	{
+		m_name = fmt::format("id:{}", m_panel->m_id);
+	}
+	
+	if (version.length())
+	{
+		version = fmt::format(" v{}", version);
+	}
+
+	if (author.length())
+	{
+		author = fmt::format(" by {}", author);
+	}
 
 	m_build_string = fmt::format("{} ({}{}{})", Component::name_version, m_name, version, author);
 }
