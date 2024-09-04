@@ -426,7 +426,7 @@ void ScriptHost::ParsePreprocessor()
 	{
 		m_name = fmt::format("id:{}", m_panel->m_id);
 	}
-	
+
 	if (version.length())
 	{
 		version = fmt::format(" v{}", version);

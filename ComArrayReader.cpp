@@ -4,12 +4,17 @@
 HRESULT ComArrayReader::convert(const VARIANT& v, pfc::bit_array_bittable& out)
 {
 	RETURN_IF_FAILED(init(v, VT_UI4));
-	if (m_data.empty()) out.resize(0);
+	
+	if (m_data.empty())
+	{
+		out.resize(0);
+	}
 
 	for (auto&& item : m_data)
 	{
 		out.set(item.ulVal, true);
 	}
+
 	return S_OK;
 }
 
@@ -22,6 +27,7 @@ HRESULT ComArrayReader::convert(const VARIANT& v, pfc::string_list_impl& out)
 		const string8 str = js::from_wide(item.bstrVal);
 		out.add_item(str);
 	}
+
 	return S_OK;
 }
 
@@ -51,5 +57,6 @@ HRESULT ComArrayReader::init(const VARIANT& v, VARTYPE vt)
 	{
 		RETURN_IF_FAILED(get_property(pdisp, std::to_wstring(i), vt, m_data[i]));
 	}
+
 	return S_OK;
 }

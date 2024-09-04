@@ -44,8 +44,15 @@ struct AlbumArtCallbackData
 
 	~AlbumArtCallbackData()
 	{
-		if (m_handle) m_handle->Release();
-		if (m_image) m_image->Release();
+		if (m_handle)
+		{
+			m_handle->Release();
+		}
+
+		if (m_image)
+		{
+			m_image->Release();
+		}
 	}
 
 	IJSImage* m_image{};
@@ -59,7 +66,10 @@ struct ImageCallbackData
 
 	~ImageCallbackData()
 	{
-		if (m_image) m_image->Release();
+		if (m_image)
+		{
+			m_image->Release();
+		}
 	}
 
 	IJSImage* m_image{};

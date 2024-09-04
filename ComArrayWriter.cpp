@@ -109,6 +109,7 @@ HRESULT ComArrayWriter::add_item(_variant_t& var)
 		SafeArrayDestroy(m_psa);
 		m_psa = nullptr;
 	}
+
 	return hr;
 }
 

@@ -49,9 +49,7 @@ namespace factory
 			name.resize(length);
 
 			if SUCCEEDED(localised_strings->GetString(0, name.data(), length + 1))
-			{
 				return name;
-			}
 		}
 
 		return DefaultFont.data();

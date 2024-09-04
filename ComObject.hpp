@@ -17,6 +17,7 @@ public:
 	ULONG STDMETHODCALLTYPE Release() final
 	{
 		const long n = --m_counter;
+
 		if (n == 0)
 		{
 			if constexpr (requires { this->Dispose(); })
@@ -25,6 +26,7 @@ public:
 			}
 			delete this;
 		}
+
 		return n;
 	}
 
