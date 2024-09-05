@@ -36,7 +36,6 @@ namespace Component
 	}
 
 	cfgDialogPosition dialog_position(guids::dialog_position);
-	cfg_string pin_to(guids::cfg_string_pin_to, "");
 
 	DECLARE_COMPONENT_VERSION(name, version_string, about())
 

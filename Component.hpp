@@ -20,5 +20,4 @@ namespace Component
 	static constexpr uint32_t max_image_size = 64 * 1024 * 1024;
 
 	extern cfgDialogPosition dialog_position;
-	extern cfg_string pin_to;
 }
