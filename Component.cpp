@@ -4,12 +4,17 @@ namespace Component
 {
 	std::string about()
 	{
+		const std::string date = pfc::string(__DATE__).replace("  ", " ").get_ptr();
 		const std::string msvc = std::to_string(_MSC_FULL_VER);
 
 		return fmt::format(
-			"Copyright(C) 2015 - 2024 marc2003\n\nBuild: {}, {}\n\nfoobar2000 SDK: {}\nColumns UI SDK: {}\nMSVC: {}.{}.{}",
+			"Copyright(C) 2015 - 2024 marc2003\n\n"
+			"Build: {}, {}\n\n"
+			"foobar2000 SDK: {}\n"
+			"Columns UI SDK: {}\n"
+			"MSVC: {}.{}.{}",
 			__TIME__,
-			__DATE__,
+			date,
 			FOOBAR2000_SDK_VERSION,
 			UI_EXTENSION_VERSION,
 			msvc.substr(0, 2),
