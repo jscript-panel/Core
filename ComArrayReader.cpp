@@ -4,7 +4,7 @@
 HRESULT ComArrayReader::convert(const VARIANT& v, pfc::bit_array_bittable& out)
 {
 	RETURN_IF_FAILED(init(v, VT_UI4));
-	
+
 	if (m_data.empty())
 	{
 		out.resize(0);
