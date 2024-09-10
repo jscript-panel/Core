@@ -419,7 +419,7 @@ library foo_jscript_panel3
 		HRESULT CreateTextLayout2(BSTR text, BSTR fonts, [defaultvalue(0)] UINT32 text_alignment, [defaultvalue(0)] UINT32 paragraph_alignment, [defaultvalue(0)] UINT32 word_wrapping, [defaultvalue(0)] UINT32 trimming_granularity, [out, retval] ITextLayout** out);
 		HRESULT DateStringToTimestamp(BSTR str, [out, retval] UINT32* out);
 		HRESULT DetectCharset(BSTR path, [out, retval] UINT32* out);
-		HRESULT DownloadFileAsync(UINT32 window_id, BSTR url, BSTR path);
+		HRESULT DownloadFileAsync(UINT32 window_id, BSTR url, BSTR path, [defaultvalue(0)] VARIANT_BOOL verify_image);
 		HRESULT DownloadImageAsync(UINT32 window_id, BSTR url);
 		HRESULT FormatDuration(double seconds, [out, retval] BSTR* out);
 		HRESULT FormatFileSize(UINT64 bytes, [out, retval] BSTR* out);
