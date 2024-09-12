@@ -80,7 +80,7 @@ library foo_jscript_panel3
 		HRESULT WriteText2(BSTR text, BSTR font_str, __int64 colour, float x, float y, float w, float h, [defaultvalue(0)] UINT32 text_alignment, [defaultvalue(0)] UINT32 paragraph_alignment, [defaultvalue(0)] UINT32 word_wrapping, [defaultvalue(0)] UINT32 trimming_granularity);
 		HRESULT WriteTextLayout(ITextLayout* layout, VARIANT colour, float x, float y, float w, float h, [defaultvalue(0)] float vertical_offset);
 		HRESULT WriteTextSimple(BSTR text, BSTR font_str, __int64 colour, float x, float y, float w, float h, [defaultvalue(0)] UINT32 text_alignment, [defaultvalue(0)] UINT32 paragraph_alignment, [defaultvalue(0)] UINT32 word_wrapping, [defaultvalue(0)] UINT32 trimming_granularity);
-		void init(void* context, void* brush, void* gradient);
+		void init(void* context, void* brush);
 	};
 
 	[uuid(0AE6C5C9-4FF1-4605-8025-C8280A5428C3)]
