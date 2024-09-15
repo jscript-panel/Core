@@ -81,21 +81,21 @@ namespace guids
 		&contextmenu_item::caller_media_library_viewer,
 	};
 
-	static const std::map<const string8, const GUID*> menu_groups =
+	static constexpr std::array menu_groups =
 	{
-		{ "file", &mainmenu_groups::file },
-		{ "edit", &mainmenu_groups::edit },
-		{ "view", &mainmenu_groups::view },
-		{ "playback", &mainmenu_groups::playback },
-		{ "library", &mainmenu_groups::library },
-		{ "help", &mainmenu_groups::help }
+		std::make_pair(L"file", &mainmenu_groups::file),
+		std::make_pair(L"edit", &mainmenu_groups::edit),
+		std::make_pair(L"view", &mainmenu_groups::view),
+		std::make_pair(L"playback", &mainmenu_groups::playback),
+		std::make_pair(L"library", &mainmenu_groups::library),
+		std::make_pair(L"help", &mainmenu_groups::help)
 	};
 
-	static const std::vector<std::pair<const GUID*, const CallbackID>> watched_objects =
+	static constexpr std::array watched_objects =
 	{
-		{ &standard_config_objects::bool_playlist_stop_after_current, CallbackID::on_playlist_stop_after_current_changed },
-		{ &standard_config_objects::bool_cursor_follows_playback, CallbackID::on_cursor_follow_playback_changed },
-		{ &standard_config_objects::bool_playback_follows_cursor, CallbackID::on_playback_follow_cursor_changed },
-		{ &standard_config_objects::bool_ui_always_on_top, CallbackID::on_always_on_top_changed }
+		std::make_pair(&standard_config_objects::bool_playlist_stop_after_current, CallbackID::on_playlist_stop_after_current_changed),
+		std::make_pair(&standard_config_objects::bool_cursor_follows_playback, CallbackID::on_cursor_follow_playback_changed),
+		std::make_pair(&standard_config_objects::bool_playback_follows_cursor, CallbackID::on_playback_follow_cursor_changed),
+		std::make_pair(&standard_config_objects::bool_ui_always_on_top, CallbackID::on_always_on_top_changed)
 	};
 }
