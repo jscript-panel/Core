@@ -9,8 +9,8 @@ namespace Component
 	static constexpr std::string_view name = "JScript Panel 3";
 	static constexpr std::string_view dll = "foo_jscript_panel3.dll";
 
-	static constexpr uint32_t version_number = 30709;
-	static constexpr std::string_view version_string = "3.7.9";
+	static constexpr uint32_t version_number = 30800;
+	static constexpr std::string_view version_string = "3.8.0";
 	static const std::string name_version = fmt::format("{}{}", name, version_string.substr(1));
 	static const std::string default_user_agent = fmt::format("{}/{}", dll, version_string);
 
