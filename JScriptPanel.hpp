@@ -5,7 +5,8 @@
 #include "Factory.hpp"
 
 #include "To.hpp"
-#include "Text.hpp"
+#include "String.hpp"
+#include "WString.hpp"
 #include "Misc.hpp"
 #include "Colour.hpp"
 #include "FileHelper.hpp"
