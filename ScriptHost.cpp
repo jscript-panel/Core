@@ -319,7 +319,7 @@ std::string ScriptHost::GetErrorText(IActiveScriptError* err)
 
 void ScriptHost::AddImport(std::string_view str)
 {
-	static const std::vector<StringPair> replacements =
+	static const StringPairs replacements =
 	{
 		{ "%fb2k_profile_path%", js::from_wide(Path::profile()) },
 		{ "%fb2k_component_path%", js::from_wide(Path::component()) },
