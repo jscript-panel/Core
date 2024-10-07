@@ -13,6 +13,7 @@ namespace factory
 
 	extern bool inited;
 	extern std::vector<std::wstring> font_names;
+	extern wil::com_ptr_t<ITypeLib> type_lib;
 	extern wil::com_ptr_t<IWICImagingFactory2> imaging;
 	extern wil::com_ptr_t<ID2D1Factory1> d2d;
 	extern wil::com_ptr_t<IDWriteFactory> dwrite;
