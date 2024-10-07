@@ -124,6 +124,6 @@ namespace factory
 			}
 		}
 
-		FB2K_ON_INIT_STAGE(init, init_stages::before_ui_init)
+		FB2K_ON_INIT_STAGE(init, init_stages::before_ui_init);
 	}
 }
