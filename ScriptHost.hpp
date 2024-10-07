@@ -30,7 +30,7 @@ public:
 private:
 	HRESULT InitCallbackMap();
 	HRESULT ParseImports();
-	HRESULT ParseScript(std::string_view code, std::string_view path);
+	HRESULT ParseScript(std::string_view path);
 	std::optional<DISPID> GetDISPID(CallbackID id);
 	std::string ExtractValue(std::string_view str);
 	std::string GetErrorText(IActiveScriptError* err);

@@ -48,7 +48,7 @@ HRESULT ScriptHost::ParseImports()
 	{
 		if (FileHelper(path).is_file())
 		{
-			RETURN_IF_FAILED(ParseScript(TextFile(path).read(), path));
+			RETURN_IF_FAILED(ParseScript(path));
 		}
 		else
 		{
@@ -59,10 +59,21 @@ HRESULT ScriptHost::ParseImports()
 	return S_OK;
 }
 
-HRESULT ScriptHost::ParseScript(std::string_view code, std::string_view path)
+HRESULT ScriptHost::ParseScript(std::string_view path)
 {
+	std::wstring wcode;
+
+	if (path == "<main>")
+	{
+		wcode = js::to_wide(m_panel->m_config.m_code);
+	}
+	else
+	{
+		const auto code = TextFile(path).read();
+		wcode = js::to_wide(code);
+	}
+
 	m_context_to_path_map.emplace(++m_last_source_context, path);
-	const auto wcode = js::to_wide(code);
 	return m_parser->ParseScriptText(wcode.data(), nullptr, nullptr, nullptr, m_last_source_context, 0, SCRIPTTEXT_HOSTMANAGESSOURCE | SCRIPTTEXT_ISVISIBLE, nullptr, nullptr);
 }
 
@@ -198,7 +209,7 @@ bool ScriptHost::Initialise()
 			RETURN_IF_FAILED(m_script_engine->SetScriptState(SCRIPTSTATE_CONNECTED));
 			RETURN_IF_FAILED(m_script_engine->GetScriptDispatch(nullptr, &m_script_root));
 			RETURN_IF_FAILED(ParseImports());
-			RETURN_IF_FAILED(ParseScript(m_panel->m_config.m_code, "<main>"));
+			RETURN_IF_FAILED(ParseScript("<main>"));
 			RETURN_IF_FAILED(InitCallbackMap());
 			return S_OK;
 		}();
