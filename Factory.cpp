@@ -9,25 +9,13 @@ namespace factory
 {
 	bool inited{};
 	std::vector<std::wstring> font_names;
+	wil::com_ptr_t<ITypeLib> type_lib;
 	wil::com_ptr_t<IWICImagingFactory2> imaging;
 	wil::com_ptr_t<ID2D1Factory1> d2d;
 	wil::com_ptr_t<IDWriteFactory> dwrite;
 	wil::com_ptr_t<IDWriteGdiInterop> gdi_interop;
 	wil::com_ptr_t<IDWriteTextFormat> error_text_format;
 	wil::com_ptr_t<IDWriteTypography> typography;
-
-	HRESULT create_error_text_format()
-	{
-		auto font = Font();
-		font.m_size = 24.f;
-		font.m_weight = DWRITE_FONT_WEIGHT_BOLD;
-
-		auto params = FormatParams();
-		params.m_text_alignment = DWRITE_TEXT_ALIGNMENT_CENTER;
-		params.m_paragraph_alignment = DWRITE_PARAGRAPH_ALIGNMENT_CENTER;
-
-		return font.create_format(error_text_format, params);
-	}
 
 	bool check_font_name(std::wstring_view name)
 	{
@@ -63,6 +51,7 @@ namespace factory
 		imaging.reset();
 		error_text_format.reset();
 		typography.reset();
+		type_lib.reset();
 
 #if ENABLE_RESVG
 		destroy_resvg_font_options();
@@ -71,6 +60,19 @@ namespace factory
 
 	namespace
 	{
+		HRESULT create_error_text_format()
+		{
+			auto font = Font();
+			font.m_size = 24.f;
+			font.m_weight = DWRITE_FONT_WEIGHT_BOLD;
+
+			auto params = FormatParams();
+			params.m_text_alignment = DWRITE_TEXT_ALIGNMENT_CENTER;
+			params.m_paragraph_alignment = DWRITE_PARAGRAPH_ALIGNMENT_CENTER;
+
+			return font.create_format(error_text_format, params);
+		}
+
 		HRESULT init_fonts()
 		{
 			wil::com_ptr_t<IDWriteFontCollection> font_collection;
@@ -96,9 +98,16 @@ namespace factory
 			return S_OK;
 		}
 
+		HRESULT init_type_lib()
+		{
+			const auto path = wil::GetModuleFileNameW(core_api::get_my_instance());
+			return LoadTypeLibEx(path.get(), REGKIND_NONE, &type_lib);
+		}
+
 		void init()
 		{
 			imaging = wil::CoCreateInstance<IWICImagingFactory2>(CLSID_WICImagingFactory2);
+
 			if (!imaging)
 				return;
 
@@ -111,6 +120,7 @@ namespace factory
 					RETURN_IF_FAILED(typography->AddFontFeature({ DWRITE_FONT_FEATURE_TAG_TABULAR_FIGURES, 1 }));
 					RETURN_IF_FAILED(create_error_text_format());
 					RETURN_IF_FAILED(init_fonts());
+					RETURN_IF_FAILED(init_type_lib());
 					return S_OK;
 				}();
 
@@ -124,6 +134,6 @@ namespace factory
 			}
 		}
 
-		FB2K_ON_INIT_STAGE(init, init_stages::before_ui_init)
+		FB2K_ON_INIT_STAGE(init, init_stages::before_ui_init);
 	}
 }
