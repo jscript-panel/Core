@@ -25,12 +25,19 @@ public:
 	void Reset();
 
 	std::string m_build_string, m_name;
-	std::unordered_map<CallbackID, DISPID> m_callback_map;
 
 private:
+	struct Preprocessor
+	{
+		static constexpr std::string_view Start = "// ==PREPROCESSOR==";
+		static constexpr std::string_view End = "// ==/PREPROCESSOR==";
+	};
+
 	HRESULT InitCallbackMap();
+	HRESULT InitScriptEngine();
+	HRESULT InitVersion();
 	HRESULT ParseImports();
-	HRESULT ParseScript(std::string_view code, std::string_view path);
+	HRESULT ParseScript(std::string_view path);
 	std::optional<DISPID> GetDISPID(CallbackID id);
 	std::string ExtractValue(std::string_view str);
 	std::string GetErrorText(IActiveScriptError* err);
@@ -41,6 +48,7 @@ private:
 	PanelBase* m_panel;
 	SCRIPTSTATE m_state{};
 	Strings m_imports;
+	std::unordered_map<CallbackID, DISPID> m_callback_map;
 	std::unordered_map<DWORD, std::string> m_context_to_path_map;
 	wil::com_ptr_t<IActiveScript> m_script_engine;
 	wil::com_ptr_t<IActiveScriptProperty> m_script_property;

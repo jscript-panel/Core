@@ -42,13 +42,32 @@ HRESULT ScriptHost::InitCallbackMap()
 	return S_OK;
 }
 
+HRESULT ScriptHost::InitScriptEngine()
+{
+	static constexpr CLSID jscript9clsid = { 0x16d51579, 0xa30b, 0x4c8b, { 0xa2, 0x76, 0x0f, 0xf4, 0xdc, 0x41, 0xe7, 0x55 } };
+
+	m_script_engine = wil::CoCreateInstance<IActiveScript>(jscript9clsid);
+	RETURN_HR_IF(E_FAIL, !m_script_engine);
+	return S_OK;
+}
+
+HRESULT ScriptHost::InitVersion()
+{
+	static constexpr long version = 1L + SCRIPTLANGUAGEVERSION_5_8;
+	auto var = _variant_t(version);
+
+	RETURN_IF_FAILED(m_script_engine->QueryInterface(&m_script_property));
+	RETURN_IF_FAILED(m_script_property->SetProperty(SCRIPTPROP_INVOKEVERSIONING, nullptr, &var));
+	return S_OK;
+}
+
 HRESULT ScriptHost::ParseImports()
 {
 	for (auto&& path : m_imports)
 	{
 		if (FileHelper(path).is_file())
 		{
-			RETURN_IF_FAILED(ParseScript(TextFile(path).read(), path));
+			RETURN_IF_FAILED(ParseScript(path));
 		}
 		else
 		{
@@ -59,10 +78,21 @@ HRESULT ScriptHost::ParseImports()
 	return S_OK;
 }
 
-HRESULT ScriptHost::ParseScript(std::string_view code, std::string_view path)
+HRESULT ScriptHost::ParseScript(std::string_view path)
 {
+	std::wstring wcode;
+
+	if (path == "<main>")
+	{
+		wcode = js::to_wide(m_panel->m_config.m_code);
+	}
+	else
+	{
+		const auto code = TextFile(path).read();
+		wcode = js::to_wide(code);
+	}
+
 	m_context_to_path_map.emplace(++m_last_source_context, path);
-	const auto wcode = js::to_wide(code);
 	return m_parser->ParseScriptText(wcode.data(), nullptr, nullptr, nullptr, m_last_source_context, 0, SCRIPTTEXT_HOSTMANAGESSOURCE | SCRIPTTEXT_ISVISIBLE, nullptr, nullptr);
 }
 
@@ -108,6 +138,7 @@ STDMETHODIMP ScriptHost::GetItemInfo(LPCOLESTR name, DWORD mask, IUnknown** ppun
 			return S_OK;
 		}
 	}
+
 	return TYPE_E_ELEMENTNOTFOUND;
 }
 
@@ -130,9 +161,13 @@ STDMETHODIMP ScriptHost::OnScriptError(IActiveScriptError* err)
 {
 	RETURN_HR_IF_NULL(E_POINTER, err);
 
-	const std::string error_text = GetErrorText(err);
+	const auto error_text = GetErrorText(err);
 	FB2K_console_formatter() << error_text;
-	fb2k::inMainThread([error_text] { Component::popup(error_text); });
+
+	fb2k::inMainThread([error_text]
+		{
+			Component::popup(error_text);
+		});
 
 	MessageBeep(MB_ICONASTERISK);
 
@@ -177,16 +212,9 @@ bool ScriptHost::Initialise()
 
 	const auto hr = [this]
 		{
-			static constexpr CLSID jscript9clsid = { 0x16d51579, 0xa30b, 0x4c8b, { 0xa2, 0x76, 0x0f, 0xf4, 0xdc, 0x41, 0xe7, 0x55 } };
-			static constexpr long version = 1L + SCRIPTLANGUAGEVERSION_5_8;
-			auto var = _variant_t(version);
-
-			m_script_engine = wil::CoCreateInstance<IActiveScript>(jscript9clsid);
-
 			RETURN_HR_IF(E_FAIL, !factory::inited);
-			RETURN_HR_IF(E_FAIL, !m_script_engine);
-			RETURN_IF_FAILED(m_script_engine->QueryInterface(&m_script_property));
-			RETURN_IF_FAILED(m_script_property->SetProperty(SCRIPTPROP_INVOKEVERSIONING, nullptr, &var));
+			RETURN_IF_FAILED(InitScriptEngine());
+			RETURN_IF_FAILED(InitVersion());
 			RETURN_IF_FAILED(m_script_engine->SetScriptSite(this));
 			RETURN_IF_FAILED(m_script_engine->QueryInterface(&m_parser));
 			RETURN_IF_FAILED(m_parser->InitNew());
@@ -198,7 +226,7 @@ bool ScriptHost::Initialise()
 			RETURN_IF_FAILED(m_script_engine->SetScriptState(SCRIPTSTATE_CONNECTED));
 			RETURN_IF_FAILED(m_script_engine->GetScriptDispatch(nullptr, &m_script_root));
 			RETURN_IF_FAILED(ParseImports());
-			RETURN_IF_FAILED(ParseScript(m_panel->m_config.m_code, "<main>"));
+			RETURN_IF_FAILED(ParseScript("<main>"));
 			RETURN_IF_FAILED(InitCallbackMap());
 			return S_OK;
 		}();
@@ -242,6 +270,7 @@ std::optional<DISPID> ScriptHost::GetDISPID(CallbackID id)
 	if (m_script_root && Connected())
 	{
 		const auto it = m_callback_map.find(id);
+
 		if (it != m_callback_map.end())
 			return it->second;
 	}
@@ -251,9 +280,9 @@ std::optional<DISPID> ScriptHost::GetDISPID(CallbackID id)
 
 std::string ScriptHost::ExtractValue(std::string_view str)
 {
-	static constexpr char q = '"';
-	const size_t first = str.find_first_of(q);
-	const size_t last = str.find_last_of(q);
+	static constexpr auto q = '"';
+	const auto first = str.find_first_of(q);
+	const auto last = str.find_last_of(q);
 
 	if (first < last && last < str.length())
 		return std::string(str.substr(first + 1, last - first - 1));
@@ -313,13 +342,12 @@ std::string ScriptHost::GetErrorText(IActiveScriptError* err)
 		errors.emplace_back(js::from_wide(sourceline.get()));
 	}
 
-	const std::string error_text = fmt::format("{}", fmt::join(errors, CRLF.data()));
-	return error_text;
+	return fmt::format("{}", fmt::join(errors, CRLF.data()));
 }
 
 void ScriptHost::AddImport(std::string_view str)
 {
-	static const std::vector<StringPair> replacements =
+	static const StringPairs replacements =
 	{
 		{ "%fb2k_profile_path%", js::from_wide(Path::profile()) },
 		{ "%fb2k_component_path%", js::from_wide(Path::component()) },
@@ -344,6 +372,7 @@ void ScriptHost::AddImport(std::string_view str)
 void ScriptHost::InvokeCallback(CallbackID id, VariantArgs args)
 {
 	const auto dispId = GetDISPID(id);
+
 	if (dispId)
 	{
 		std::ranges::reverse(args);
@@ -373,7 +402,6 @@ void ScriptHost::Reset()
 			gc->CollectGarbage(SCRIPTGCTYPE_EXHAUSTIVE);
 		}
 
-		m_script_engine->SetScriptState(SCRIPTSTATE_DISCONNECTED);
 		m_script_engine->SetScriptState(SCRIPTSTATE_CLOSED);
 		m_script_engine->Close();
 	}
@@ -389,17 +417,14 @@ void ScriptHost::ParsePreprocessor()
 	m_imports.clear();
 	m_name.clear();
 
-	static constexpr std::string_view pre_start = "// ==PREPROCESSOR==";
-	static constexpr std::string_view pre_end = "// ==/PREPROCESSOR==";
-
-	const std::string code = m_panel->m_config.m_code.get_ptr();
+	const auto& code = m_panel->m_config.m_code;
+	const auto start_pos = code.find(Preprocessor::Start) + Preprocessor::Start.length();
+	const auto end_pos = code.find(Preprocessor::End);
 	std::string author, version;
-	const size_t start_pos = code.find(pre_start) + pre_start.length();
-	const size_t end_pos = code.find(pre_end);
 
 	if (start_pos < end_pos && end_pos < code.length())
 	{
-		const std::string pre_body = code.substr(start_pos, end_pos - start_pos);
+		const auto pre_body = code.substr(start_pos, end_pos - start_pos);
 
 		for (auto&& line : js::split_string(pre_body, CRLF))
 		{
