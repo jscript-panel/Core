@@ -1,50 +1,30 @@
 #pragma once
 
-static wil::com_ptr_t<ITypeLib> g_type_lib;
-
-struct TypeInfoCache
-{
-	wil::com_ptr_t<ITypeInfo> type_info;
-	std::unordered_map<ULONG, DISPID> cache;
-};
-
 template <typename T>
 class JSDispatchBase : public T
 {
 protected:
-	JSDispatchBase()
-	{
-		if (!g_type_lib)
-		{
-			const auto path = wil::GetModuleFileNameW(core_api::get_my_instance());
-			LoadTypeLibEx(path.get(), REGKIND_NONE, &g_type_lib);
-		}
-
-		if (!s_type_info_cache.type_info)
-		{
-			g_type_lib->GetTypeInfoOfGuid(__uuidof(T), &s_type_info_cache.type_info);
-		}
-	}
-
-	virtual ~JSDispatchBase() {}
+	JSDispatchBase() = default;
+	virtual ~JSDispatchBase() = default;
 
 public:
 	STDMETHODIMP GetIDsOfNames(REFIID, OLECHAR** names, uint32_t, LCID, DISPID* dispids) final
 	{
 		RETURN_HR_IF_NULL(E_POINTER, dispids);
+		RETURN_IF_FAILED(InitTypeInfo());
 
 		const ULONG hash = LHashValOfName(LANG_NEUTRAL, names[0]);
-		const auto it = s_type_info_cache.cache.find(hash);
+		const auto it = s_dispid_map.find(hash);
 
-		if (it != s_type_info_cache.cache.end())
+		if (it != s_dispid_map.end())
 		{
 			dispids[0] = it->second;
 		}
 		else
 		{
-			RETURN_IF_FAILED_EXPECTED(s_type_info_cache.type_info->GetIDsOfNames(&names[0], 1, &dispids[0]));
+			RETURN_IF_FAILED_EXPECTED(s_type_info->GetIDsOfNames(&names[0], 1, &dispids[0]));
 
-			s_type_info_cache.cache.emplace(hash, dispids[0]);
+			s_dispid_map.emplace(hash, dispids[0]);
 		}
 
 		return S_OK;
@@ -55,8 +35,8 @@ public:
 		RETURN_HR_IF_NULL(E_POINTER, out);
 		RETURN_HR_IF(DISP_E_BADINDEX, i != 0);
 
-		s_type_info_cache.type_info->AddRef();
-		*out = s_type_info_cache.type_info.get();
+		s_type_info->AddRef();
+		*out = s_type_info.get();
 		return S_OK;
 	}
 
@@ -70,9 +50,20 @@ public:
 
 	STDMETHODIMP Invoke(DISPID dispid, REFIID, LCID, WORD flags, DISPPARAMS* params, VARIANT* result, EXCEPINFO* excep, uint32_t* err) final
 	{
-		return s_type_info_cache.type_info->Invoke(this, dispid, flags, params, result, excep, err);
+		return s_type_info->Invoke(this, dispid, flags, params, result, excep, err);
 	}
 
 private:
-	inline static TypeInfoCache s_type_info_cache;
+	HRESULT InitTypeInfo()
+	{
+		if (!s_type_info)
+		{
+			RETURN_IF_FAILED(factory::type_lib->GetTypeInfoOfGuid(__uuidof(T), &s_type_info));
+		}
+
+		return S_OK;
+	}
+
+	inline static std::unordered_map<ULONG, DISPID> s_dispid_map;
+	inline static wil::com_ptr_t<ITypeInfo> s_type_info;
 };
