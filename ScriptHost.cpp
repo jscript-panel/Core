@@ -1,13 +1,7 @@
 #include "stdafx.hpp"
 #include "ScriptHost.hpp"
 
-ScriptHost::ScriptHost(PanelBase* panel)
-	: m_panel(panel)
-	, m_console(ComObjectSingleton<Console>::get())
-	, m_fb(ComObjectSingleton<Fb>::get())
-	, m_plman(ComObjectSingleton<Plman>::get())
-	, m_utils(ComObjectSingleton<Utils>::get())
-	, m_window(new ImplementCOMRefCounter<Window>(panel)) {}
+ScriptHost::ScriptHost(PanelBase* panel) : m_panel(panel), m_window(new ImplementCOMRefCounter<Window>(panel)) {}
 
 HRESULT ScriptHost::InitCallbackMap()
 {
@@ -109,26 +103,26 @@ STDMETHODIMP ScriptHost::GetItemInfo(LPCOLESTR name, DWORD mask, IUnknown** ppun
 
 		if (js::compare_string(name, L"console"))
 		{
-			m_console->AddRef();
-			*ppunk = m_console.get();
+			factory::console->AddRef();
+			*ppunk = factory::console.get();
 			return S_OK;
 		}
 		else if (js::compare_string(name, L"fb"))
 		{
-			m_fb->AddRef();
-			*ppunk = m_fb.get();
+			factory::fb->AddRef();
+			*ppunk = factory::fb.get();
 			return S_OK;
 		}
 		else if (js::compare_string(name, L"plman"))
 		{
-			m_plman->AddRef();
-			*ppunk = m_plman.get();
+			factory::plman->AddRef();
+			*ppunk = factory::plman.get();
 			return S_OK;
 		}
 		else if (js::compare_string(name, L"utils"))
 		{
-			m_utils->AddRef();
-			*ppunk = m_utils.get();
+			factory::utils->AddRef();
+			*ppunk = factory::utils.get();
 			return S_OK;
 		}
 		else if (js::compare_string(name, L"window"))

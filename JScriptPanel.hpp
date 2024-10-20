@@ -17,7 +17,6 @@
 #include "GUIDS.hpp"
 #include "JScriptPanel_h.h"
 #include "ComObject.hpp"
-#include "ComObjectSingleton.hpp"
 #include "JSDispatchBase.hpp"
 #include "JSDispatch.hpp"
 #include "JSDisposable.hpp"

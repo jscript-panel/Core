@@ -1,5 +1,10 @@
 #pragma once
 
+class Console;
+class Fb;
+class Plman;
+class Utils;
+
 namespace factory
 {
 	static constexpr D2D1_DRAW_TEXT_OPTIONS d2d_text_options = D2D1_DRAW_TEXT_OPTIONS_CLIP | D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT;
@@ -13,7 +18,13 @@ namespace factory
 
 	extern bool inited;
 	extern std::vector<std::wstring> font_names;
+
+	extern wil::com_ptr_t<Console> console;
+	extern wil::com_ptr_t<Fb> fb;
+	extern wil::com_ptr_t<Plman> plman;
+	extern wil::com_ptr_t<Utils> utils;
 	extern wil::com_ptr_t<ITypeLib> type_lib;
+
 	extern wil::com_ptr_t<IWICImagingFactory2> imaging;
 	extern wil::com_ptr_t<ID2D1Factory1> d2d;
 	extern wil::com_ptr_t<IDWriteFactory> dwrite;

@@ -54,9 +54,5 @@ private:
 	wil::com_ptr_t<IActiveScriptProperty> m_script_property;
 	wil::com_ptr_t<IActiveScriptParse> m_parser;
 	wil::com_ptr_t<IDispatch> m_script_root;
-	wil::com_ptr_t<Console> m_console;
-	wil::com_ptr_t<Fb> m_fb;
-	wil::com_ptr_t<Plman> m_plman;
-	wil::com_ptr_t<Utils> m_utils;
 	wil::com_ptr_t<Window> m_window;
 };

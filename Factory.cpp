@@ -9,7 +9,13 @@ namespace factory
 {
 	bool inited{};
 	std::vector<std::wstring> font_names;
+
+	wil::com_ptr_t<Console> console;
+	wil::com_ptr_t<Fb> fb;
+	wil::com_ptr_t<Plman> plman;
+	wil::com_ptr_t<Utils> utils;
 	wil::com_ptr_t<ITypeLib> type_lib;
+
 	wil::com_ptr_t<IWICImagingFactory2> imaging;
 	wil::com_ptr_t<ID2D1Factory1> d2d;
 	wil::com_ptr_t<IDWriteFactory> dwrite;
@@ -52,6 +58,10 @@ namespace factory
 		error_text_format.reset();
 		typography.reset();
 		type_lib.reset();
+		console.reset();
+		fb.reset();
+		plman.reset();
+		utils.reset();
 
 #if ENABLE_RESVG
 		destroy_resvg_font_options();
@@ -98,19 +108,29 @@ namespace factory
 			return S_OK;
 		}
 
+		HRESULT init_imaging()
+		{
+			imaging = wil::CoCreateInstance<IWICImagingFactory2>(CLSID_WICImagingFactory2);
+			RETURN_HR_IF(E_FAIL, !imaging);
+			return S_OK;
+		}
+
 		HRESULT init_type_lib()
 		{
 			const auto path = wil::GetModuleFileNameW(core_api::get_my_instance());
 			return LoadTypeLibEx(path.get(), REGKIND_NONE, &type_lib);
 		}
 
+		void init_namespaces()
+		{
+			console = new ImplementCOMRefCounter<Console>();
+			fb = new ImplementCOMRefCounter<Fb>();
+			plman = new ImplementCOMRefCounter<Plman>();
+			utils = new ImplementCOMRefCounter<Utils>();
+		}
+
 		void init()
 		{
-			imaging = wil::CoCreateInstance<IWICImagingFactory2>(CLSID_WICImagingFactory2);
-
-			if (!imaging)
-				return;
-
 			const auto hr = []
 				{
 					RETURN_IF_FAILED(D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &d2d));
@@ -120,6 +140,7 @@ namespace factory
 					RETURN_IF_FAILED(typography->AddFontFeature({ DWRITE_FONT_FEATURE_TAG_TABULAR_FIGURES, 1 }));
 					RETURN_IF_FAILED(create_error_text_format());
 					RETURN_IF_FAILED(init_fonts());
+					RETURN_IF_FAILED(init_imaging());
 					RETURN_IF_FAILED(init_type_lib());
 					return S_OK;
 				}();
@@ -127,6 +148,7 @@ namespace factory
 			if SUCCEEDED(hr)
 			{
 				inited = true;
+				init_namespaces();
 			}
 			else
 			{
