@@ -1,4 +1,6 @@
 #include "stdafx.hpp"
+#include "Factory.hpp"
+
 #include "Font.hpp"
 
 #if ENABLE_RESVG
@@ -88,11 +90,11 @@ namespace factory
 			wil::com_ptr_t<IDWriteFontCollection> font_collection;
 			RETURN_IF_FAILED(dwrite->GetSystemFontCollection(&font_collection, TRUE));
 
-			const uint32_t family_count = font_collection->GetFontFamilyCount();
+			const auto family_count = font_collection->GetFontFamilyCount();
 			wil::com_ptr_t<IDWriteFontFamily> font_family;
 			wil::com_ptr_t<IDWriteLocalizedStrings> family_names;
 
-			for (const uint32_t i : std::views::iota(0U, family_count))
+			for (const auto i : std::views::iota(0U, family_count))
 			{
 				if FAILED(font_collection->GetFontFamily(i, &font_family))
 					continue;

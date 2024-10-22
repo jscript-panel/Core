@@ -24,6 +24,7 @@ public:
 			{
 				this->Dispose();
 			}
+
 			delete this;
 		}
 

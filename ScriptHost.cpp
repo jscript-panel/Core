@@ -347,7 +347,7 @@ void ScriptHost::AddImport(std::string_view str)
 		{ "%fb2k_component_path%", js::from_wide(Path::component()) },
 	};
 
-	std::string path = ExtractValue(str);
+	auto path = ExtractValue(str);
 	if (path.empty())
 		return;
 

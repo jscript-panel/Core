@@ -13,7 +13,7 @@ public:
 		RETURN_HR_IF_NULL(E_POINTER, dispids);
 		RETURN_IF_FAILED(InitTypeInfo());
 
-		const ULONG hash = LHashValOfName(LANG_NEUTRAL, names[0]);
+		const auto hash = LHashValOfName(LANG_NEUTRAL, names[0]);
 		const auto it = s_dispid_map.find(hash);
 
 		if (it != s_dispid_map.end())
