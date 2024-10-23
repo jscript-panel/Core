@@ -34,5 +34,4 @@ namespace factory
 
 	bool check_font_name(std::wstring_view name);
 	std::wstring get_font_name(IDWriteLocalizedStrings* localised_strings);
-	void reset();
 }

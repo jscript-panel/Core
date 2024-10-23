@@ -51,25 +51,6 @@ namespace factory
 		return DefaultFont.data();
 	}
 
-	void reset()
-	{
-		d2d.reset();
-		dwrite.reset();
-		gdi_interop.reset();
-		imaging.reset();
-		error_text_format.reset();
-		typography.reset();
-		type_lib.reset();
-		console.reset();
-		fb.reset();
-		plman.reset();
-		utils.reset();
-
-#if ENABLE_RESVG
-		destroy_resvg_font_options();
-#endif
-	}
-
 	namespace
 	{
 		HRESULT create_error_text_format()
@@ -158,6 +139,29 @@ namespace factory
 			}
 		}
 
+		void reset()
+		{
+			PanelManager::get()->reset_all();
+			Plman::release();
+
+			d2d.reset();
+			dwrite.reset();
+			gdi_interop.reset();
+			imaging.reset();
+			error_text_format.reset();
+			typography.reset();
+			type_lib.reset();
+			console.reset();
+			fb.reset();
+			plman.reset();
+			utils.reset();
+
+#if ENABLE_RESVG
+			destroy_resvg_font_options();
+#endif
+		}
+
 		FB2K_ON_INIT_STAGE(init, init_stages::before_ui_init);
+		FB2K_RUN_ON_QUIT(reset);
 	}
 }
